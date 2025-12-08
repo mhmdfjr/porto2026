@@ -29,7 +29,7 @@ export const FeatureSection = () => {
   return (
     <section
       id="feature"
-      className="relative bg-brand-red py-16 px-6 md:px-12 z-20 overflow-hidden"
+      className="relative bg-brand-red py-10 px-6 md:px-12 z-20 overflow-hidden"
     >
       {/* Dekorasi Ikon */}
       <div className="transition-transform hover:rotate-45 duration-500 absolute top-1 -translate-y-1/2 -left-10 md:-left-18 select-none">

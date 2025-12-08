@@ -26,7 +26,7 @@ export const OrganizationSection = () => {
   return (
     <section
       id="organization"
-      className="relative w-full bg-brand-yellow py-20 px-6 md:px-12 overflow-hidden"
+      className="relative w-full bg-brand-yellow py-10 px-6 md:px-12 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         {/* --- Header --- */}

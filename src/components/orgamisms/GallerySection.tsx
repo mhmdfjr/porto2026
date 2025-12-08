@@ -63,7 +63,7 @@ export const GallerySection = () => {
   return (
     <section
       id="gallery"
-      className="relative bg-brand-yellow py-16 px-6 md:px-12 w-full overflow-hidden"
+      className="relative bg-brand-yellow py-10 px-6 md:px-12 w-full overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto">
         {/* --- Header --- */}

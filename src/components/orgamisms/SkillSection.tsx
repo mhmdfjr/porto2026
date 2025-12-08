@@ -77,7 +77,7 @@ export const SkillSection = () => {
 
       {/* --- AREA KONTEN TEKS --- */}
       <div className="flex-1 relative flex flex-col justify-center items-start p-8 md:p-16 lg:p-16">
-        <h2 className="absolute top-8 left-6 md:top-12 md:left-12 font-gotham font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter">
+        <h2 className="font-gotham font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter">
           Skills
         </h2>
 
@@ -96,13 +96,13 @@ export const SkillSection = () => {
         </div>
 
         {/* Dekorasi Matahari Kuning */}
-        <div className="absolute bottom-0 right-0 transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0">
+        <div className="absolute top-0 right-0 transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0">
           <Image
             src="/sun-yellow.svg"
             alt="Decorative Sun"
             width={100}
             height={100}
-            className="object-contain w-32 h-32 md:w-64 md:h-64 lg:w-[200px] lg:h-[200px]"
+            className="object-contain w-12 h-12 md:w-28 md:h-28 lg:w-[140px] lg:h-[140px]"
           />
         </div>
       </div>

@@ -41,7 +41,7 @@ export const ProjectCard = ({
         </div>
 
         {/* --- Content Area --- */}
-        <div className="flex flex-col gap-3 mt-6">
+        <div className="flex flex-col gap-2 mt-4">
           <h3 className="font-gotham font-black text-brand-red text-2xl md:text-3xl lg:text-4xl tracking-tight leading-none">
             {title}
           </h3>
@@ -68,7 +68,7 @@ export const ProjectCard = ({
       </div>
 
       {/* --- Action Buttons --- */}
-      <div className="flex gap-4 mt-6">
+      <div className="flex gap-4 mt-2">
         <button className="px-6 py-2 border border-brand-red text-brand-red font-gotham font-bold uppercase text-sm hover:bg-brand-red hover:text-black transition-colors">
           Learn More
         </button>

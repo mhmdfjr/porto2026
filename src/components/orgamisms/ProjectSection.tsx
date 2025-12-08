@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 import { ProjectCard } from "../molecules/ProjectCard";
 import { getProjects } from "@/lib/database";
 import type { Project } from "@/lib/supabase";
@@ -68,12 +69,23 @@ export const ProjectSection = () => {
   return (
     <section
       id="projects"
-      className="relative bg-brand-black py-20 px-6 md:px-12 w-full overflow-hidden"
+      className="relative bg-brand-black py-10 px-6 md:px-12 w-full overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto">
-        <h2 className="font-gotham font-black text-brand-red text-5xl md:text-6xl lg:text-8xl tracking-tighter mb-16">
-          Project
-        </h2>
+        <div className="w-full flex justify-between items-start z-10">
+          <h2 className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-8 md:mb-10">
+            Project
+          </h2>
+          <div className="transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0">
+            <Image
+              src="/sun-red.svg"
+              alt="Decorative Sun"
+              width={100}
+              height={100}
+              className="object-contain w-12 h-12 md:w-14 md:h-214 lg:w-16 lg:h-16"
+            />
+          </div>
+        </div>
 
         {loading ? (
           <div className="w-full flex justify-center items-center h-64">
@@ -117,20 +129,20 @@ export const ProjectSection = () => {
             </div>
 
             {/* --- CONTROLS --- */}
-            <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-8 mt-16 md:mt-20">
+            <div className="flex flex-row items-center justify-center md:justify-between gap-2 md:gap-4 lg:gap-6 mt-8 md:mt-10">
               <button
                 onClick={scrollPrev}
-                className="hidden md:flex px-8 py-3 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
+                className="hidden md:flex px-4 py-2 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
               >
                 Prev
               </button>
 
-              <div className="flex gap-4 flex-wrap justify-center">
+              <div className="flex gap-1 md:gap-3 flex-wrap justify-center">
                 {scrollSnaps.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => scrollTo(index)}
-                    className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 border-brand-red transition-all duration-300 ${
+                    className={`w-3 h-3 md:w-5 md:h-5 rounded-full border-2 border-brand-red transition-all duration-300 ${
                       index === selectedIndex
                         ? "bg-brand-red"
                         : "bg-transparent hover:bg-brand-red/30"
@@ -141,19 +153,17 @@ export const ProjectSection = () => {
               </div>
 
               <button
+                onClick={scrollPrev}
+                className="md:hidden px-8 py-3 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
+              >
+                Prev
+              </button>
+
+              <button
                 onClick={scrollNext}
                 className="px-8 py-3 bg-brand-red text-black font-gotham font-bold text-lg hover:bg-red-600 transition-colors"
               >
                 Next
-              </button>
-            </div>
-
-            <div className="md:hidden flex justify-center mt-6">
-              <button
-                onClick={scrollPrev}
-                className="px-8 py-3 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
-              >
-                Prev
               </button>
             </div>
           </>

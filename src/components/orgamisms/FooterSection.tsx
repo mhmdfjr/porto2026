@@ -74,6 +74,19 @@ export const FooterSection = () => {
                 +62 857-0007-2350
               </Link>
             </div>
+
+            <div className="flex flex-col gap-1">
+              <span className="font-gotham font-bold text-brand-yellow text-xl md:text-2xl lg:text-3xl">
+                LinkedIn
+              </span>
+              <Link
+                href="https://www.linkedin.com/in/mohamadfajarnurkhasani/"
+                target="_blank"
+                className="font-dm text-brand-yellow text-base md:text-lg lg:text-xl hover:text-brand-yellow transition-colors"
+              >
+                Mohamad Fajar Nur Khasani
+              </Link>
+            </div>
           </div>
 
           <div className="transition-transform hover:rotate-45 duration-500 select-none">

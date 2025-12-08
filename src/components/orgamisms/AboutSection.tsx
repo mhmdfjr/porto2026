@@ -12,7 +12,7 @@ export const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative w-full bg-brand-yellow text-brand-red pt-16 lg:pb-16 px-6 md:px-12 overflow-hidden"
+      className="relative w-full bg-brand-yellow text-brand-red pt-10 lg:pb-10 px-6 md:px-12 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto w-full">
         {/* Grid Layout: Mobile 1 Kolom, Desktop 2 Kolom */}

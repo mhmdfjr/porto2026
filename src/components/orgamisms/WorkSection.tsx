@@ -27,11 +27,11 @@ export const WorkSection = () => {
   return (
     <section
       id="work"
-      className="relative bg-brand-black py-16 px-6 md:px-12 w-full overflow-hidden"
+      className="relative bg-brand-black py-10 px-6 md:px-12 w-full overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto">
         {/* Dekorasi Matahari Berputar */}
-        <div className="transition-transform hover:rotate-45 duration-500 absolute bottom-10 right-10 md:right-16 select-none z-0 opacity-50">
+        <div className="transition-transform hover:rotate-45 duration-500 absolute -top-10 -right-10 md:-right-16 select-none z-0">
           <Image
             src="/sun-red.svg"
             alt="Decorative Sun"
