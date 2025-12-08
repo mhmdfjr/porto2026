@@ -1,0 +1,126 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { getEducations, formatDateRange } from "@/lib/database";
+import type { Education } from "@/lib/supabase";
+
+export const EducationSection = () => {
+  const [educations, setEducations] = useState<Education[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchEducations() {
+      try {
+        const educationsData = await getEducations();
+        setEducations(educationsData);
+      } catch (error) {
+        console.error("Error fetching educations:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEducations();
+  }, []);
+
+  return (
+    <section
+      id="education"
+      className="relative w-full bg-brand-red py-16 px-6 md:px-12 overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* --- Header --- */}
+        <div className="w-full flex gap-4 md:gap-6 justify-end items-start">
+          <div className="transition-transform hover:rotate-45 duration-500 select-none">
+            <Image
+              src="/sun-yellow.svg"
+              alt="Decorative Sun"
+              width={100}
+              height={100}
+              className="object-contain w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16"
+            />
+          </div>
+          <h2 className="font-gotham text-end font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl mb-8 md:mb-20 tracking-tighter">
+            Education
+          </h2>
+        </div>
+
+        {/* --- TIMELINE CONTAINER --- */}
+        <div className="relative min-h-[400px]">
+          {/* Loading State Wrapper */}
+          {loading ? (
+            <div className="w-full flex justify-center items-center h-64">
+              <p className="font-dm text-brand-yellow text-xl animate-pulse">
+                Loading education history...
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* 1. DEKORASI GARIS (Desktop: Horizontal, Mobile: Vertical) */}
+
+              {/* Desktop Horizontal Line */}
+              <div className="hidden md:block absolute top-0 left-0 w-full h-1 bg-brand-yellow rounded-full z-0 transform -translate-y-12">
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-brand-yellow border-4 border-brand-red rounded-full" />
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-brand-yellow border-4 border-brand-red rounded-full" />
+              </div>
+
+              {/* Mobile Vertical Line */}
+              <div className="md:hidden absolute top-0 left-2 h-full w-1 bg-brand-yellow/50 rounded-full z-0" />
+
+              {/* 2. ITEM LIST --- */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-24 relative z-10">
+                {educations.map((item) => (
+                  <div
+                    key={item.id}
+                    className="relative pl-10 md:pl-0 flex flex-col gap-4 group"
+                  >
+                    {/* --- DOT INDICATOR --- */}
+                    <div
+                      className="absolute
+                      /* Mobile Position */
+                      left-2.5 top-0 w-6 h-6 -translate-x-1/2
+                      /* Desktop Position */
+                      md:left-1/2 md:-top-12 md:translate-x-1/2 md:-translate-y-1/2
+                      bg-brand-yellow rounded-full border-4 border-brand-red z-10 transition-transform duration-300 group-hover:scale-125"
+                    />
+
+                    {/* --- IMAGE CARD --- */}
+                    <div className="relative w-full aspect-video bg-gray-900 overflow-hidden shadow-2xl">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-transform duration-700"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+
+                    {/* --- CONTENT --- */}
+                    <div className="flex flex-col gap-2 text-left md:text-center">
+                      {/* Nama Sekolah */}
+                      <h3 className="font-gotham font-black text-brand-yellow text-xl md:text-2xl lg:text-3xl tracking-tight">
+                        {item.name}
+                      </h3>
+
+                      {/* Jurusan & Tahun */}
+                      <span className="font-dm font-bold text-white/90 text-sm md:text-base lg:text-lg uppercase tracking-widest">
+                        {item.major} • {formatDateRange(item.start, item.end)}
+                      </span>
+
+                      {/* Lokasi (Sebagai deskripsi karena di DB tidak ada field description) */}
+                      {/* {item.location && (
+                        <p className="font-dm text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mt-2">
+                          {item.location}
+                        </p>
+                      )} */}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};

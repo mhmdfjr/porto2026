@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* --- 1. Custom Colors --- */
+  --color-brand-red: #e12020;
+  --color-brand-yellow: #fce08b;
+  --color-brand-black: #030303;
+
+  /* --- 2. Custom Fonts --- */
+  /* Mengambil variable dari layout.tsx */
+  --font-gotham: var(--font-gotham), "Montserrat", sans-serif;
+  --font-dm: var(--font-dm-sans), sans-serif;
+
+  /* --- 3. Breakpoints (Default Tailwind sudah aman untuk Mobile First) --- */
+  /* sm: 640px, md: 768px, lg: 1024px, xl: 1280px */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Utilities Dasar */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm);
+  background-color: var(--color-brand-black);
+  color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-gotham);
 }
