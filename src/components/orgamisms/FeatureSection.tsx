@@ -55,7 +55,7 @@ export const FeatureSection = () => {
         {/* PERBAIKAN GRID:
            1. items-start: Agar item tidak dipaksa memenuhi tinggi baris (stretch), sehingga efek turun terlihat jelas.
         */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 lg:gap-x-24 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 lg:gap-x-24 items-start">
           {featuresData.map((feature, index) => {
             // Logika: Jika index ganjil (1, 3, dst..), berarti dia ada di kolom kanan (pada desktop).
             // Kita beri margin-top besar (md:mt-24) agar posisinya turun.
@@ -65,7 +65,7 @@ export const FeatureSection = () => {
               <div
                 key={index}
                 className={`transition-all duration-500 ${
-                  isRightColumn ? "mt-8 md:mt-10" : ""
+                  isRightColumn ? "mt-2 md:mt-10" : ""
                 }`}
               >
                 <FeatureCard

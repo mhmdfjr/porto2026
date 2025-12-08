@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Navbar } from "../molecules/Navbar";
 import { Button } from "../atoms/Button";
+import Link from "next/link";
 
 // Gunakan gambar placeholder gunung jika belum ada asset lokal
 // Nanti ganti src dengan path lokal Anda: "/assets/mountain-bg.jpg"
@@ -64,7 +65,9 @@ export const HeroSection = () => {
             </span>
 
             <div className="flex justify-end mt-8 lg:text-xl md:text-lg text-base">
-              <Button>Learn More</Button>
+              <Link href="#about">
+                <Button>Learn More</Button>
+              </Link>
             </div>
           </div>
         </div>
