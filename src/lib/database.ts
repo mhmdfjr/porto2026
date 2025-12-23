@@ -85,6 +85,27 @@ export async function getProjects(): Promise<Project[]> {
   }
 }
 
+// Fetch specific project by ID
+export async function getProjectById(id: number): Promise<Project | null> {
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      console.error(`Error fetching project with id ${id}:`, error)
+      return null
+    }
+
+    return data
+  } catch (error) {
+    console.error(`Error fetching project with id ${id}:`, error)
+    return null
+  }
+}
+
 export async function getOrganizations(): Promise<Organization[]> {
   try {
     const { data, error } = await supabase.from("organizations").select("*").order("id", { ascending: false })

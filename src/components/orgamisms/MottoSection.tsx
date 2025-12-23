@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion"; // Import motion
 
-// Gambar Background: Street/Crowd dengan efek motion blur (sesuai referensi)
 const BANNER_IMAGE =
   "https://images.unsplash.com/photo-1494587351196-bbf5f29cff42?q=80&w=2000&auto=format&fit=crop";
 
@@ -17,9 +19,15 @@ export const MottoSection = ({
       id="motto"
       className="relative w-full h-[40vh] md:h-[60vh] flex items-center justify-center overflow-hidden"
     >
-      {/* --- BACKGROUND IMAGE --- */}
-      {/* Menggunakan grayscale dan sedikit blur untuk fokus ke teks */}
-      <div className="absolute inset-0 z-0">
+      {/* --- BACKGROUND IMAGE ANIMATION --- */}
+      {/* Efek: Slow Zoom Out saat terlihat */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        initial={{ scale: 1.1, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        viewport={{ once: false }}
+      >
         <Image
           src={BANNER_IMAGE}
           alt="Street Background"
@@ -27,24 +35,53 @@ export const MottoSection = ({
           className="object-cover grayscale brightness-75"
           priority
         />
-      </div>
+      </motion.div>
 
       {/* --- CONTENT (RED BOX) --- */}
       <div className="relative z-10 p-4 w-full flex justify-center">
-        <div className="flex gap-4 justify-center items-center bg-brand-red px-6 py-4 md:px-12 md:py-8 shadow-2xl transform transition-transform duration-500 hover:rotate-2 hover:scale-105">
-          <div className="transition-transform hover:rotate-45 duration-500 select-none">
+        <motion.div
+          className="flex gap-4 justify-center items-center bg-brand-red px-6 py-4 md:px-12 md:py-8 shadow-2xl cursor-default"
+          // Entrance Animation (Pop Up)
+          initial={{ opacity: 0, scale: 0.8, y: 50 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
+            delay: 0.2,
+          }}
+          viewport={{ once: false }}
+          // Hover Animation (Menggantikan Tailwind hover)
+          whileHover={{ scale: 1.05, rotate: 2 }}
+        >
+          {/* Sun Icon Animation */}
+          <motion.div
+            className="transition-transform hover:rotate-45 duration-500"
+            initial={{ scale: 0, rotate: -180 }}
+            whileInView={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 100, delay: 0.4 }}
+            viewport={{ once: false }}
+          >
             <Image
               src="/sun-black.svg"
               alt="Decorative Sun"
               width={100}
               height={100}
-              className="animate-spin-slow object-contain w-16 h-16 md:w-18 md:h-18 lg:w-20 lg:h-20"
+              className="animate-[spin_20s_linear_infinite] lg:animate-spin-slow object-contain w-16 h-16 md:w-18 md:h-18 lg:w-20 lg:h-20"
             />
-          </div>
-          <h2 className="font-gotham font-black text-brand-black text-3xl md:text-5xl lg:text-7xl uppercase tracking-tighter text-center">
+          </motion.div>
+
+          {/* Text Animation */}
+          <motion.h2
+            className="font-gotham font-black text-brand-black text-3xl md:text-5xl lg:text-7xl uppercase tracking-tighter text-center"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
+            viewport={{ once: false }}
+          >
             {text}
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
       </div>
     </section>
   );

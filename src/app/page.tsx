@@ -23,10 +23,9 @@ export default function Home() {
       <ProjectSection />
       <QuotesSection />
       <EducationSection />
-      <MottoSection text="Cast of characters" />
+      <MottoSection text="Be Your Own Muse" />
       <OrganizationSection />
       <FooterSection />
-      {/* Section lainnya (About, Projects, dll) akan ditambahkan di bawah sini nanti */}
     </main>
   );
 }

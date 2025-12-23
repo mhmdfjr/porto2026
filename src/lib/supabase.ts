@@ -54,6 +54,8 @@ export interface Project {
   placeholder: string
   techstack: string[]
   image: string[]
+  live_url?: string
+  code_url?: string
   created_at: string
 }
 

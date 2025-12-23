@@ -1,11 +1,13 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion"; // Import motion
 
 // Gambar Ilustrasi Footer (Komunikasi/Orang)
-// Placeholder menggunakan gambar portrait orang/lifestyle
 const FOOTER_IMAGE =
-  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop";
+  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/me5.jpg";
 
 export const FooterSection = () => {
   return (
@@ -14,27 +16,46 @@ export const FooterSection = () => {
       className="relative w-full bg-brand-red pt-4 pb-4 px-6 md:px-12 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10">
-        {/* --- LEFT COLUMN: Heading & Image --- */}
+        {/* --- LEFT COLUMN: Heading --- */}
         <div className="flex-1 flex flex-col gap-8 md:gap-10">
-          {/* Big Heading "Thank you" */}
-          <h2 className="font-gotham w-full text-end font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter leading-none">
+          {/* Heading Animation - Slide in from Right */}
+          <motion.h2
+            className="font-gotham w-full text-end font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter leading-none"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: false }}
+          >
             Thank you
-          </h2>
+          </motion.h2>
         </div>
 
         <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-between gap-12 md:gap-20">
-          <div className="relative w-full md:max-w-1/2 aspect-video bg-brand-yellow/10">
+          {/* --- Main Image Animation --- */}
+          <motion.div
+            className="relative w-full md:max-w-1/2 aspect-video bg-brand-yellow/10"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: false }}
+          >
             <Image
               src={FOOTER_IMAGE}
               alt="Thank you visual"
               fill
               className="object-cover grayscale contrast-125 opacity-90"
             />
-          </div>
+          </motion.div>
 
           <div className="flex-1 flex flex-col justify-center gap-2 md:gap-4 md:pl-8">
             {/* Contact Item 1: Email */}
-            <div className="flex flex-col gap-2">
+            <motion.div
+              className="flex flex-col gap-2"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: false }}
+            >
               <span className="font-gotham font-bold text-brand-yellow text-xl md:text-2xl lg:text-3xl">
                 Email
               </span>
@@ -45,10 +66,16 @@ export const FooterSection = () => {
               >
                 moh.fajar1304@gmail.com
               </Link>
-            </div>
+            </motion.div>
 
             {/* Contact Item 2: Social Media */}
-            <div className="flex flex-col gap-1">
+            <motion.div
+              className="flex flex-col gap-1"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: false }}
+            >
               <span className="font-gotham font-bold text-brand-yellow text-xl md:text-2xl lg:text-3xl">
                 Social media
               </span>
@@ -59,10 +86,16 @@ export const FooterSection = () => {
               >
                 @holy.jar_
               </Link>
-            </div>
+            </motion.div>
 
             {/* Contact Item 3: Phone */}
-            <div className="flex flex-col gap-1">
+            <motion.div
+              className="flex flex-col gap-1"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: false }}
+            >
               <span className="font-gotham font-bold text-brand-yellow text-xl md:text-2xl lg:text-3xl">
                 Phone
               </span>
@@ -73,9 +106,16 @@ export const FooterSection = () => {
               >
                 +62 857-0007-2350
               </Link>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col gap-1">
+            {/* Contact Item 4: LinkedIn */}
+            <motion.div
+              className="flex flex-col gap-1"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              viewport={{ once: false }}
+            >
               <span className="font-gotham font-bold text-brand-yellow text-xl md:text-2xl lg:text-3xl">
                 LinkedIn
               </span>
@@ -86,27 +126,40 @@ export const FooterSection = () => {
               >
                 Mohamad Fajar Nur Khasani
               </Link>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="transition-transform hover:rotate-45 duration-500 select-none">
+          {/* Sun Decoration Animation */}
+          <motion.div
+            className="transition-transform hover:rotate-45 duration-500 select-none"
+            initial={{ scale: 0, rotate: 90 }}
+            whileInView={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
+            viewport={{ once: false }}
+          >
             <Image
-              src="/sun-yellow.svg" // Pastikan file ini ada di folder public/
+              src="/sun-yellow.svg"
               alt="Decorative Sun"
               width={100}
               height={100}
-              className="object-contain w-10 h-10 md:w-30 md:h-30 lg:w-32 lg:h-32"
+              className="animate-[spin_20s_linear_infinite] lg:animate-spin-slow object-contain w-10 h-10 md:w-30 md:h-30 lg:w-32 lg:h-32"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      {/* Copyright Kecil (Opsional, di paling bawah) */}
-      <div className="max-w-7xl mx-auto mt-8 pt-4 border-t border-brand-yellow">
+      {/* Copyright Animation */}
+      <motion.div
+        className="max-w-7xl mx-auto mt-8 pt-4 border-t border-brand-yellow"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.8 }}
+        viewport={{ once: false }}
+      >
         <p className="font-dm text-brand-yellow text-sm text-center md:text-left">
           © {new Date().getFullYear()} Mohamad Fajar. All rights reserved.
         </p>
-      </div>
+      </motion.div>
     </footer>
   );
 };

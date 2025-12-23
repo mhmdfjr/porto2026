@@ -1,7 +1,9 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ProjectCardProps {
+  id: number;
   title: string;
   description: string;
   tags: string[];
@@ -9,15 +11,12 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({
+  id,
   title,
   description,
   tags,
   imageUrl,
 }: ProjectCardProps) => {
-  // LOGIC VALIDASI GAMBAR (SAFE URL):
-  // 1. Pastikan imageUrl tidak null/undefined
-  // 2. Pastikan tipe datanya string (bukan array kosong yg lolos check truthy)
-  // 3. Pastikan diawali http (external) atau / (local)
   const isValidUrl =
     imageUrl &&
     typeof imageUrl === "string" &&
@@ -69,9 +68,12 @@ export const ProjectCard = ({
 
       {/* --- Action Buttons --- */}
       <div className="flex gap-4 mt-2">
-        <button className="px-6 py-2 border border-brand-red text-brand-red font-gotham font-bold uppercase text-sm hover:bg-brand-red hover:text-black transition-colors">
+        <Link
+          href={`/project/${id}`}
+          className="px-6 py-2 border border-brand-red text-brand-red font-gotham font-bold uppercase text-sm hover:bg-brand-red hover:text-black transition-colors text-center"
+        >
           Learn More
-        </button>
+        </Link>
         <button className="px-6 py-2 bg-brand-red text-black font-gotham font-bold uppercase text-sm hover:bg-red-600 transition-colors">
           Live Demo
         </button>
