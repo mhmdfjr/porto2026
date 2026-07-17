@@ -18,33 +18,33 @@ const galleryItems: GalleryItem[] = [
   // --- BARIS 1 ---
   {
     id: 1,
-    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/nature2.jpg",
+    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/nature10.jpg",
     alt: "Nature",
     className: "md:col-span-1 md:row-span-1",
   },
   {
     id: 2,
-    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/me1.jpg",
+    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/art4.jpg",
     alt: "Me",
     className: "md:col-span-1 md:row-span-1",
   },
   {
     id: 3,
-    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/building3.jpg",
+    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/nature15.JPG",
     alt: "Cafe",
     className: "md:col-span-2 md:row-span-1",
   },
   // --- BIG ITEM (KANAN) ---
   {
     id: 4,
-    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/nature1.jpg", // Orang Duduk Background Merah
+    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/nature14.JPG", // Orang Duduk Background Merah
     alt: "Nature",
     className: "md:col-span-2 md:row-span-2",
   },
   // --- BARIS 2 & 3 (Campuran) ---
   {
     id: 5,
-    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/me4.jpg", // Sepatu Hijau
+    src: "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/building2.jpg", // Sepatu Hijau
     alt: "Me",
     className: "md:col-span-1 md:row-span-2",
   },

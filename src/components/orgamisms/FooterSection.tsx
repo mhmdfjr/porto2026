@@ -7,7 +7,7 @@ import { motion } from "framer-motion"; // Import motion
 
 // Gambar Ilustrasi Footer (Komunikasi/Orang)
 const FOOTER_IMAGE =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/me5.jpg";
+  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/me6.JPG";
 
 export const FooterSection = () => {
   return (
