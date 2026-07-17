@@ -51,9 +51,8 @@ export interface Project {
   id: number
   name: string
   description: string
-  placeholder: string
   techstack: string[]
-  image: string[]
+  images: string[]
   live_url?: string
   code_url?: string
   created_at: string

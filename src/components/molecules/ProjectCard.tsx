@@ -22,7 +22,6 @@ export const ProjectCard = ({
     typeof imageUrl === "string" &&
     (imageUrl.startsWith("http") || imageUrl.startsWith("/"));
 
-  // Fallback ke sun-red.svg jika URL tidak valid
   const safeImageUrl = isValidUrl ? imageUrl : "/sun-red.svg";
 
   return (

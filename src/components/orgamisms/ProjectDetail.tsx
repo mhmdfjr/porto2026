@@ -61,11 +61,11 @@ export const ProjectDetailSection = ({
 
   // Logic Slider
   useEffect(() => {
-    if (!project || !project.image || project.image.length <= 1) return;
+    if (!project || !project.images || project.images.length <= 1) return;
 
     const interval = setInterval(() => {
       setDirection(1);
-      setCurrentImageIndex((prev) => (prev + 1) % project.image.length);
+      setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
     }, 3000);
 
     return () => clearInterval(interval);
@@ -100,10 +100,11 @@ export const ProjectDetailSection = ({
   }
 
   // Safe Image Logic
-  const rawImages = project.image || [];
+  const rawImages = project.images || [];
   const validImages = rawImages.filter(
     (img) =>
-      typeof img === "string" && (img.startsWith("http") || img.startsWith("/"))
+      typeof img === "string" &&
+      (img.startsWith("http") || img.startsWith("/")),
   );
   const images = validImages.length > 0 ? validImages : ["/sun-red.svg"];
 

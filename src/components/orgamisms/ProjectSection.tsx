@@ -56,15 +56,15 @@ export const ProjectSection = () => {
   // Navigasi Manual
   const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
-    [emblaApi]
+    [emblaApi],
   );
   const scrollNext = useCallback(
     () => emblaApi && emblaApi.scrollNext(),
-    [emblaApi]
+    [emblaApi],
   );
   const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
-    [emblaApi]
+    [emblaApi],
   );
 
   return (
@@ -125,8 +125,8 @@ export const ProjectSection = () => {
                 {projects.map((project, index) => {
                   // Logic Image
                   const firstImage =
-                    project.image && project.image.length > 0
-                      ? project.image[0]
+                    project.images && project.images.length > 0
+                      ? project.images[0]
                       : null;
 
                   return (

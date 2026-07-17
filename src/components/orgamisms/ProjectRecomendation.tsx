@@ -41,7 +41,7 @@ export const ProjectRecommendationSection = ({
     const validImage = images.find(
       (img) =>
         typeof img === "string" &&
-        (img.startsWith("http") || img.startsWith("/"))
+        (img.startsWith("http") || img.startsWith("/")),
     );
     return validImage || "/sun-red.svg";
   };
@@ -88,7 +88,7 @@ export const ProjectRecommendationSection = ({
             viewport={{ once: false, amount: 0.2 }} // Trigger saat 20% terlihat
           >
             {recommendations.map((rec) => {
-              const safeImage = getSafeImage(rec.image);
+              const safeImage = getSafeImage(rec.images);
 
               return (
                 <motion.div key={rec.id} variants={cardVariants}>
