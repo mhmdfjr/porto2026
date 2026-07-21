@@ -9,22 +9,22 @@ const featuresData = [
   {
     title: "Modern Tech Stack",
     description:
-      "Building robust applications using the latest technologies like Next.js 15, React, and Supabase.",
+      "Building scalable and maintainable applications with modern technologies such as Next.js, React, and Laravel.",
   },
   {
     title: "Tailored Solutions",
     description:
-      "I don't just write code; I craft digital solutions customized to solve your specific business challenges.",
+      "Crafting digital solutions tailored to solve real-world challenges and meet unique business needs.",
   },
   {
     title: "Interactive UI",
     description:
-      "Bringing static designs to life with smooth animations and responsive interactions.",
+      "Transforming static designs into engaging user experiences with responsive interactions and accessible interfaces.",
   },
   {
     title: "Reliable Partner",
     description:
-      "Clear communication and timely delivery. I treat your project with the same passion as my own.",
+      "Providing clear communication, on-time delivery, and a commitment to every project as if it were my own.",
   },
 ];
 

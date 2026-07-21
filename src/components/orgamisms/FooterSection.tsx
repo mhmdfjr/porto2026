@@ -3,9 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion"; // Import motion
+import { motion } from "framer-motion";
 
-// Gambar Ilustrasi Footer (Komunikasi/Orang)
 const FOOTER_IMAGE =
   "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/me6.JPG";
 
@@ -16,7 +15,6 @@ export const FooterSection = () => {
       className="relative w-full bg-brand-red pt-4 pb-4 px-6 md:px-12 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10">
-        {/* --- LEFT COLUMN: Heading --- */}
         <div className="flex-1 flex flex-col gap-8 md:gap-10">
           {/* Heading Animation - Slide in from Right */}
           <motion.h2
@@ -31,7 +29,6 @@ export const FooterSection = () => {
         </div>
 
         <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-between gap-12 md:gap-20">
-          {/* --- Main Image Animation --- */}
           <motion.div
             className="relative w-full md:max-w-1/2 aspect-video bg-brand-yellow/10"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -48,7 +45,6 @@ export const FooterSection = () => {
           </motion.div>
 
           <div className="flex-1 flex flex-col justify-center gap-2 md:gap-4 md:pl-8">
-            {/* Contact Item 1: Email */}
             <motion.div
               className="flex flex-col gap-2"
               initial={{ opacity: 0, x: 30 }}
@@ -68,7 +64,6 @@ export const FooterSection = () => {
               </Link>
             </motion.div>
 
-            {/* Contact Item 2: Social Media */}
             <motion.div
               className="flex flex-col gap-1"
               initial={{ opacity: 0, x: 30 }}
@@ -88,7 +83,6 @@ export const FooterSection = () => {
               </Link>
             </motion.div>
 
-            {/* Contact Item 3: Phone */}
             <motion.div
               className="flex flex-col gap-1"
               initial={{ opacity: 0, x: 30 }}
@@ -108,7 +102,6 @@ export const FooterSection = () => {
               </Link>
             </motion.div>
 
-            {/* Contact Item 4: LinkedIn */}
             <motion.div
               className="flex flex-col gap-1"
               initial={{ opacity: 0, x: 30 }}
@@ -129,7 +122,6 @@ export const FooterSection = () => {
             </motion.div>
           </div>
 
-          {/* Sun Decoration Animation */}
           <motion.div
             className="transition-transform hover:rotate-45 duration-500 select-none"
             initial={{ scale: 0, rotate: 90 }}
@@ -148,7 +140,6 @@ export const FooterSection = () => {
         </div>
       </div>
 
-      {/* Copyright Animation */}
       <motion.div
         className="max-w-7xl mx-auto mt-8 pt-4 border-t border-brand-yellow"
         initial={{ opacity: 0 }}

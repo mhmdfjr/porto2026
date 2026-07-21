@@ -113,7 +113,7 @@ export const SkillSection = () => {
           ) : (
             <p className="font-dm text-brand-yellow text-2xl md:text-3xl lg:text-4xl leading-relaxed text-left font-medium">
               {/* Fallback jika data kosong */}
-              {skillsString ? `“${skillsString}, ”` : "“No skills added yet.”"}
+              {skillsString ? `“${skillsString}.”` : "“No skills added yet.”"}
             </p>
           )}
         </motion.div>
