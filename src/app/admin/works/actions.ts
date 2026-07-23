@@ -5,10 +5,11 @@ import { createClient } from "@/lib/supabase/server"
 import { workSchema, type WorkFormState } from "@/lib/validations/work"
 
 const BUCKET = "porto"
+const FOLDER = "Works"
 
 async function uploadImage(supabase: any, file: File) {
   const ext = file.name.split(".").pop()
-  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+  const path = `${FOLDER}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
   const { error } = await supabase.storage.from(BUCKET).upload(path, file)
   if (error) throw new Error(`Gagal upload gambar: ${error.message}`)

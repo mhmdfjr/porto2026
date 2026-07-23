@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { motion } from "framer-motion"; // Import motion
+import { motion } from "framer-motion";
 import { ProjectCard } from "../molecules/ProjectCard";
 import { getProjects } from "@/lib/database";
 import type { Project } from "@/lib/supabase";
@@ -12,7 +12,6 @@ export const ProjectSection = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // --- EMBLA CAROUSEL SETUP ---
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
@@ -22,7 +21,6 @@ export const ProjectSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-  // Fetch Data Supabase
   useEffect(() => {
     async function fetchProjects() {
       try {
@@ -37,7 +35,6 @@ export const ProjectSection = () => {
     fetchProjects();
   }, []);
 
-  // Sync Embla State (Dots & Selection)
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
@@ -53,7 +50,6 @@ export const ProjectSection = () => {
     onSelect();
   }, [emblaApi, onSelect, projects]);
 
-  // Navigasi Manual
   const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
     [emblaApi],
@@ -73,7 +69,6 @@ export const ProjectSection = () => {
       className="relative bg-brand-black py-10 px-6 md:px-12 w-full overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto">
-        {/* --- Header Animation --- */}
         <div className="w-full flex justify-between items-start z-10">
           <motion.h2
             className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-8 md:mb-10"
@@ -85,7 +80,6 @@ export const ProjectSection = () => {
             Project
           </motion.h2>
 
-          {/* Sun Icon Animation */}
           <motion.div
             className="transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0"
             initial={{ scale: 0, rotate: 90 }}
@@ -111,7 +105,6 @@ export const ProjectSection = () => {
             </p>
           </div>
         ) : projects.length === 0 ? (
-          // Empty State
           <div className="w-full flex justify-center items-center h-32">
             <p className="font-dm text-brand-red/60 text-lg">
               No projects found.
@@ -119,11 +112,9 @@ export const ProjectSection = () => {
           </div>
         ) : (
           <>
-            {/* --- CAROUSEL AREA --- */}
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="flex -ml-6 md:-ml-8 cursor-grab active:cursor-grabbing">
                 {projects.map((project, index) => {
-                  // Logic Image
                   const firstImage =
                     project.images && project.images.length > 0
                       ? project.images[0]
@@ -133,12 +124,11 @@ export const ProjectSection = () => {
                     <motion.div
                       key={project.id}
                       className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-6 md:pl-8"
-                      // Staggered Animation per Slide
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{
                         duration: 0.6,
-                        delay: index * 0.1, // Delay bertingkat
+                        delay: index * 0.1,
                         ease: "easeOut",
                       }}
                       viewport={{ once: false, amount: 0.2 }}
@@ -156,7 +146,6 @@ export const ProjectSection = () => {
               </div>
             </div>
 
-            {/* --- CONTROLS ANIMATION --- */}
             <motion.div
               className="flex flex-row items-center justify-center md:justify-between gap-2 md:gap-4 lg:gap-6 mt-8 md:mt-10"
               initial={{ opacity: 0, y: 20 }}
@@ -164,7 +153,6 @@ export const ProjectSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: false }}
             >
-              {/* Desktop Prev */}
               <button
                 onClick={scrollPrev}
                 className="hidden md:flex px-4 py-2 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
@@ -172,7 +160,6 @@ export const ProjectSection = () => {
                 Prev
               </button>
 
-              {/* Dots */}
               <div className="flex gap-1 md:gap-3 flex-wrap justify-center">
                 {scrollSnaps.map((_, index) => (
                   <button
@@ -188,7 +175,6 @@ export const ProjectSection = () => {
                 ))}
               </div>
 
-              {/* Mobile Prev */}
               <button
                 onClick={scrollPrev}
                 className="md:hidden px-8 py-3 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
@@ -196,7 +182,6 @@ export const ProjectSection = () => {
                 Prev
               </button>
 
-              {/* Next Button */}
               <button
                 onClick={scrollNext}
                 className="px-8 py-3 bg-brand-red text-black font-gotham font-bold text-lg hover:bg-red-600 transition-colors"

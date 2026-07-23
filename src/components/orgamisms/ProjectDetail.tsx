@@ -8,7 +8,6 @@ import { Tag } from "@/components/atoms/Tag";
 import { BackButton } from "@/components/atoms/BackButton";
 import { Button } from "../atoms/Button";
 
-// --- VARIANTS ANIMASI SLIDER (Geser Gambar) ---
 const slideVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? "100%" : "-100%",
@@ -26,13 +25,12 @@ const slideVariants = {
   }),
 };
 
-// --- VARIANTS ANIMASI KONTEN (Gaya Footer: Staggered) ---
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // Delay antar elemen anak
+      staggerChildren: 0.15,
       delayChildren: 0.2,
     },
   },
@@ -59,7 +57,6 @@ export const ProjectDetailSection = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  // Logic Slider
   useEffect(() => {
     if (!project || !project.images || project.images.length <= 1) return;
 
@@ -76,7 +73,6 @@ export const ProjectDetailSection = ({
     setCurrentImageIndex(newIndex);
   };
 
-  // Loading State
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center bg-brand-black">
@@ -87,7 +83,6 @@ export const ProjectDetailSection = ({
     );
   }
 
-  // Not Found State
   if (!project) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 bg-brand-black">
@@ -99,7 +94,6 @@ export const ProjectDetailSection = ({
     );
   }
 
-  // Safe Image Logic
   const rawImages = project.images || [];
   const validImages = rawImages.filter(
     (img) =>
@@ -111,7 +105,6 @@ export const ProjectDetailSection = ({
   return (
     <section className="relative w-full bg-brand-black overflow-hidden selection:bg-brand-red selection:text-black">
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-10">
-        {/* --- HEADER ANIMATION (Slide In from Left) --- */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -137,7 +130,6 @@ export const ProjectDetailSection = ({
           </h1>
         </motion.div>
 
-        {/* --- IMAGE SLIDER ANIMATION (Pop Up / Scale Up) --- */}
         <motion.div
           className="relative w-full aspect-video md:aspect-21/9 bg-gray-900 border border-brand-red overflow-hidden mb-8 md:mb-10 group"
           initial={{ scale: 0.95, opacity: 0 }}
@@ -187,7 +179,6 @@ export const ProjectDetailSection = ({
           )}
         </motion.div>
 
-        {/* --- DESCRIPTION & TECH STACK (Grid Layout) --- */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-10">
           <motion.div
             className="lg:col-span-8 flex flex-col gap-6"
@@ -225,7 +216,6 @@ export const ProjectDetailSection = ({
             </motion.div>
           </motion.div>
 
-          {/* Kolom Kanan: Sidebar (Staggered Animation) */}
           <motion.div
             className="lg:col-span-4 flex flex-col gap-8 lg:border-l lg:border-brand-red lg:pl-10"
             variants={containerVariants}

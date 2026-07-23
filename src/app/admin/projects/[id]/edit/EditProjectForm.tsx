@@ -9,8 +9,6 @@ import type { ProjectFormState } from "@/lib/validations/project";
 
 export function EditProjectForm({ project }: { project: Project }) {
   const router = useRouter();
-  // existingImages di-track di ProjectForm lewat hidden input,
-  // tapi supaya updateProject dapat array-nya, kita baca dari FormData di action wrapper ini.
   const [existingImages] = useState(project.images ?? []);
 
   async function action(state: ProjectFormState, formData: FormData) {

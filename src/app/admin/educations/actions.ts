@@ -5,10 +5,11 @@ import { createClient } from "@/lib/supabase/server"
 import { educationSchema, type EducationFormState } from "@/lib/validations/education"
 
 const BUCKET = "porto"
+const FOLDER = "Educations"
 
 async function uploadImage(supabase: any, file: File) {
   const ext = file.name.split(".").pop()
-  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+  const path = `${FOLDER}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
   const { error } = await supabase.storage.from(BUCKET).upload(path, file)
   if (error) throw new Error(`Gagal upload gambar: ${error.message}`)

@@ -27,10 +27,9 @@ export const ProjectCard = ({
   return (
     <div className="flex flex-col gap-6 w-full group h-full justify-between">
       <div>
-        {/* --- Image Area --- */}
         <div className="relative w-full aspect-video bg-brand-yellow overflow-hidden">
           <Image
-            src={safeImageUrl} // Gunakan URL aman
+            src={safeImageUrl}
             alt={title || "Project Image"}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -38,7 +37,6 @@ export const ProjectCard = ({
           />
         </div>
 
-        {/* --- Content Area --- */}
         <div className="flex flex-col gap-2 mt-4">
           <h3 className="font-gotham font-black text-brand-red text-2xl md:text-3xl lg:text-4xl tracking-tight leading-none">
             {title}
@@ -56,7 +54,6 @@ export const ProjectCard = ({
                 </span>
               ))
             ) : (
-              // Fallback jika tidak ada tags
               <span className="opacity-50 text-xs font-normal italic">
                 No tags
               </span>
@@ -65,7 +62,6 @@ export const ProjectCard = ({
         </div>
       </div>
 
-      {/* --- Action Buttons --- */}
       <div className="flex gap-4 mt-2">
         <Link
           href={`/project/${id}`}

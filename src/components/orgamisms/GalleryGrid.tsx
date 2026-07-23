@@ -45,7 +45,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[160px] md:auto-rows-[200px] lg:auto-rows-[260px] gap-4 md:gap-6">
+        <div className="grid grid-cols-6 lg:grid-cols-12 auto-rows-[56px] md:auto-rows-[68px] lg:auto-rows-[90px] gap-2 md:gap-3 lg:gap-4">
           {items.map((item, index) => (
             <motion.div
               key={item.id}
@@ -65,8 +65,9 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                 src={item.src}
                 alt={item.alt}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                loading="eager"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </motion.div>
           ))}

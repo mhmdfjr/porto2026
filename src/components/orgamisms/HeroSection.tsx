@@ -11,19 +11,19 @@ const HERO_IMAGE_URL =
   "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop";
 
 const CONTACT_LINKS = [
-  { name: "Email", href: "mailto:youremail@example.com", icon: Mail },
+  { name: "Email", href: "mailto:moh.fajar1304@gmail.com", icon: Mail },
   {
     name: "Instagram",
-    href: "https://instagram.com/yourusername",
+    href: "https://instagram.com/holy.jar_",
     icon: Instagram,
   },
-  { name: "Phone", href: "tel:+6281234567890", icon: Phone },
+  { name: "Phone", href: "https://wa.me/6285700072350", icon: Phone },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/yourusername",
+    href: "https://linkedin.com/in/mohamadfajarnurkhasani",
     icon: Linkedin,
   },
-  { name: "GitHub", href: "https://github.com/yourusername", icon: Github },
+  { name: "GitHub", href: "https://github.com/mhmdfjr", icon: Github },
 ];
 
 export const HeroSection = () => {

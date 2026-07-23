@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const FOOTER_IMAGE =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/me6.JPG";
+  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/Me/me6.JPG";
 
 export const FooterSection = () => {
   return (

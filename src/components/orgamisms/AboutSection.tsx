@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import { Button } from "../atoms/Button";
 
 const IMAGE_PROFILE_1 =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/profil.png";
+  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/Me/me7.jpeg";
 const IMAGE_PROFILE_2 =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/nature7.jpg";
+  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/Me/me9.png";
 
 const CV_URL =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/CV%20Mohamad%20Fajar%20NK%20(Jul%202026).pdf";
+  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/CV/CV%20Mohamad%20Fajar%20NK%20(Jul%202026).pdf";
 
 export const AboutSection = () => {
   return (
@@ -94,7 +94,7 @@ export const AboutSection = () => {
             </motion.div>
 
             <motion.div
-              className="relative w-[90%] md:w-[70%] h-60 lg:h-[350px] lg:absolute lg:top-0 lg:right-0 overflow-hidden shadow-xl"
+              className="relative w-[80%] md:w-[60%] h-60 lg:h-[300px] lg:absolute lg:top-0 lg:right-0 overflow-hidden shadow-xl"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -102,14 +102,14 @@ export const AboutSection = () => {
             >
               <Image
                 src={IMAGE_PROFILE_1}
-                alt="Profile Silhouette"
+                alt="Profile Back"
                 fill
                 className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-500"
               />
             </motion.div>
 
             <motion.div
-              className="relative -top-10 md:-top-16 self-end w-[80%] md:w-[60%] h-60 lg:h-[300px] lg:mt-0 lg:absolute lg:bottom-0 lg:left-10 overflow-hidden shadow-xl"
+              className="relative -top-10 md:-top-16 self-end w-[90%] md:w-[70%] h-60 lg:h-[350px] lg:mt-0 lg:absolute lg:bottom-0 lg:left-10 overflow-hidden shadow-xl"
               initial={{ opacity: 0, x: -50, y: 50 }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -117,7 +117,7 @@ export const AboutSection = () => {
             >
               <Image
                 src={IMAGE_PROFILE_2}
-                alt="Nature View"
+                alt="Profile Front"
                 fill
                 className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-500"
               />

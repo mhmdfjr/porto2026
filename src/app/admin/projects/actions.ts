@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server"
 import { projectSchema, type ProjectFormState } from "@/lib/validations/project"
 
 const BUCKET = "porto"
+const FOLDER = "Projects"
 
 async function uploadImages(supabase: any, files: File[]) {
   const urls: string[] = []
@@ -13,7 +14,7 @@ async function uploadImages(supabase: any, files: File[]) {
     if (!file || file.size === 0) continue
 
     const ext = file.name.split(".").pop()
-    const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+    const path = `${FOLDER}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
     const { error } = await supabase.storage.from(BUCKET).upload(path, file)
     if (error) throw new Error(`Gagal upload gambar: ${error.message}`)

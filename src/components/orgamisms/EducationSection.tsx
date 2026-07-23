@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion"; // Import motion
+import { motion } from "framer-motion";
 import { getEducations, formatDateRange } from "@/lib/database";
 import type { Education } from "@/lib/supabase";
 
@@ -30,9 +30,7 @@ export const EducationSection = () => {
       className="relative w-full bg-brand-red py-10 px-6 md:px-12 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
-        {/* --- Header --- */}
         <div className="w-full flex gap-4 md:gap-6 justify-end items-start z-10 relative">
-          {/* Sun Icon Animation */}
           <motion.div
             className="transition-transform hover:rotate-45 duration-500 select-none"
             initial={{ scale: 0, rotate: -90 }}
@@ -54,7 +52,6 @@ export const EducationSection = () => {
             />
           </motion.div>
 
-          {/* Title Animation - Slide in from right */}
           <motion.h2
             className="font-gotham text-end font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl mb-8 md:mb-20 tracking-tighter"
             initial={{ opacity: 0, x: 50 }}
@@ -66,9 +63,7 @@ export const EducationSection = () => {
           </motion.h2>
         </div>
 
-        {/* --- TIMELINE CONTAINER --- */}
         <div className="relative min-h-[400px]">
-          {/* Loading State Wrapper */}
           {loading ? (
             <div className="w-full flex justify-center items-center h-64">
               <p className="font-dm text-brand-yellow text-xl animate-pulse">
@@ -77,9 +72,6 @@ export const EducationSection = () => {
             </div>
           ) : (
             <>
-              {/* 1. DEKORASI GARIS (Desktop: Horizontal, Mobile: Vertical) */}
-
-              {/* Desktop Horizontal Line Animation - Draws out from left */}
               <motion.div
                 className="hidden md:block absolute top-0 left-0 w-full h-1 bg-brand-yellow rounded-full z-0 transform -translate-y-12 origin-left"
                 initial={{ scaleX: 0 }}
@@ -87,12 +79,10 @@ export const EducationSection = () => {
                 transition={{ duration: 1, ease: "easeInOut", delay: 0.4 }}
                 viewport={{ once: false, amount: 0.8 }}
               >
-                {/* End Decoration Dots */}
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-brand-yellow border-4 border-brand-red rounded-full" />
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-brand-yellow border-4 border-brand-red rounded-full" />
               </motion.div>
 
-              {/* Mobile Vertical Line Animation - Draws down */}
               <motion.div
                 className="md:hidden absolute top-0 left-2 h-full w-1 bg-brand-yellow/50 rounded-full z-0 origin-top"
                 initial={{ scaleY: 0 }}
@@ -101,14 +91,12 @@ export const EducationSection = () => {
                 viewport={{ once: false }}
               />
 
-              {/* 2. ITEM LIST --- */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-24 relative z-10">
                 {educations.map((item, index) => (
                   <div
                     key={item.id}
                     className="relative pl-10 md:pl-0 flex flex-col gap-4 group"
                   >
-                    {/* --- DOT INDICATOR ANIMATION - Pops up --- */}
                     <motion.div
                       className="absolute
                       /* Mobile Position */
@@ -126,7 +114,6 @@ export const EducationSection = () => {
                       viewport={{ once: false }}
                     />
 
-                    {/* --- IMAGE CARD ANIMATION - Fade in & Scale --- */}
                     <motion.div
                       className="relative w-full aspect-video bg-gray-900 overflow-hidden shadow-2xl"
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -147,7 +134,6 @@ export const EducationSection = () => {
                       />
                     </motion.div>
 
-                    {/* --- CONTENT ANIMATION - Fade up --- */}
                     <motion.div
                       className="flex flex-col gap-2 text-left md:text-center"
                       initial={{ opacity: 0, y: 20 }}
@@ -159,12 +145,10 @@ export const EducationSection = () => {
                       }}
                       viewport={{ once: false, amount: 0.8 }}
                     >
-                      {/* Nama Sekolah */}
                       <h3 className="font-gotham font-black text-brand-yellow text-xl md:text-2xl lg:text-3xl tracking-tight">
                         {item.name}
                       </h3>
 
-                      {/* Jurusan & Tahun */}
                       <span className="font-dm font-bold text-white/90 text-sm md:text-base lg:text-lg uppercase tracking-widest">
                         {item.major} • {formatDateRange(item.start, item.end)}
                       </span>

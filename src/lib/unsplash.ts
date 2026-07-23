@@ -38,10 +38,13 @@ export async function getDailyUnsplashImage(query: string): Promise<string> {
 export async function getDailyGalleryImages() {
   const keywords = [
     "mountain",
+    "forest",
     "coffee shop",
     "book",
     "painting",
+    "art gallery",
     "city",
+    "ocean",
   ] as const;
 
   const results = await Promise.all(

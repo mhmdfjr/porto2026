@@ -10,19 +10,18 @@ interface ProjectRecommendationsProps {
   recommendations: Project[];
 }
 
-// --- VARIANTS ANIMASI (Meniru gaya Footer) ---
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2, // Delay antar kartu (mirip delay antar link kontak di footer)
+      staggerChildren: 0.2,
     },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50 }, // Muncul dari bawah
+  hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
     y: 0,
@@ -33,7 +32,6 @@ const cardVariants = {
 export const ProjectRecommendationSection = ({
   recommendations,
 }: ProjectRecommendationsProps) => {
-  // Jika tidak ada data, return null
   if (!recommendations || recommendations.length === 0) return null;
 
   const getSafeImage = (images: string[] | null | undefined) => {
@@ -50,7 +48,6 @@ export const ProjectRecommendationSection = ({
     <section className="bg-brand-yellow w-full px-6 md:px-12 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="border-t pt-10 pb-16">
-          {/* --- HEADER SECTION --- */}
           <div className="flex items-center justify-between mb-10">
             <motion.h2
               className="font-gotham font-black text-brand-red text-3xl md:text-4xl lg:text-5xl tracking-tighter"
@@ -64,8 +61,8 @@ export const ProjectRecommendationSection = ({
 
             <motion.div
               className="select-none"
-              initial={{ scale: 0, rotate: 90 }} // Mulai kecil dan miring
-              whileInView={{ scale: 1, rotate: 0 }} // Membesar normal
+              initial={{ scale: 0, rotate: 90 }}
+              whileInView={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
               viewport={{ once: false }}
             >
@@ -79,13 +76,12 @@ export const ProjectRecommendationSection = ({
             </motion.div>
           </div>
 
-          {/* --- GRID CARDS (STAGGERED ANIMATION) --- */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }} // Trigger saat 20% terlihat
+            viewport={{ once: false, amount: 0.2 }}
           >
             {recommendations.map((rec) => {
               const safeImage = getSafeImage(rec.images);
@@ -93,7 +89,6 @@ export const ProjectRecommendationSection = ({
               return (
                 <motion.div key={rec.id} variants={cardVariants}>
                   <Link href={`/project/${rec.id}`} className="group block">
-                    {/* Image Container with Scale Effect on Hover */}
                     <div className="relative w-full aspect-video bg-gray-900 overflow-hidden mb-4 transition-all">
                       <Image
                         src={safeImage}
@@ -101,11 +96,9 @@ export const ProjectRecommendationSection = ({
                         fill
                         className="object-cover contrast-125 group-hover:scale-105 transition-all duration-500"
                       />
-                      {/* Overlay Hover */}
                       <div className="absolute inset-0 bg-brand-red/0 group-hover:bg-brand-red/10 transition-colors" />
                     </div>
 
-                    {/* Text Content */}
                     <h3 className="font-gotham font-black text-brand-red text-2xl md:text-3xl lg:text-4xl uppercase tracking-tight decoration-brand-red underline-offset-4">
                       {rec.name}
                     </h3>
