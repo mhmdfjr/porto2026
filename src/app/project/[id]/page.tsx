@@ -1,48 +1,98 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { getProjects } from "@/lib/database";
-import type { Project } from "@/lib/supabase";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getProjectById, getProjects } from "@/lib/database";
 import { Navbar } from "@/components/molecules/Navbar";
 import { FooterSection } from "@/components/orgamisms/FooterSection";
 import { ProjectDetailSection } from "@/components/orgamisms/ProjectDetail";
 import { ProjectRecommendationSection } from "@/components/orgamisms/ProjectRecomendation";
 
-export default function ProjectDetail() {
-  const params = useParams();
-  const id = params?.id ? Number(params.id) : null;
+export const revalidate = 60;
 
-  const [project, setProject] = useState<Project | null>(null);
-  const [recommendations, setRecommendations] = useState<Project[]>([]);
+type ProjectPageProps = {
+  params: Promise<{ id: string }>;
+};
 
-  useEffect(() => {
-    async function fetchData() {
-      if (!id) return;
-      try {
-        const allProjects = await getProjects();
-        console.log(allProjects);
+export async function generateStaticParams() {
+  const projects = await getProjects();
 
-        // Cari project yang sedang dibuka
-        const current = allProjects.find((p) => p.id === id);
-        console.log(current);
+  return projects.map((project) => ({
+    id: project.id.toString(),
+  }));
+}
 
-        // Cari rekomendasi (Project lain selain yang sedang dibuka)
-        const others = allProjects.filter((p) => p.id !== id).slice(0, 2);
+export async function generateMetadata({
+  params,
+}: ProjectPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const project = await getProjectById(Number(id));
 
-        if (current) setProject(current);
-        setRecommendations(others);
-      } catch (error) {
-        console.error("Error fetching project:", error);
-      }
-    }
-    fetchData();
-  }, [id]);
+  if (!project) {
+    return {};
+  }
+
+  const description = project.description.replace(/\s+/g, " ").slice(0, 160);
+  const canonicalUrl = `https://mhmdfjr.vercel.app/project/${project.id}`;
+
+  return {
+    title: `${project.name} | Mohamad Fajar`,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${project.name} | Mohamad Fajar`,
+      description,
+      url: canonicalUrl,
+      type: "article",
+      images: [
+        { url: project.images?.[0] ?? "/logo.png", width: 1200, height: 630 },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.name} | Mohamad Fajar`,
+      description,
+      images: [project.images?.[0] ?? "/logo.png"],
+    },
+  };
+}
+
+export default async function ProjectDetail({ params }: ProjectPageProps) {
+  const { id } = await params;
+  const project = await getProjectById(Number(id));
+
+  if (!project) {
+    notFound();
+  }
+
+  const allProjects = await getProjects();
+  const recommendations = allProjects
+    .filter((item) => item.id !== project.id)
+    .slice(0, 2);
+
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.name,
+    description: project.description,
+    url: `https://mhmdfjr.vercel.app/project/${project.id}`,
+    author: {
+      "@type": "Person",
+      name: "Mohamad Fajar Nur Khasani",
+    },
+    keywords: project.techstack?.join(", ") ?? "web development",
+  };
+
   return (
     <main>
       <Navbar />
-      <ProjectDetailSection project={project} loading={!project} />
+      <ProjectDetailSection project={project} loading={false} />
       <ProjectRecommendationSection recommendations={recommendations} />
       <FooterSection />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
     </main>
   );
 }

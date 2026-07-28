@@ -94,7 +94,7 @@ export const AboutSection = () => {
             </motion.div>
 
             <motion.div
-              className="relative w-[80%] md:w-[60%] h-60 lg:h-[300px] lg:absolute lg:top-0 lg:right-0 overflow-hidden shadow-xl"
+              className="relative w-[80%] md:w-[60%] h-60 md:h-[270px] lg:h-[300px] lg:absolute lg:top-0 lg:right-0 overflow-hidden shadow-xl"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -109,7 +109,7 @@ export const AboutSection = () => {
             </motion.div>
 
             <motion.div
-              className="relative -top-10 md:-top-16 self-end w-[90%] md:w-[70%] h-60 lg:h-[350px] lg:mt-0 lg:absolute lg:bottom-0 lg:left-10 overflow-hidden shadow-xl"
+              className="relative -top-10 md:-top-16 self-end w-[80%] md:w-[70%] h-60 md:h-[300px] lg:h-[350px] lg:mt-0 lg:absolute lg:bottom-0 lg:left-10 overflow-hidden shadow-xl"
               initial={{ opacity: 0, x: -50, y: 50 }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}

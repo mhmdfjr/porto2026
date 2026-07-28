@@ -72,8 +72,8 @@ export const HeroSection = () => {
       </div>
 
       <div className="flex-1 bg-brand-black w-full relative z-20 px-6 md:px-12 md:pt-0">
-        <div className="w-full max-w-7xl mx-auto h-full flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
-          <motion.h1
+        <div className="w-full max-w-7xl mx-auto h-full mb-5 md:mb-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+          <motion.div
             className="font-gotham font-black text-brand-red leading-[1.1] tracking-tighter
               text-[18vw]
               md:text-[9rem]
@@ -85,20 +85,20 @@ export const HeroSection = () => {
             viewport={{ once: false }}
           >
             Fajar
-          </motion.h1>
+          </motion.div>
 
           <motion.div
-            className="w-full flex flex-col md:flex-row items-end justify-end md:gap-8"
+            className="w-full flex flex-col md:flex-row items-end md:items-center justify-end gap-4"
             initial={{ x: 50, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             viewport={{ once: false }}
           >
-            <span className="mt-2 font-gotham font-bold text-brand-red lg:text-xl md:text-lg text-base">
+            <span className="font-gotham font-bold text-brand-red md:text-lg lg:text-xl text-base">
               Full-Stack Developer
             </span>
 
-            <div className="flex justify-end mt-8 lg:text-xl md:text-lg text-base">
+            <div className="flex justify-end md:text-lg lg:text-xl text-base">
               <Button href="#about" text="Learn More" />
             </div>
           </motion.div>
