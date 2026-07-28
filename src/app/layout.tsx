@@ -87,6 +87,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logo.png",
   },
+  other: {
+    "google-site-verification": "rOC6CNwFqAXBMF-NY_LVMjg2BNyslgFuZlFCGx23qHs",
+  },
 };
 
 export default function RootLayout({
