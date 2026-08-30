@@ -28,7 +28,7 @@ export async function getDailyUnsplashImage(query: string): Promise<string> {
     }
 
     const data = await res.json();
-    return data?.urls?.regular ?? FALLBACK_IMAGE;
+    return data?.urls?.full ?? data?.urls?.regular ?? FALLBACK_IMAGE;
   } catch (error) {
     console.error(`Gagal mengambil gambar Unsplash untuk "${query}":`, error);
     return FALLBACK_IMAGE;

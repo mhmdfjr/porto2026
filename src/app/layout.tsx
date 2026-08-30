@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans, Montserrat } from "next/font/google";
 import localFont from "next/font/local";
+// TypeScript may complain about importing CSS without module declarations
+// @ts-ignore
 import "./globals.css";
 
 const dmSans = DM_Sans({
