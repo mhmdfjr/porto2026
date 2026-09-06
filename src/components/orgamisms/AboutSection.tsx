@@ -10,7 +10,7 @@ const IMAGE_PROFILE_2 =
   "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/Me/me9.png";
 
 const CV_URL =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/CV/CV%20Mohamad%20Fajar%20NK%20(Jul%202026).pdf";
+  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/CV/CV%20Mohamad%20Fajar%20Nur%20Khasani%20(Aug%202026).pdf";
 
 export const AboutSection = () => {
   return (
