@@ -1,30 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 import type { Education } from "@/lib/supabase";
 import { formatDateRange } from "@/lib/database";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { deleteEducation } from "./actions";
 
 export function EducationsTable({ educations }: { educations: Education[] }) {
-  const [isPending, startTransition] = useTransition();
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-
-  function handleDelete(education: Education) {
-    if (!confirm(`Hapus data pendidikan di "${education.name}"?`)) return;
-
-    setDeletingId(education.id);
-    startTransition(async () => {
-      const result = await deleteEducation(education.id, education.image);
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-      setDeletingId(null);
-    });
-  }
 
   return (
     <div className="overflow-x-auto rounded-lg border border-neutral-800">
@@ -71,15 +53,10 @@ export function EducationsTable({ educations }: { educations: Education[] }) {
                   >
                     Edit
                   </Link>
-                  <button
-                    onClick={() => handleDelete(e)}
-                    disabled={isPending && deletingId === e.id}
-                    className="rounded bg-red-500/10 px-3 py-1 text-red-400 hover:bg-red-500/20 disabled:opacity-50"
-                  >
-                    {isPending && deletingId === e.id
-                      ? "Menghapus..."
-                      : "Delete"}
-                  </button>
+                  <DeleteButton
+                    itemLabel={e.name}
+                    onDelete={() => deleteEducation(e.id)}
+                  />
                 </div>
               </td>
             </tr>

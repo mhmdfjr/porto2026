@@ -7,11 +7,12 @@ import { NavLink } from "../atoms/NavLink";
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Skill", href: "#skill" },
-  { label: "Project", href: "#project" },
-  { label: "Education", href: "#education" },
+  { label: "About", href: "/#about" },
+  { label: "Work", href: "/#work" },
+  { label: "Skill", href: "/#skill" },
+  { label: "Projects", href: "/project" },
+  { label: "Blog", href: "/blog" },
+  { label: "Education", href: "/#education" },
 ];
 
 export const Navbar = () => {

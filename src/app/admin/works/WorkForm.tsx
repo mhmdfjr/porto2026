@@ -4,6 +4,8 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import type { Work } from "@/lib/supabase";
 import type { WorkFormState } from "@/lib/validations/work";
+import { FormField, fieldInputClass } from "@/components/admin/FormField";
+import { SubmitButton } from "@/components/admin/SubmitButton";
 
 type Props = {
   mode: "create" | "edit";
@@ -13,14 +15,6 @@ type Props = {
 };
 
 const initialState: WorkFormState = { success: false, message: "" };
-
-const emptyValues = {
-  company: "",
-  role: "",
-  location: "",
-  start: "",
-  end: "",
-};
 
 export function WorkForm({ mode, work, action, onSuccess }: Props) {
   const [state, formAction, isPending] = useActionState(action, initialState);
@@ -42,17 +36,7 @@ export function WorkForm({ mode, work, action, onSuccess }: Props) {
 
     if (state.success) {
       toast.success(state.message);
-
-      if (mode === "create") {
-        setValues(emptyValues);
-        setSelectedFile(null);
-
-        if (preview) URL.revokeObjectURL(preview);
-        setPreview(null);
-
-        if (fileInputRef.current) fileInputRef.current.value = "";
-      }
-
+      // onSuccess navigates away; failed input is intentionally kept.
       onSuccess?.();
     } else {
       toast.error(state.message);
@@ -63,7 +47,8 @@ export function WorkForm({ mode, work, action, onSuccess }: Props) {
         fileInputRef.current.files = dt.files;
       }
     }
-  }, [state]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, onSuccess]);
 
   function handleChange(field: keyof typeof values) {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,77 +71,56 @@ export function WorkForm({ mode, work, action, onSuccess }: Props) {
       action={formAction}
       className="space-y-4 rounded-lg bg-neutral-900 p-4"
     >
-      <div>
-        <label className="text-sm text-neutral-300">Perusahaan</label>
+      <FormField label="Perusahaan" error={state.errors?.company?.[0]}>
         <input
           name="company"
           value={values.company}
           onChange={handleChange("company")}
-          className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+          className={fieldInputClass}
         />
-        {state.errors?.company && (
-          <p className="mt-1 text-xs text-red-400">{state.errors.company[0]}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div>
-        <label className="text-sm text-neutral-300">Posisi/Role</label>
+      <FormField label="Posisi/Role" error={state.errors?.role?.[0]}>
         <input
           name="role"
           value={values.role}
           onChange={handleChange("role")}
-          className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+          className={fieldInputClass}
         />
-        {state.errors?.role && (
-          <p className="mt-1 text-xs text-red-400">{state.errors.role[0]}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div>
-        <label className="text-sm text-neutral-300">Lokasi</label>
+      <FormField label="Lokasi" error={state.errors?.location?.[0]}>
         <input
           name="location"
           value={values.location}
           onChange={handleChange("location")}
           placeholder="Jakarta, Indonesia / Remote"
-          className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+          className={fieldInputClass}
         />
-        {state.errors?.location && (
-          <p className="mt-1 text-xs text-red-400">
-            {state.errors.location[0]}
-          </p>
-        )}
-      </div>
+      </FormField>
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="text-sm text-neutral-300">Tanggal Mulai</label>
+        <FormField label="Tanggal Mulai" error={state.errors?.start?.[0]}>
           <input
             type="date"
             name="start"
             value={values.start}
             onChange={handleChange("start")}
-            className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+            className={fieldInputClass}
           />
-          {state.errors?.start && (
-            <p className="mt-1 text-xs text-red-400">{state.errors.start[0]}</p>
-          )}
-        </div>
-        <div>
-          <label className="text-sm text-neutral-300">
-            Tanggal Selesai (kosongkan jika masih bekerja)
-          </label>
+        </FormField>
+        <FormField
+          label="Tanggal Selesai (kosongkan jika masih bekerja)"
+          error={state.errors?.end?.[0]}
+        >
           <input
             type="date"
             name="end"
             value={values.end}
             onChange={handleChange("end")}
-            className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+            className={fieldInputClass}
           />
-          {state.errors?.end && (
-            <p className="mt-1 text-xs text-red-400">{state.errors.end[0]}</p>
-          )}
-        </div>
+        </FormField>
       </div>
 
       <div>
@@ -167,7 +131,7 @@ export function WorkForm({ mode, work, action, onSuccess }: Props) {
           ref={fileInputRef}
           type="file"
           name="image"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp"
           onChange={handleFileChange}
           className="mt-1 w-full rounded bg-neutral-800 p-2 text-white file:mr-3 file:rounded file:border-0 file:bg-neutral-700 file:px-3 file:py-1 file:text-white"
         />
@@ -177,6 +141,7 @@ export function WorkForm({ mode, work, action, onSuccess }: Props) {
 
         {preview && (
           <div className="mt-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={preview}
               alt=""
@@ -186,17 +151,7 @@ export function WorkForm({ mode, work, action, onSuccess }: Props) {
         )}
       </div>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="w-full rounded bg-white py-2 font-semibold text-black disabled:opacity-50"
-      >
-        {isPending
-          ? "Menyimpan..."
-          : mode === "create"
-            ? "Tambah Data"
-            : "Simpan Perubahan"}
-      </button>
+      <SubmitButton pending={isPending} mode={mode} createLabel="Tambah Data" />
     </form>
   );
 }

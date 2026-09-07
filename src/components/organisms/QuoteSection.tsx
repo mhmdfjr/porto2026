@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { mediaConfig } from "@/lib/config";
 
 const quotesData = [
   {
@@ -34,30 +35,23 @@ const quotesData = [
   { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
 ];
 
-const IMG_1 =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/art1.jpg";
-const IMG_2 =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/building1.jpg";
-const IMG_3 =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/cafe1.jpg";
+const IMG_1 = mediaConfig.quoteImages[0];
+const IMG_2 = mediaConfig.quoteImages[1];
+const IMG_3 = mediaConfig.quoteImages[2];
+
+function quoteOfTheDay() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor(
+    (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24),
+  );
+  return quotesData[dayOfYear % quotesData.length];
+}
 
 export const QuotesSection = () => {
-  const [todaysQuote, setTodaysQuote] = useState(quotesData[0]);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const date = new Date();
-    const start = new Date(date.getFullYear(), 0, 0);
-    const diff = date.getTime() - start.getTime();
-    const oneDay = 1000 * 60 * 60 * 24;
-    const dayOfYear = Math.floor(diff / oneDay);
-
-    const quoteIndex = dayOfYear % quotesData.length;
-    setTodaysQuote(quotesData[quoteIndex]);
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  // Computed during render (not in an effect) so SSR/first paint
+  // already contains the quote instead of rendering null.
+  const todaysQuote = quoteOfTheDay();
 
   return (
     <section

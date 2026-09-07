@@ -5,12 +5,9 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ProjectCard } from "../molecules/ProjectCard";
-import { getProjects } from "@/lib/database";
 import type { Project } from "@/lib/supabase";
 
-export const ProjectSection = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+export const ProjectSection = ({ projects }: { projects: Project[] }) => {
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -21,28 +18,17 @@ export const ProjectSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const projectsData = await getProjects();
-        setProjects(projectsData);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProjects();
-  }, []);
-
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
+  // Subscribing to the external Embla carousel instance (official
+  // Embla pattern): sync snap list + selection into React state.
   useEffect(() => {
     if (!emblaApi) return;
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
@@ -97,14 +83,7 @@ export const ProjectSection = () => {
           </motion.div>
         </div>
 
-        {loading ? (
-          // Loading State
-          <div className="w-full flex justify-center items-center h-64">
-            <p className="font-dm text-brand-red text-xl animate-pulse">
-              Loading projects...
-            </p>
-          </div>
-        ) : projects.length === 0 ? (
+        {projects.length === 0 ? (
           <div className="w-full flex justify-center items-center h-32">
             <p className="font-dm text-brand-red/60 text-lg">
               No projects found.

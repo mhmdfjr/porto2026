@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProjectById, getProjects } from "@/lib/database";
+import { getProjectById, getProjects, getContacts } from "@/lib/database";
 import { Navbar } from "@/components/molecules/Navbar";
-import { FooterSection } from "@/components/orgamisms/FooterSection";
-import { ProjectDetailSection } from "@/components/orgamisms/ProjectDetail";
-import { ProjectRecommendationSection } from "@/components/orgamisms/ProjectRecomendation";
+import { FooterSection } from "@/components/organisms/FooterSection";
+import { ProjectDetailSection } from "@/components/organisms/ProjectDetail";
+import { ProjectRecommendationSection } from "@/components/organisms/ProjectRecommendation";
 
 export const revalidate = 60;
 
@@ -66,6 +66,7 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
   }
 
   const allProjects = await getProjects();
+  const contacts = await getContacts();
   const recommendations = allProjects
     .filter((item) => item.id !== project.id)
     .slice(0, 2);
@@ -86,9 +87,9 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
   return (
     <main>
       <Navbar />
-      <ProjectDetailSection project={project} loading={false} />
+      <ProjectDetailSection project={project} />
       <ProjectRecommendationSection recommendations={recommendations} />
-      <FooterSection />
+      <FooterSection contacts={contacts} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}

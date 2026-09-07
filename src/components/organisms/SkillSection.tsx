@@ -1,31 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion"; // Import motion
-import { getSkills } from "@/lib/database";
+import { mediaConfig } from "@/lib/config";
 import type { Skill } from "@/lib/supabase";
 
-const SKILL_IMAGE_URL =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/nature4.jpg";
+const SKILL_IMAGE_URL = mediaConfig.skillImage;
 
-export const SkillSection = () => {
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchSkills() {
-      try {
-        const skillsData = await getSkills();
-        setSkills(skillsData);
-      } catch (error) {
-        console.error("Error loading skills:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchSkills();
-  }, []);
+export const SkillSection = ({ skills }: { skills: Skill[] }) => {
 
   // --- LOGIC PERBAIKAN ---
   const skillsString = skills.map((skill) => skill.name).join(", ");
@@ -105,17 +88,11 @@ export const SkillSection = () => {
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           viewport={{ once: false }}
         >
-          {/* Tampilkan Loading State atau Data */}
-          {loading ? (
-            <p className="font-dm text-brand-yellow/50 text-2xl md:text-3xl lg:text-4xl animate-pulse">
-              Loading skills...
-            </p>
-          ) : (
-            <p className="font-dm text-brand-yellow text-2xl md:text-3xl lg:text-4xl leading-relaxed text-left font-medium">
-              {/* Fallback jika data kosong */}
-              {skillsString ? `“${skillsString}.”` : "“No skills added yet.”"}
-            </p>
-          )}
+          {/* Data rendered with content on the server */}
+          <p className="font-dm text-brand-yellow text-2xl md:text-3xl lg:text-4xl leading-relaxed text-left font-medium">
+            {/* Fallback jika data kosong */}
+            {skillsString ? `“${skillsString}.”` : "“No skills added yet.”"}
+          </p>
         </motion.div>
 
         {/* Dekorasi Matahari Kuning - Pop Up Animation */}

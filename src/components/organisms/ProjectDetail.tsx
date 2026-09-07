@@ -46,13 +46,11 @@ const itemVariants = {
 };
 
 interface ProjectDetailSectionProps {
-  project: Project | null;
-  loading: boolean;
+  project: Project;
 }
 
 export const ProjectDetailSection = ({
   project,
-  loading,
 }: ProjectDetailSectionProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -72,16 +70,6 @@ export const ProjectDetailSection = ({
     setDirection(newIndex > currentImageIndex ? 1 : -1);
     setCurrentImageIndex(newIndex);
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-brand-black">
-        <p className="font-dm text-brand-red animate-pulse text-xl">
-          Loading project details...
-        </p>
-      </div>
-    );
-  }
 
   if (!project) {
     return (

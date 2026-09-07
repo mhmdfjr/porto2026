@@ -1,0 +1,61 @@
+import type { Metadata } from "next";
+import { getProjects, getContacts } from "@/lib/database";
+import { siteConfig } from "@/lib/config";
+import { Navbar } from "@/components/molecules/Navbar";
+import { ProjectCard } from "@/components/molecules/ProjectCard";
+import { FooterSection } from "@/components/organisms/FooterSection";
+
+export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: `Koleksi project ${siteConfig.name} — aplikasi web modern yang dibangun dengan Next.js, Laravel, dan teknologi terkini.`,
+  alternates: { canonical: `${siteConfig.url}/project` },
+  openGraph: {
+    title: `Projects | ${siteConfig.name}`,
+    description: `Koleksi project ${siteConfig.name} — aplikasi web modern.`,
+    url: `${siteConfig.url}/project`,
+    type: "website",
+  },
+};
+
+export default async function ProjectsPage() {
+  const [projects, contacts] = await Promise.all([
+    getProjects(),
+    getContacts(),
+  ]);
+
+  return (
+    <main className="bg-brand-black text-white">
+      <Navbar />
+      <section className="mx-auto max-w-[1400px] px-6 md:px-12 py-16">
+        <h1 className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter">
+          Projects
+        </h1>
+        <p className="mt-2 font-dm text-brand-red/80">
+          Koleksi project yang pernah saya kerjakan.
+        </p>
+
+        {projects.length === 0 ? (
+          <p className="mt-12 font-dm text-brand-red/60 text-lg">
+            No projects found.
+          </p>
+        ) : (
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                title={project.name}
+                description={project.description}
+                tags={project.techstack}
+                imageUrl={project.images?.[0] ?? null}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+      <FooterSection contacts={contacts} />
+    </main>
+  );
+}

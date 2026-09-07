@@ -1,29 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion"; // Import motion
 import { WorkCard } from "../molecules/WorkCard";
-import { getWorks, formatDateRange } from "@/lib/database";
+import { formatDateRange } from "@/lib/database";
 import type { Work } from "@/lib/supabase";
 
-export const WorkSection = () => {
-  const [works, setWorks] = useState<Work[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchWorks() {
-      try {
-        const worksData = await getWorks();
-        setWorks(worksData);
-      } catch (error) {
-        console.error("Error fetching works:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchWorks();
-  }, []);
+export const WorkSection = ({ works }: { works: Work[] }) => {
 
   return (
     <section
@@ -63,19 +47,11 @@ export const WorkSection = () => {
           </motion.h2>
         </div>
 
-        {/* --- Content Area --- */}
-        {loading ? (
-          // Loading State
-          <div className="w-full flex justify-center items-center h-64">
-            <p className="font-dm text-brand-red text-xl animate-pulse">
-              Loading experience...
-            </p>
-          </div>
-        ) : (
-          // Grid Layout 3-2-1
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 row-gap-12 relative z-10">
-            {works.length > 0 ? (
-              works.map((work, index) => (
+        {/* --- Content Area (rendered with data on the server) --- */}
+        {/* Grid Layout 3-2-1 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 row-gap-12 relative z-10">
+          {works.length > 0 ? (
+            works.map((work, index) => (
                 // Wrapper Animation per Card
                 <motion.div
                   key={work.id}
@@ -104,7 +80,6 @@ export const WorkSection = () => {
               </p>
             )}
           </div>
-        )}
       </div>
     </section>
   );

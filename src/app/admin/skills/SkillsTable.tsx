@@ -1,29 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 import type { Skill } from "@/lib/supabase";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { deleteSkill } from "./actions";
 
 export function SkillsTable({ skills }: { skills: Skill[] }) {
-  const [isPending, startTransition] = useTransition();
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-
-  function handleDelete(skill: Skill) {
-    if (!confirm(`Hapus skill "${skill.name}"?`)) return;
-
-    setDeletingId(skill.id);
-    startTransition(async () => {
-      const result = await deleteSkill(skill.id);
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-      setDeletingId(null);
-    });
-  }
 
   return (
     <div className="overflow-x-auto rounded-lg border border-neutral-800">
@@ -50,15 +32,10 @@ export function SkillsTable({ skills }: { skills: Skill[] }) {
                   >
                     Edit
                   </Link>
-                  <button
-                    onClick={() => handleDelete(s)}
-                    disabled={isPending && deletingId === s.id}
-                    className="rounded bg-red-500/10 px-3 py-1 text-red-400 hover:bg-red-500/20 disabled:opacity-50"
-                  >
-                    {isPending && deletingId === s.id
-                      ? "Menghapus..."
-                      : "Delete"}
-                  </button>
+                  <DeleteButton
+                    itemLabel={s.name}
+                    onDelete={() => deleteSkill(s.id)}
+                  />
                 </div>
               </td>
             </tr>

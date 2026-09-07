@@ -1,29 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 import type { Contact } from "@/lib/supabase";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { deleteContact } from "./actions";
 
 export function ContactsTable({ contacts }: { contacts: Contact[] }) {
-  const [isPending, startTransition] = useTransition();
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-
-  function handleDelete(contact: Contact) {
-    if (!confirm(`Hapus kontak "${contact.name}"?`)) return;
-
-    setDeletingId(contact.id);
-    startTransition(async () => {
-      const result = await deleteContact(contact.id);
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-      setDeletingId(null);
-    });
-  }
 
   return (
     <div className="overflow-x-auto rounded-lg border border-neutral-800">
@@ -45,6 +27,7 @@ export function ContactsTable({ contacts }: { contacts: Contact[] }) {
                 <a
                   href={c.url}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-400 hover:underline"
                 >
                   {c.url}
@@ -66,15 +49,10 @@ export function ContactsTable({ contacts }: { contacts: Contact[] }) {
                   >
                     Edit
                   </Link>
-                  <button
-                    onClick={() => handleDelete(c)}
-                    disabled={isPending && deletingId === c.id}
-                    className="rounded bg-red-500/10 px-3 py-1 text-red-400 hover:bg-red-500/20 disabled:opacity-50"
-                  >
-                    {isPending && deletingId === c.id
-                      ? "Menghapus..."
-                      : "Delete"}
-                  </button>
+                  <DeleteButton
+                    itemLabel={c.name}
+                    onDelete={() => deleteContact(c.id)}
+                  />
                 </div>
               </td>
             </tr>

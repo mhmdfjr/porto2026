@@ -3,23 +3,28 @@
 import { revalidatePath } from "next/cache"
 import { createClient } from "@/lib/supabase/server"
 import { organizationSchema, type OrganizationFormState } from "@/lib/validations/organization"
+import { storageConfig } from "@/lib/config"
+import {
+  uploadImage,
+  extractStoragePath,
+  removeStoragePaths,
+  UploadValidationError,
+} from "@/lib/storage"
+import {
+  requireUser,
+  validateId,
+  toUserMessage,
+  FriendlyError,
+} from "@/lib/actions-helpers"
 
-const BUCKET = "porto"
-const FOLDER = "Organizations"
+const FOLDER = storageConfig.folders.organizations
 
-async function uploadImage(supabase: any, file: File) {
-  const ext = file.name.split(".").pop()
-  const path = `${FOLDER}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-
-  const { error } = await supabase.storage.from(BUCKET).upload(path, file)
-  if (error) throw new Error(`Gagal upload gambar: ${error.message}`)
-
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path)
-  return data.publicUrl as string
-}
-
-function removeImagePath(url: string) {
-  return url.split(`${BUCKET}/`)[1]
+function validationFail(errors: Record<string, string[]>): OrganizationFormState {
+  return {
+    success: false,
+    message: "Validasi gagal, periksa kembali input kamu",
+    errors,
+  }
 }
 
 export async function createOrganization(
@@ -34,27 +39,22 @@ export async function createOrganization(
   })
 
   if (!parsed.success) {
-    return {
-      success: false,
-      message: "Validasi gagal, periksa kembali input kamu",
-      errors: parsed.error.flatten().fieldErrors,
-    }
+    return validationFail(
+      parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    )
   }
 
-  const file = formData.get("image") as File
+  const file = formData.get("image") as File | null
 
   if (!file || file.size === 0) {
-    return {
-      success: false,
-      message: "Validasi gagal, periksa kembali input kamu",
-      errors: { image: ["Gambar wajib diunggah"] },
-    }
+    return validationFail({ image: ["Gambar wajib diunggah"] })
   }
 
   const supabase = await createClient()
 
   try {
-    const imageUrl = await uploadImage(supabase, file)
+    await requireUser(supabase)
+    const imageUrl = await uploadImage(supabase, file, FOLDER)
 
     const { error } = await supabase.from("organizations").insert({
       name: parsed.data.name,
@@ -64,14 +64,20 @@ export async function createOrganization(
       image: imageUrl,
     })
 
-    if (error) throw new Error(error.message)
+    if (error) {
+      await removeStoragePaths(supabase, [extractStoragePath(imageUrl)])
+      throw error
+    }
 
     revalidatePath("/admin/organizations")
     return { success: true, message: "Data organisasi berhasil ditambahkan" }
   } catch (err) {
+    if (err instanceof UploadValidationError) {
+      return validationFail({ image: [err.message] })
+    }
     return {
       success: false,
-      message: err instanceof Error ? err.message : "Gagal menambahkan data",
+      message: toUserMessage(err, "Gagal menambahkan data"),
     }
   }
 }
@@ -90,35 +96,43 @@ export async function updateOrganization(
   })
 
   if (!parsed.success) {
-    return {
-      success: false,
-      message: "Validasi gagal, periksa kembali input kamu",
-      errors: parsed.error.flatten().fieldErrors,
-    }
-  }
-
-  const file = formData.get("image") as File
-  const hasNewFile = file && file.size > 0
-
-  if (!hasNewFile && !existingImage) {
-    return {
-      success: false,
-      message: "Validasi gagal, periksa kembali input kamu",
-      errors: { image: ["Gambar wajib diunggah"] },
-    }
+    return validationFail(
+      parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    )
   }
 
   const supabase = await createClient()
 
   try {
-    let imageUrl = existingImage
+    await requireUser(supabase)
+    const recordId = validateId(id, "Data organisasi")
+
+    const { data: current, error: fetchError } = await supabase
+      .from("organizations")
+      .select("image")
+      .eq("id", recordId)
+      .single()
+    if (fetchError || !current) throw new FriendlyError("Data tidak ditemukan")
+
+    const trustedExisting =
+      existingImage && existingImage === current.image ? existingImage : ""
+
+    const file = formData.get("image") as File | null
+    const hasNewFile = file !== null && file.size > 0
+
+    if (!hasNewFile && !trustedExisting) {
+      return validationFail({ image: ["Gambar wajib diunggah"] })
+    }
+
+    let imageUrl = trustedExisting
 
     if (hasNewFile) {
-      imageUrl = await uploadImage(supabase, file)
+      imageUrl = await uploadImage(supabase, file as File, FOLDER)
 
-      if (existingImage) {
-        const oldPath = removeImagePath(existingImage)
-        if (oldPath) await supabase.storage.from(BUCKET).remove([oldPath])
+      if (current.image && current.image !== imageUrl) {
+        await removeStoragePaths(supabase, [
+          extractStoragePath(current.image),
+        ])
       }
     }
 
@@ -131,38 +145,55 @@ export async function updateOrganization(
         role: parsed.data.role,
         image: imageUrl,
       })
-      .eq("id", id)
+      .eq("id", recordId)
 
-    if (error) throw new Error(error.message)
+    if (error) {
+      if (hasNewFile && imageUrl !== current.image) {
+        await removeStoragePaths(supabase, [extractStoragePath(imageUrl)])
+      }
+      throw error
+    }
 
     revalidatePath("/admin/organizations")
     return { success: true, message: "Data organisasi berhasil diperbarui" }
   } catch (err) {
+    if (err instanceof UploadValidationError) {
+      return validationFail({ image: [err.message] })
+    }
     return {
       success: false,
-      message: err instanceof Error ? err.message : "Gagal memperbarui data",
+      message: toUserMessage(err, "Gagal memperbarui data"),
     }
   }
 }
 
-export async function deleteOrganization(id: number, imageUrl: string) {
+export async function deleteOrganization(id: number) {
   const supabase = await createClient()
 
   try {
-    if (imageUrl) {
-      const path = removeImagePath(imageUrl)
-      if (path) await supabase.storage.from(BUCKET).remove([path])
+    await requireUser(supabase)
+    const recordId = validateId(id, "Data organisasi")
+
+    const { data: current, error: fetchError } = await supabase
+      .from("organizations")
+      .select("image")
+      .eq("id", recordId)
+      .single()
+    if (fetchError || !current) throw new FriendlyError("Data tidak ditemukan")
+
+    if (current.image) {
+      await removeStoragePaths(supabase, [extractStoragePath(current.image)])
     }
 
-    const { error } = await supabase.from("organizations").delete().eq("id", id)
-    if (error) throw new Error(error.message)
+    const { error } = await supabase.from("organizations").delete().eq("id", recordId)
+    if (error) throw error
 
     revalidatePath("/admin/organizations")
     return { success: true, message: "Data organisasi berhasil dihapus" }
   } catch (err) {
     return {
       success: false,
-      message: err instanceof Error ? err.message : "Gagal menghapus data",
+      message: toUserMessage(err, "Gagal menghapus data"),
     }
   }
 }

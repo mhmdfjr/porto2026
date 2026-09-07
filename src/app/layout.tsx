@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
-import { DM_Sans, Montserrat } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { DM_Sans } from "next/font/google";
 import localFont from "next/font/local";
-// TypeScript may complain about importing CSS without module declarations
-// @ts-ignore
 import "./globals.css";
+import { siteConfig } from "@/lib/config";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -21,12 +20,7 @@ const gotham = localFont({
   ],
   variable: "--font-gotham",
   display: "swap",
-});
-
-const gothamFallback = Montserrat({
-  variable: "--font-gotham",
-  subsets: ["latin"],
-  weight: ["700", "900"],
+  fallback: ["Arial", "sans-serif"],
 });
 
 const personSchema = {
@@ -46,13 +40,12 @@ const personSchema = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mhmdfjr.vercel.app"),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Mohamad Fajar | Full Stack Developer",
+    default: siteConfig.title,
     template: "%s | Mohamad Fajar",
   },
-  description:
-    "Mohamad Fajar Nur Khasani is a full-stack developer who builds modern websites for digital solutions with Next.js, Laravel, and other modern technologies.",
+  description: siteConfig.description,
   keywords: [
     "full stack developer",
     "next.js developer",
@@ -65,10 +58,9 @@ export const metadata: Metadata = {
     canonical: "https://mhmdfjr.vercel.app",
   },
   openGraph: {
-    title: "Mohamad Fajar | Full Stack Developer",
-    description:
-      "Mohamad Fajar Nur Khasani is a full-stack developer who builds modern websites for digital solutions with Next.js, La.",
-    url: "https://mhmdfjr.vercel.app",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
     siteName: "Mohamad Fajar's Portfolio",
     images: [{ url: "/logo.png", width: 1200, height: 630 }],
     locale: "id_ID",
@@ -76,9 +68,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohamad Fajar | Full Stack Developer",
-    description:
-      "Mohamad Fajar Nur Khasani is a full-stack developer who builds modern websites for digital solutions with Next.js, La.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: ["/logo.png"],
   },
   robots: {
@@ -92,6 +83,12 @@ export const metadata: Metadata = {
   other: {
     "google-site-verification": "rOC6CNwFqAXBMF-NY_LVMjg2BNyslgFuZlFCGx23qHs",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#030303",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

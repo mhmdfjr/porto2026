@@ -3,14 +3,12 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "../atoms/Button";
+import { mediaConfig } from "@/lib/config";
 
-const IMAGE_PROFILE_1 =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/Me/me7.jpeg";
-const IMAGE_PROFILE_2 =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/Me/me9.png";
+const IMAGE_PROFILE_1 = mediaConfig.profileBack;
+const IMAGE_PROFILE_2 = mediaConfig.profileFront;
 
-const CV_URL =
-  "https://lgklimjczxflxpmtjsoi.supabase.co/storage/v1/object/public/porto/CV/CV%20Mohamad%20Fajar%20Nur%20Khasani%20(Aug%202026).pdf";
+const CV_URL = mediaConfig.cvUrl;
 
 export const AboutSection = () => {
   return (
@@ -43,7 +41,7 @@ export const AboutSection = () => {
               valuable knowledge and great experience through my academic
               studies, professional work, and community involvement in
               technology. I graduated with a{" "}
-              <strong>Bachelor's Degree in Computer Science</strong> and
+              <strong>Bachelor&apos;s Degree in Computer Science</strong> and
               previously earned a{" "}
               <strong>
                 Vocational School Diploma in Computer Network Engineering

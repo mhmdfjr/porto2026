@@ -1,221 +1,165 @@
 import { supabase } from "./supabase"
-import type { Contact, Skill, Education, Work, Project, Organization } from "./supabase"
+import type { Contact, Skill, Feature, Education, Work, Project, Organization, Post } from "./supabase"
 
-export async function getContacts(): Promise<Contact[]> {
-  try {
-    const { data, error } = await supabase.from("contacts").select("*").order("name", { ascending: true })
+/**
+ * NOTE: these reads use the public anon client and therefore rely
+ * on Supabase RLS policies (public read, authenticated write).
+ * Admin mutations in app/admin/** use the SSR server client
+ * with an explicit requireUser() check instead.
+ */
 
-    if (error) {
-      console.error("Error fetching contacts:", error)
-      return []
-    }
+type OrderBy = { column: string; ascending: boolean };
 
-    return data || []
-  } catch (error) {
-    console.error("Error fetching contacts:", error)
-    return []
-  }
-}
-
-export async function getContactById(id: number): Promise<Contact | null> {
+async function fetchList<T>(table: string, order: OrderBy): Promise<T[]> {
   try {
     const { data, error } = await supabase
-      .from("contacts")
+      .from(table)
       .select("*")
-      .eq("id", id)
-      .single()
+      .order(order.column, { ascending: order.ascending });
 
     if (error) {
-      console.error(`Error fetching contact with id ${id}:`, error)
-      return null
+      console.error(`Error fetching ${table}:`, error);
+      return [];
     }
 
-    return data
+    return (data ?? []) as T[];
   } catch (error) {
-    console.error(`Error fetching contact with id ${id}:`, error)
-    return null
+    console.error(`Error fetching ${table}:`, error);
+    return [];
   }
 }
 
-export async function getSkills(): Promise<Skill[]> {
+async function fetchById<T>(table: string, id: number): Promise<T | null> {
+  if (!Number.isInteger(id) || id <= 0) return null;
   try {
-    const { data, error } = await supabase.from("skills").select("*").order("name", { ascending: true })
+    const { data, error } = await supabase
+      .from(table)
+      .select("*")
+      .eq("id", id)
+      .single();
 
     if (error) {
-      console.error("Error fetching skills:", error)
-      return []
+      console.error(`Error fetching ${table} with id ${id}:`, error);
+      return null;
     }
 
-    return data || []
+    return data as T;
   } catch (error) {
-    console.error("Error fetching skills:", error)
-    return []
+    console.error(`Error fetching ${table} with id ${id}:`, error);
+    return null;
   }
+}
+
+export function getContacts(): Promise<Contact[]> {
+  return fetchList<Contact>("contacts", { column: "name", ascending: true });
+}
+
+export function getContactById(id: number): Promise<Contact | null> {
+  return fetchById<Contact>("contacts", id);
+}
+
+export function getSkills(): Promise<Skill[]> {
+  return fetchList<Skill>("skills", { column: "name", ascending: true });
 }
 
 // Fetch specific skill by ID
-export async function getSkillById(id: number): Promise<Skill | null> {
-  try {
-    const { data, error } = await supabase
-      .from("skills")
-      .select("*")
-      .eq("id", id)
-      .single()
-
-    if (error) {
-      console.error(`Error fetching skill with id ${id}:`, error)
-      return null
-    }
-
-    return data
-  } catch (error) {
-    console.error(`Error fetching skill with id ${id}:`, error)
-    return null
-  }
+export function getSkillById(id: number): Promise<Skill | null> {
+  return fetchById<Skill>("skills", id);
 }
 
-export async function getEducations(): Promise<Education[]> {
-  try {
-    const { data, error } = await supabase.from("educations").select("*").order("start", { ascending: false })
-
-    if (error) {
-      console.error("Error fetching educations:", error)
-      return []
-    }
-
-    return data || []
-  } catch (error) {
-    console.error("Error fetching educations:", error)
-    return []
-  }
+export function getFeatures(): Promise<Feature[]> {
+  return fetchList<Feature>("features", { column: "id", ascending: true });
 }
 
-export async function getEducationById(id: number): Promise<Education | null> {
-  try {
-    const { data, error } = await supabase
-      .from("educations")
-      .select("*")
-      .eq("id", id)
-      .single()
-
-    if (error) {
-      console.error(`Error fetching education with id ${id}:`, error)
-      return null
-    }
-
-    return data
-  } catch (error) {
-    console.error(`Error fetching education with id ${id}:`, error)
-    return null
-  }
+export function getFeatureById(id: number): Promise<Feature | null> {
+  return fetchById<Feature>("features", id);
 }
 
-export async function getWorks(): Promise<Work[]> {
-  try {
-    const { data, error } = await supabase.from("works").select("*").order("start", { ascending: false })
-
-    if (error) {
-      console.error("Error fetching works:", error)
-      return []
-    }
-
-    return data || []
-  } catch (error) {
-    console.error("Error fetching works:", error)
-    return []
-  }
+export function getEducations(): Promise<Education[]> {
+  return fetchList<Education>("educations", { column: "start", ascending: false });
 }
 
-export async function getWorkById(id: number): Promise<Work | null> {
-  try {
-    const { data, error } = await supabase
-      .from("works")
-      .select("*")
-      .eq("id", id)
-      .single()
-
-    if (error) {
-      console.error(`Error fetching work with id ${id}:`, error)
-      return null
-    }
-
-    return data
-  } catch (error) {
-    console.error(`Error fetching work with id ${id}:`, error)
-    return null
-  }
+export function getEducationById(id: number): Promise<Education | null> {
+  return fetchById<Education>("educations", id);
 }
 
-export async function getProjects(): Promise<Project[]> {
-  try {
-    const { data, error } = await supabase.from("projects").select("*").order("id", { ascending: false })
+export function getWorks(): Promise<Work[]> {
+  return fetchList<Work>("works", { column: "start", ascending: false });
+}
 
-    if (error) {
-      console.error("Error fetching projects:", error)
-      return []
-    }
+export function getWorkById(id: number): Promise<Work | null> {
+  return fetchById<Work>("works", id);
+}
 
-    return data || []
-  } catch (error) {
-    console.error("Error fetching projects:", error)
-    return []
-  }
+export function getProjects(): Promise<Project[]> {
+  return fetchList<Project>("projects", { column: "id", ascending: false });
 }
 
 // Fetch specific project by ID
-export async function getProjectById(id: number): Promise<Project | null> {
+export function getProjectById(id: number): Promise<Project | null> {
+  return fetchById<Project>("projects", id);
+}
+
+export function getOrganizations(): Promise<Organization[]> {
+  return fetchList<Organization>("organizations", { column: "id", ascending: false });
+}
+
+export function getOrganizationById(id: number): Promise<Organization | null> {
+  return fetchById<Organization>("organizations", id);
+}
+
+// --- Blog posts ---
+
+/** All posts for admin (draft + published). */
+export function getAllPosts(): Promise<Post[]> {
+  return fetchList<Post>("posts", { column: "updated_at", ascending: false });
+}
+
+export function getPostById(id: number): Promise<Post | null> {
+  return fetchById<Post>("posts", id);
+}
+
+/** Published posts for public pages, newest first. */
+export async function getPublishedPosts(): Promise<Post[]> {
   try {
     const { data, error } = await supabase
-      .from("projects")
+      .from("posts")
       .select("*")
-      .eq("id", id)
-      .single()
+      .eq("status", "published")
+      .order("published_at", { ascending: false });
 
     if (error) {
-      console.error(`Error fetching project with id ${id}:`, error)
-      return null
+      console.error("Error fetching published posts:", error);
+      return [];
     }
 
-    return data
+    return (data ?? []) as Post[];
   } catch (error) {
-    console.error(`Error fetching project with id ${id}:`, error)
-    return null
+    console.error("Error fetching published posts:", error);
+    return [];
   }
 }
 
-export async function getOrganizations(): Promise<Organization[]> {
-  try {
-    const { data, error } = await supabase.from("organizations").select("*").order("id", { ascending: false })
-
-    if (error) {
-      console.error("Error fetching organizations:", error)
-      return []
-    }
-
-    return data || []
-  } catch (error) {
-    console.error("Error fetching organizations:", error)
-    return []
-  }
-}
-
-export async function getOrganizationById(id: number): Promise<Organization | null> {
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const clean = slug.trim().toLowerCase();
+  if (!clean || clean.length > 120) return null;
   try {
     const { data, error } = await supabase
-      .from("organizations")
+      .from("posts")
       .select("*")
-      .eq("id", id)
-      .single()
+      .eq("slug", clean)
+      .eq("status", "published")
+      .single();
 
     if (error) {
-      console.error(`Error fetching organization with id ${id}:`, error)
-      return null
+      console.error(`Error fetching post ${clean}:`, error);
+      return null;
     }
 
-    return data
+    return data as Post;
   } catch (error) {
-    console.error(`Error fetching organization with id ${id}:`, error)
-    return null
+    console.error(`Error fetching post ${clean}:`, error);
+    return null;
   }
 }
 
@@ -224,6 +168,7 @@ export function formatDate(dateString?: string) {
   if (!dateString) return "Present"
 
   const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) return "Invalid date"
   return date.toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",

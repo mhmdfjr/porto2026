@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { logout } from "./actions";
 import { Toaster } from "sonner";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function AdminLayout({
   children,
@@ -19,9 +24,11 @@ export default async function AdminLayout({
   const menu = [
     { href: "/admin", label: "Dashboard" },
     { href: "/admin/projects", label: "Projects" },
+    { href: "/admin/posts", label: "Posts" },
     { href: "/admin/works", label: "Works" },
     { href: "/admin/educations", label: "Educations" },
     { href: "/admin/skills", label: "Skills" },
+    { href: "/admin/features", label: "Features" },
     { href: "/admin/organizations", label: "Organizations" },
     { href: "/admin/contacts", label: "Contacts" },
   ];

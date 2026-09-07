@@ -4,6 +4,8 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import type { Project } from "@/lib/supabase";
 import type { ProjectFormState } from "@/lib/validations/project";
+import { FormField, fieldInputClass } from "@/components/admin/FormField";
+import { SubmitButton } from "@/components/admin/SubmitButton";
 
 type Props = {
   mode: "create" | "edit";
@@ -16,14 +18,6 @@ type Props = {
 };
 
 const initialState: ProjectFormState = { success: false, message: "" };
-
-const emptyValues = {
-  name: "",
-  description: "",
-  techstack: "",
-  live_url: "",
-  code_url: "",
-};
 
 export function ProjectForm({ mode, project, action, onSuccess }: Props) {
   const [state, formAction, isPending] = useActionState(action, initialState);
@@ -50,18 +44,7 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
 
     if (state.success) {
       toast.success(state.message);
-
-      if (mode === "create") {
-        setValues(emptyValues);
-        setExistingImages([]);
-        setSelectedFiles([]);
-
-        previews.forEach((url) => URL.revokeObjectURL(url));
-        setPreviews([]);
-
-        if (fileInputRef.current) fileInputRef.current.value = "";
-      }
-
+      // onSuccess navigates away; failed input is intentionally kept.
       onSuccess?.();
     } else {
       toast.error(state.message);
@@ -71,7 +54,10 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
         fileInputRef.current.files = dt.files;
       }
     }
-  }, [state]);
+    // selectedFiles is intentionally read here to restore the
+    // file input after a failed submit.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, onSuccess]);
 
   function handleChange(field: keyof typeof values) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -98,84 +84,57 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
       action={formAction}
       className="space-y-4 rounded-lg bg-neutral-900 p-4"
     >
-      <div>
-        <label className="text-sm text-neutral-300">Nama Project</label>
+      <FormField label="Nama Project" error={state.errors?.name?.[0]}>
         <input
           name="name"
           value={values.name}
           onChange={handleChange("name")}
-          className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+          className={fieldInputClass}
         />
-        {state.errors?.name && (
-          <p className="mt-1 text-xs text-red-400">{state.errors.name[0]}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div>
-        <label className="text-sm text-neutral-300">Deskripsi</label>
+      <FormField label="Deskripsi" error={state.errors?.description?.[0]}>
         <textarea
           name="description"
           value={values.description}
           onChange={handleChange("description")}
           rows={3}
-          className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+          className={fieldInputClass}
         />
-        {state.errors?.description && (
-          <p className="mt-1 text-xs text-red-400">
-            {state.errors.description[0]}
-          </p>
-        )}
-      </div>
+      </FormField>
 
-      <div>
-        <label className="text-sm text-neutral-300">
-          Techstack (pisahkan dengan koma)
-        </label>
+      <FormField
+        label="Techstack (pisahkan dengan koma)"
+        error={state.errors?.techstack?.[0]}
+      >
         <input
           name="techstack"
           value={values.techstack}
           onChange={handleChange("techstack")}
           placeholder="Next.js, Tailwind, Supabase"
-          className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+          className={fieldInputClass}
         />
-        {state.errors?.techstack && (
-          <p className="mt-1 text-xs text-red-400">
-            {state.errors.techstack[0]}
-          </p>
-        )}
-      </div>
+      </FormField>
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="text-sm text-neutral-300">Live URL</label>
+        <FormField label="Live URL" error={state.errors?.live_url?.[0]}>
           <input
             name="live_url"
             value={values.live_url}
             onChange={handleChange("live_url")}
             placeholder="https://..."
-            className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+            className={fieldInputClass}
           />
-          {state.errors?.live_url && (
-            <p className="mt-1 text-xs text-red-400">
-              {state.errors.live_url[0]}
-            </p>
-          )}
-        </div>
-        <div>
-          <label className="text-sm text-neutral-300">Code URL</label>
+        </FormField>
+        <FormField label="Code URL" error={state.errors?.code_url?.[0]}>
           <input
             name="code_url"
             value={values.code_url}
             onChange={handleChange("code_url")}
             placeholder="https://github.com/..."
-            className="mt-1 w-full rounded bg-neutral-800 p-2 text-white"
+            className={fieldInputClass}
           />
-          {state.errors?.code_url && (
-            <p className="mt-1 text-xs text-red-400">
-              {state.errors.code_url[0]}
-            </p>
-          )}
-        </div>
+        </FormField>
       </div>
 
       <div>
@@ -187,7 +146,7 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
           type="file"
           name="images"
           multiple
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp"
           onChange={handleFileChange}
           className="mt-1 w-full rounded bg-neutral-800 p-2 text-white file:mr-3 file:rounded file:border-0 file:bg-neutral-700 file:px-3 file:py-1 file:text-white"
         />
@@ -200,6 +159,7 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
           <div className="mt-3 flex flex-wrap gap-2">
             {existingImages.map((url) => (
               <div key={url} className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={url}
                   alt=""
@@ -220,6 +180,7 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
         {previews.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
             {previews.map((src, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={src}
                 src={src}
@@ -237,17 +198,11 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="w-full rounded bg-white py-2 font-semibold text-black disabled:opacity-50"
-      >
-        {isPending
-          ? "Menyimpan..."
-          : mode === "create"
-            ? "Tambah Project"
-            : "Simpan Perubahan"}
-      </button>
+      <SubmitButton
+        pending={isPending}
+        mode={mode}
+        createLabel="Tambah Project"
+      />
     </form>
   );
 }

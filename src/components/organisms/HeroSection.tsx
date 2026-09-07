@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import { Navbar } from "../molecules/Navbar";
 import { Button } from "../atoms/Button";
 import { Mail, Instagram, Phone, Linkedin, Github } from "lucide-react";
+import { mediaConfig } from "@/lib/config";
 
-const HERO_IMAGE_URL =
-  "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop";
+const HERO_IMAGE_URL = mediaConfig.heroImage;
 
 const CONTACT_LINKS = [
   { name: "Email", href: "mailto:moh.fajar1304@gmail.com", icon: Mail },

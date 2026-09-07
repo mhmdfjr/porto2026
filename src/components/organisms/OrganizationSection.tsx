@@ -1,28 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { getOrganizations } from "@/lib/database";
 import type { Organization } from "@/lib/supabase";
 
-export const OrganizationSection = () => {
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchOrganizations() {
-      try {
-        const organizationsData = await getOrganizations();
-        setOrganizations(organizationsData);
-      } catch (error) {
-        console.error("Error fetching organizations:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchOrganizations();
-  }, []);
+export const OrganizationSection = ({
+  organizations,
+}: {
+  organizations: Organization[];
+}) => {
 
   return (
     <section
@@ -64,14 +51,6 @@ export const OrganizationSection = () => {
         </div>
 
         <div className="relative min-h-[400px]">
-          {loading ? (
-            <div className="w-full flex justify-center items-center h-64">
-              <p className="font-dm text-brand-red text-xl animate-pulse">
-                Loading organizations...
-              </p>
-            </div>
-          ) : (
-            <>
               <motion.div
                 className="hidden md:block absolute top-0 left-0 w-full h-1 bg-brand-red rounded-full z-0 transform -translate-y-12 origin-left"
                 initial={{ scaleX: 0 }}
@@ -153,8 +132,6 @@ export const OrganizationSection = () => {
                   </motion.div>
                 ))}
               </div>
-            </>
-          )}
         </div>
       </div>
     </section>

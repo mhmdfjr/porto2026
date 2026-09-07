@@ -1,16 +1,33 @@
 import { z } from "zod"
 
+const stringList = (requiredMessage: string, itemLabel: string) =>
+  z
+    .string()
+    .trim()
+    .min(1, requiredMessage)
+    .max(500, `${itemLabel} terlalu panjang`)
+    .transform((val) => val.split(",").map((v) => v.trim()).filter(Boolean))
+    .refine((val) => val.length > 0, { message: requiredMessage })
+    .refine((val) => val.length <= 20, {
+      message: `Maksimal 20 ${itemLabel.toLowerCase()}`,
+    })
+    .refine((val) => val.every((v) => v.length <= 60), {
+      message: `Setiap ${itemLabel.toLowerCase()} maksimal 60 karakter`,
+    })
+
 export const organizationSchema = z.object({
-  name: z.string().min(2, "Nama organisasi minimal 2 karakter"),
-  location: z.string().min(2, "Lokasi minimal 2 karakter"),
-  year: z
+  name: z
     .string()
-    .min(1, "Tahun wajib diisi, pisahkan dengan koma")
-    .transform((val) => val.split(",").map((y) => y.trim()).filter(Boolean)),
-  role: z
+    .trim()
+    .min(2, "Nama organisasi minimal 2 karakter")
+    .max(120, "Nama organisasi maksimal 120 karakter"),
+  location: z
     .string()
-    .min(1, "Role wajib diisi, pisahkan dengan koma")
-    .transform((val) => val.split(",").map((r) => r.trim()).filter(Boolean)),
+    .trim()
+    .min(2, "Lokasi minimal 2 karakter")
+    .max(120, "Lokasi maksimal 120 karakter"),
+  year: stringList("Tahun wajib diisi, pisahkan dengan koma", "Tahun"),
+  role: stringList("Role wajib diisi, pisahkan dengan koma", "Role"),
 })
 
 export type OrganizationFormState = {

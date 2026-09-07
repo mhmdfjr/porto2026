@@ -1,29 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 import type { Project } from "@/lib/supabase";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { deleteProject } from "@/app/admin/projects/actions";
 
 export function ProjectsTable({ projects }: { projects: Project[] }) {
-  const [isPending, startTransition] = useTransition();
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-
-  function handleDelete(project: Project) {
-    if (!confirm(`Hapus project "${project.name}"?`)) return;
-
-    setDeletingId(project.id);
-    startTransition(async () => {
-      const result = await deleteProject(project.id, project.images ?? []);
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-      setDeletingId(null);
-    });
-  }
 
   return (
     <div className="overflow-x-auto rounded-lg border border-neutral-800">
@@ -75,6 +57,7 @@ export function ProjectsTable({ projects }: { projects: Project[] }) {
                   <a
                     href={p.live_url}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="text-blue-400 hover:underline"
                   >
                     Link
@@ -88,6 +71,7 @@ export function ProjectsTable({ projects }: { projects: Project[] }) {
                   <a
                     href={p.code_url}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="text-blue-400 hover:underline"
                   >
                     Link
@@ -107,15 +91,10 @@ export function ProjectsTable({ projects }: { projects: Project[] }) {
                   >
                     Edit
                   </Link>
-                  <button
-                    onClick={() => handleDelete(p)}
-                    disabled={isPending && deletingId === p.id}
-                    className="rounded bg-red-500/10 px-3 py-1 text-red-400 hover:bg-red-500/20 disabled:opacity-50"
-                  >
-                    {isPending && deletingId === p.id
-                      ? "Menghapus..."
-                      : "Delete"}
-                  </button>
+                  <DeleteButton
+                    itemLabel={p.name}
+                    onDelete={() => deleteProject(p.id)}
+                  />
                 </div>
               </td>
             </tr>

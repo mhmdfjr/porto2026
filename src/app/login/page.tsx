@@ -1,10 +1,24 @@
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 import { login } from "./actions";
+
+export const metadata: Metadata = {
+  title: "Admin Login",
+  robots: { index: false, follow: false },
+};
 
 export default async function LoginPage({
   searchParams,
 }: {
   searchParams: Promise<{ message?: string }>;
 }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) redirect("/admin");
+
   const { message } = await searchParams;
 
   return (
@@ -27,6 +41,8 @@ export default async function LoginPage({
             name="email"
             type="email"
             required
+            maxLength={254}
+            autoComplete="email"
             className="mt-1 w-full rounded border border-neutral-700 bg-neutral-800 p-2 text-white"
           />
         </div>
@@ -37,6 +53,9 @@ export default async function LoginPage({
             name="password"
             type="password"
             required
+            minLength={8}
+            maxLength={72}
+            autoComplete="current-password"
             className="mt-1 w-full rounded border border-neutral-700 bg-neutral-800 p-2 text-white"
           />
         </div>

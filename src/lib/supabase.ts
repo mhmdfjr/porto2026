@@ -25,6 +25,13 @@ export interface Skill {
   created_at: string
 }
 
+export interface Feature {
+  id: number
+  feature: string
+  description: string
+  created_at: string
+}
+
 export interface Education {
   id: number
   name: string
@@ -66,4 +73,23 @@ export interface Organization {
   role: string[]
   image: string
   created_at: string
+}
+
+export type PostStatus = "draft" | "published"
+
+export interface Post {
+  id: number
+  slug: string
+  title: string
+  excerpt: string
+  content_json: Record<string, unknown>
+  content_html: string
+  cover_image: string | null
+  tags: string[]
+  status: PostStatus
+  featured: boolean
+  reading_minutes: number
+  published_at: string | null
+  created_at: string
+  updated_at: string
 }

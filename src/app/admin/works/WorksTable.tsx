@@ -1,30 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 import type { Work } from "@/lib/supabase";
 import { formatDateRange } from "@/lib/database";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { deleteWork } from "./actions";
 
 export function WorksTable({ works }: { works: Work[] }) {
-  const [isPending, startTransition] = useTransition();
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-
-  function handleDelete(work: Work) {
-    if (!confirm(`Hapus data kerja di "${work.company}"?`)) return;
-
-    setDeletingId(work.id);
-    startTransition(async () => {
-      const result = await deleteWork(work.id, work.image);
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-      setDeletingId(null);
-    });
-  }
 
   return (
     <div className="overflow-x-auto rounded-lg border border-neutral-800">
@@ -71,15 +53,10 @@ export function WorksTable({ works }: { works: Work[] }) {
                   >
                     Edit
                   </Link>
-                  <button
-                    onClick={() => handleDelete(w)}
-                    disabled={isPending && deletingId === w.id}
-                    className="rounded bg-red-500/10 px-3 py-1 text-red-400 hover:bg-red-500/20 disabled:opacity-50"
-                  >
-                    {isPending && deletingId === w.id
-                      ? "Menghapus..."
-                      : "Delete"}
-                  </button>
+                  <DeleteButton
+                    itemLabel={w.company}
+                    onDelete={() => deleteWork(w.id)}
+                  />
                 </div>
               </td>
             </tr>

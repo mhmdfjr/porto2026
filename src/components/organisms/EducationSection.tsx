@@ -1,28 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { getEducations, formatDateRange } from "@/lib/database";
+import { formatDateRange } from "@/lib/database";
 import type { Education } from "@/lib/supabase";
 
-export const EducationSection = () => {
-  const [educations, setEducations] = useState<Education[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchEducations() {
-      try {
-        const educationsData = await getEducations();
-        setEducations(educationsData);
-      } catch (error) {
-        console.error("Error fetching educations:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchEducations();
-  }, []);
+export const EducationSection = ({
+  educations,
+}: {
+  educations: Education[];
+}) => {
 
   return (
     <section
@@ -64,16 +52,8 @@ export const EducationSection = () => {
         </div>
 
         <div className="relative min-h-[400px]">
-          {loading ? (
-            <div className="w-full flex justify-center items-center h-64">
-              <p className="font-dm text-brand-yellow text-xl animate-pulse">
-                Loading education history...
-              </p>
-            </div>
-          ) : (
-            <>
-              <motion.div
-                className="hidden md:block absolute top-0 left-0 w-full h-1 bg-brand-yellow rounded-full z-0 transform -translate-y-12 origin-left"
+            <motion.div
+              className="hidden md:block absolute top-0 left-0 w-full h-1 bg-brand-yellow rounded-full z-0 transform -translate-y-12 origin-left"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 transition={{ duration: 1, ease: "easeInOut", delay: 0.4 }}
@@ -156,8 +136,6 @@ export const EducationSection = () => {
                   </div>
                 ))}
               </div>
-            </>
-          )}
         </div>
       </div>
     </section>

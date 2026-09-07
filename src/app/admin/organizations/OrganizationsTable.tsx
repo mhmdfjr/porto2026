@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 import type { Organization } from "@/lib/supabase";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { deleteOrganization } from "./actions";
 
 export function OrganizationsTable({
@@ -11,26 +10,6 @@ export function OrganizationsTable({
 }: {
   organizations: Organization[];
 }) {
-  const [isPending, startTransition] = useTransition();
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-
-  function handleDelete(organization: Organization) {
-    if (!confirm(`Hapus data organisasi "${organization.name}"?`)) return;
-
-    setDeletingId(organization.id);
-    startTransition(async () => {
-      const result = await deleteOrganization(
-        organization.id,
-        organization.image,
-      );
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-      setDeletingId(null);
-    });
-  }
 
   return (
     <div className="overflow-x-auto rounded-lg border border-neutral-800">
@@ -97,15 +76,10 @@ export function OrganizationsTable({
                   >
                     Edit
                   </Link>
-                  <button
-                    onClick={() => handleDelete(o)}
-                    disabled={isPending && deletingId === o.id}
-                    className="rounded bg-red-500/10 px-3 py-1 text-red-400 hover:bg-red-500/20 disabled:opacity-50"
-                  >
-                    {isPending && deletingId === o.id
-                      ? "Menghapus..."
-                      : "Delete"}
-                  </button>
+                  <DeleteButton
+                    itemLabel={o.name}
+                    onDelete={() => deleteOrganization(o.id)}
+                  />
                 </div>
               </td>
             </tr>

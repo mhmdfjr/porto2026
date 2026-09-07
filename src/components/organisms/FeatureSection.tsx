@@ -4,8 +4,9 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FeatureCard } from "../molecules/FeatureCard";
+import type { Feature } from "@/lib/supabase";
 
-const featuresData = [
+const fallbackFeatures = [
   {
     title: "Modern Tech Stack",
     description:
@@ -28,7 +29,12 @@ const featuresData = [
   },
 ];
 
-export const FeatureSection = () => {
+export const FeatureSection = ({ features }: { features: Feature[] }) => {
+  // Fallback to curated copy when the database has no rows yet.
+  const items =
+    features.length > 0
+      ? features.map((f) => ({ title: f.feature, description: f.description }))
+      : fallbackFeatures;
   return (
     <section
       id="feature"
@@ -63,7 +69,7 @@ export const FeatureSection = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: false }}
           >
-            What's the reason
+            What&apos;s the reason
           </motion.h2>
 
           <motion.h2
@@ -79,7 +85,7 @@ export const FeatureSection = () => {
 
         {/* GRID ANIMATION (Staggered Fade Up) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 lg:gap-x-24 items-start">
-          {featuresData.map((feature, index) => {
+          {items.map((feature, index) => {
             // Logika layout zig-zag vertikal
             const isRightColumn = index % 2 !== 0;
 
