@@ -8,7 +8,7 @@ interface ProjectCardProps {
   title: string;
   description: string;
   tags: string[];
-  liveUrl: string;
+  live_url: string | null;
   imageUrl: string | null;
 }
 
@@ -17,7 +17,7 @@ export const ProjectCard = ({
   title,
   description,
   tags,
-  liveUrl,
+  live_url,
   imageUrl,
 }: ProjectCardProps) => {
   const isValidUrl =
@@ -74,7 +74,7 @@ export const ProjectCard = ({
         />
         <Button
           text="Live demo"
-          href={liveUrl}
+          href={live_url ? live_url : `#`}
           size="sm"
           variant="solid-red-black"
         />

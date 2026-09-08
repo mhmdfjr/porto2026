@@ -17,7 +17,7 @@ export function SkillBadge({ name, logoUrl, index = 0 }: Props) {
 
   return (
     <motion.span
-      className="inline-flex items-center gap-2 border border-brand-yellow bg-brand-red pr-4 min-w-max"
+      className="inline-flex items-center gap-2 border border-brand-yellow bg-transparent pr-4 min-w-max"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: (index % 8) * 0.07, ease: "easeOut" }}

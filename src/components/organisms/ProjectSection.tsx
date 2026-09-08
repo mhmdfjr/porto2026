@@ -8,7 +8,6 @@ import { ProjectCard } from "../molecules/ProjectCard";
 import type { Project } from "@/lib/supabase";
 
 export const ProjectSection = ({ projects }: { projects: Project[] }) => {
-
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
@@ -117,6 +116,7 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
                         title={project.name}
                         description={project.description}
                         tags={project.techstack}
+                        live_url={project.live_url || null}
                         imageUrl={firstImage}
                       />
                     </motion.div>
