@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import type { Post } from "@/lib/supabase";
 import { slugifyTitle, type PostFormState } from "@/lib/validations/post";
 import { PostEditor } from "@/components/admin/PostEditor";
+import { IMAGE_INPUT_ACCEPT } from "@/lib/config";
 
 type Props = {
   mode: "create" | "edit";
@@ -183,7 +184,7 @@ export function PostForm({ mode, post, action, onSuccess }: Props) {
           ref={fileInputRef}
           type="file"
           name="cover"
-          accept="image/jpeg,image/png,image/webp"
+          accept={IMAGE_INPUT_ACCEPT}
           onChange={handleCoverChange}
           className="mt-1 w-full rounded bg-neutral-800 p-2 text-white file:mr-3 file:rounded file:border-0 file:bg-neutral-700 file:px-3 file:py-1 file:text-white"
         />

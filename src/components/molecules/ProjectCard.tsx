@@ -1,12 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "../atoms/Button";
 
 interface ProjectCardProps {
   id: number;
   title: string;
   description: string;
   tags: string[];
+  liveUrl: string;
   imageUrl: string | null;
 }
 
@@ -15,6 +17,7 @@ export const ProjectCard = ({
   title,
   description,
   tags,
+  liveUrl,
   imageUrl,
 }: ProjectCardProps) => {
   const isValidUrl =
@@ -38,11 +41,11 @@ export const ProjectCard = ({
         </div>
 
         <div className="flex flex-col gap-2 mt-4">
-          <h3 className="font-gotham font-black text-brand-red text-2xl md:text-3xl lg:text-4xl tracking-tight leading-none">
+          <h3 className="font-gotham font-black text-brand-red text-xl md:text-2xl lg:text-3xl tracking-tight leading-none">
             {title}
           </h3>
 
-          <p className="font-dm text-brand-red/80 text-sm md:text-base leading-relaxed line-clamp-3">
+          <p className="font-dm text-brand-red/80 text-sm md:text-base leading-relaxed line-clamp-2">
             {description}
           </p>
 
@@ -62,16 +65,19 @@ export const ProjectCard = ({
         </div>
       </div>
 
-      <div className="flex gap-4 mt-2">
-        <Link
+      <div className="flex gap-4">
+        <Button
+          text="Learn more"
           href={`/project/${id}`}
-          className="px-6 py-2 border border-brand-red text-brand-red font-gotham font-bold uppercase text-sm hover:bg-brand-red hover:text-black transition-colors text-center"
-        >
-          Learn More
-        </Link>
-        <button className="px-6 py-2 bg-brand-red text-black font-gotham font-bold uppercase text-sm hover:bg-red-600 transition-colors">
-          Live Demo
-        </button>
+          size="sm"
+          variant="outline-red-black"
+        />
+        <Button
+          text="Live demo"
+          href={liveUrl}
+          size="sm"
+          variant="solid-red-black"
+        />
       </div>
     </div>
   );

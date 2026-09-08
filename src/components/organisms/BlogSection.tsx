@@ -16,16 +16,6 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
     >
       <div className="max-w-[1400px] mx-auto">
         <div className="w-full flex justify-between items-start z-10">
-          <motion.h2
-            className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-8 md:mb-10"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: false }}
-          >
-            Blog
-          </motion.h2>
-
           <motion.div
             className="transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0"
             initial={{ scale: 0, rotate: 90 }}
@@ -41,12 +31,20 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
               className="animate-[spin_20s_linear_infinite] lg:animate-spin-slow object-contain w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
             />
           </motion.div>
+
+          <motion.h2
+            className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-8 md:mb-10"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: false }}
+          >
+            Blog
+          </motion.h2>
         </div>
 
         {latest.length === 0 ? (
-          <p className="font-dm text-brand-red/60 text-lg">
-            No articles yet.
-          </p>
+          <p className="font-dm text-brand-red/60 text-lg">No articles yet.</p>
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 relative z-10">

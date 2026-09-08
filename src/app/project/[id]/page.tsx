@@ -69,7 +69,7 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
   const contacts = await getContacts();
   const recommendations = allProjects
     .filter((item) => item.id !== project.id)
-    .slice(0, 2);
+    .slice(0, 3);
 
   const projectSchema = {
     "@context": "https://schema.org",

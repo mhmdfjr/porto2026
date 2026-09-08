@@ -12,6 +12,7 @@ export function SkillsTable({ skills }: { skills: Skill[] }) {
       <table className="w-full text-left text-sm">
         <thead className="bg-neutral-900 text-neutral-400">
           <tr>
+            <th className="p-3">Logo</th>
             <th className="p-3">Nama Skill</th>
             <th className="p-3">Dibuat</th>
             <th className="p-3 text-right">Aksi</th>
@@ -20,6 +21,18 @@ export function SkillsTable({ skills }: { skills: Skill[] }) {
         <tbody>
           {skills.map((s) => (
             <tr key={s.id} className="border-t border-neutral-800">
+              <td className="p-3">
+                {s.logo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={s.logo}
+                    alt={s.name}
+                    className="h-8 w-8 rounded object-contain bg-neutral-800 p-0.5"
+                  />
+                ) : (
+                  <span className="text-neutral-600">-</span>
+                )}
+              </td>
               <td className="p-3 font-medium">{s.name}</td>
               <td className="p-3 text-neutral-400">
                 {new Date(s.created_at).toLocaleDateString("id-ID")}
@@ -43,7 +56,7 @@ export function SkillsTable({ skills }: { skills: Skill[] }) {
 
           {skills.length === 0 && (
             <tr>
-              <td colSpan={3} className="p-6 text-center text-neutral-500">
+              <td colSpan={4} className="p-6 text-center text-neutral-500">
                 Belum ada data skill
               </td>
             </tr>

@@ -22,10 +22,10 @@ const initialState: ContactFormState = { success: false, message: "" };
 export function ContactForm({ mode, contact, action, onSuccess }: Props) {
   const [state, formAction, isPending] = useActionState(action, initialState);
 
-  // Controlled state untuk semua field
   const [values, setValues] = useState(() => ({
     name: contact?.name ?? "",
     url: contact?.url ?? "",
+    username: contact?.username ?? "",
     icon: contact?.icon ?? "",
   }));
 
@@ -34,7 +34,6 @@ export function ContactForm({ mode, contact, action, onSuccess }: Props) {
 
     if (state.success) {
       toast.success(state.message);
-      // onSuccess navigates away; failed input is intentionally kept.
       onSuccess?.();
     } else {
       toast.error(state.message);
@@ -68,6 +67,16 @@ export function ContactForm({ mode, contact, action, onSuccess }: Props) {
           value={values.url}
           onChange={handleChange("url")}
           placeholder="https://github.com/username"
+          className={fieldInputClass}
+        />
+      </FormField>
+
+      <FormField label="Username" error={state.errors?.username?.[0]}>
+        <input
+          name="username"
+          value={values.username}
+          onChange={handleChange("username")}
+          placeholder="username"
           className={fieldInputClass}
         />
       </FormField>

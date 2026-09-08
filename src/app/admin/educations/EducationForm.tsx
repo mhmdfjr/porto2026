@@ -6,6 +6,7 @@ import type { Education } from "@/lib/supabase";
 import type { EducationFormState } from "@/lib/validations/education";
 import { FormField, fieldInputClass } from "@/components/admin/FormField";
 import { SubmitButton } from "@/components/admin/SubmitButton";
+import { IMAGE_INPUT_ACCEPT } from "@/lib/config";
 
 type Props = {
   mode: "create" | "edit";
@@ -140,7 +141,7 @@ export function EducationForm({ mode, education, action, onSuccess }: Props) {
           ref={fileInputRef}
           type="file"
           name="image"
-          accept="image/jpeg,image/png,image/webp"
+          accept={IMAGE_INPUT_ACCEPT}
           onChange={handleFileChange}
           className="mt-1 w-full rounded bg-neutral-800 p-2 text-white file:mr-3 file:rounded file:border-0 file:bg-neutral-700 file:px-3 file:py-1 file:text-white"
         />

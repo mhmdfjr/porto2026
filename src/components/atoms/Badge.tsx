@@ -3,12 +3,14 @@ import React from "react";
 type BadgeVariant = "primary" | "secondary";
 
 interface BadgeProps {
+  children?: React.ReactNode;
   text?: string;
   variant?: BadgeVariant;
   className?: string;
 }
 
 export const Badge = ({
+  children,
   text,
   variant = "primary",
   className = "",
@@ -26,9 +28,11 @@ export const Badge = ({
 
   const finalClassName = `${baseStyles} ${variants[variant]} ${className}`;
 
+  const content = children || text;
+
   return (
     <div className={finalClassName} {...props}>
-      {text}
+      {content}
     </div>
   );
 };

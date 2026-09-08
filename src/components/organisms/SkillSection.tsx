@@ -4,14 +4,17 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion"; // Import motion
 import { mediaConfig } from "@/lib/config";
+import { SkillBadge } from "../molecules/SkillBadge";
 import type { Skill } from "@/lib/supabase";
 
-const SKILL_IMAGE_URL = mediaConfig.skillImage;
-
-export const SkillSection = ({ skills }: { skills: Skill[] }) => {
-
-  // --- LOGIC PERBAIKAN ---
-  const skillsString = skills.map((skill) => skill.name).join(", ");
+export const SkillSection = ({
+  skills,
+  image,
+}: {
+  skills: Skill[];
+  image?: string;
+}) => {
+  const SKILL_IMAGE_URL = image ?? mediaConfig.skillImage;
 
   return (
     <section
@@ -89,10 +92,22 @@ export const SkillSection = ({ skills }: { skills: Skill[] }) => {
           viewport={{ once: false }}
         >
           {/* Data rendered with content on the server */}
-          <p className="font-dm text-brand-yellow text-2xl md:text-3xl lg:text-4xl leading-relaxed text-left font-medium">
-            {/* Fallback jika data kosong */}
-            {skillsString ? `“${skillsString}.”` : "“No skills added yet.”"}
-          </p>
+          {skills.length > 0 ? (
+            <div className="flex flex-wrap gap-2 md:gap-3">
+              {skills.map((skill, index) => (
+                <SkillBadge
+                  key={skill.id}
+                  name={skill.name}
+                  logoUrl={skill.logo}
+                  index={index}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="font-dm text-brand-yellow text-2xl md:text-3xl lg:text-4xl leading-relaxed text-left font-medium">
+              “No skills added yet.”
+            </p>
+          )}
         </motion.div>
 
         {/* Dekorasi Matahari Kuning - Pop Up Animation */}

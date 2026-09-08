@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { mediaConfig } from "@/lib/config";
 
 export interface GalleryItem {
   id: number;
@@ -11,6 +13,16 @@ export interface GalleryItem {
 }
 
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
+  const [failed, setFailed] = useState<ReadonlySet<number>>(new Set());
+
+  function handleError(id: number) {
+    setFailed((prev) => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+  }
   return (
     <section
       id="gallery"
@@ -49,7 +61,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
           {items.map((item, index) => (
             <motion.div
               key={item.id}
-              className={`relative group overflow-hidden bg-brand-red/10 ${item.className}`}
+              className={`relative group overflow-hidden ${item.className}`}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               transition={{
@@ -59,15 +71,16 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
               }}
               viewport={{ once: false, amount: 0.2 }}
             >
-              <div className="absolute inset-0 bg-brand-red/0 group-hover:bg-brand-red/20 transition-colors duration-300 z-10" />
-
               <Image
-                src={item.src}
+                src={
+                  failed.has(item.id) ? mediaConfig.galleryFallback : item.src
+                }
                 alt={item.alt}
                 fill
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 loading="eager"
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                onError={() => handleError(item.id)}
+                className="object-cover transition-transform duration-700 grayscale group-hover:scale-110 group-hover:grayscale-0"
               />
             </motion.div>
           ))}

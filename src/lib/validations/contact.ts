@@ -1,12 +1,12 @@
-import { z } from "zod"
+import { z } from "zod";
 
 function isContactUrl(val: string): boolean {
-  if (/^mailto:[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)) return true
+  if (/^mailto:[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)) return true;
   try {
-    const url = new URL(val)
-    return url.protocol === "http:" || url.protocol === "https:"
+    const url = new URL(val);
+    return url.protocol === "http:" || url.protocol === "https:";
   } catch {
-    return false
+    return false;
   }
 }
 
@@ -24,15 +24,20 @@ export const contactSchema = z.object({
     .refine(isContactUrl, {
       message: "URL harus diawali http://, https://, atau mailto: yang valid",
     }),
+  username: z
+    .string()
+    .trim()
+    .min(2, "Username minimal 2 karakter")
+    .max(50, "Username maksimal 50 karakter"),
   icon: z
     .string()
     .trim()
     .min(1, "Nama icon wajib diisi")
     .max(60, "Nama icon maksimal 60 karakter"),
-})
+});
 
 export type ContactFormState = {
-  success: boolean
-  message: string
-  errors?: Record<string, string[]>
-}
+  success: boolean;
+  message: string;
+  errors?: Record<string, string[]>;
+};

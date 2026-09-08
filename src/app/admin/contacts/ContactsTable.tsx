@@ -6,7 +6,6 @@ import { DeleteButton } from "@/components/admin/DeleteButton";
 import { deleteContact } from "./actions";
 
 export function ContactsTable({ contacts }: { contacts: Contact[] }) {
-
   return (
     <div className="overflow-x-auto rounded-lg border border-neutral-800">
       <table className="w-full text-left text-sm">
@@ -14,6 +13,7 @@ export function ContactsTable({ contacts }: { contacts: Contact[] }) {
           <tr>
             <th className="p-3">Nama</th>
             <th className="p-3">URL</th>
+            <th className="p-3">Username</th>
             <th className="p-3">Icon</th>
             <th className="p-3">Dibuat</th>
             <th className="p-3 text-right">Aksi</th>
@@ -32,6 +32,11 @@ export function ContactsTable({ contacts }: { contacts: Contact[] }) {
                 >
                   {c.url}
                 </a>
+              </td>
+              <td className="p-3">
+                <span className="rounded bg-neutral-800 px-2 py-0.5 text-xs">
+                  {c.username}
+                </span>
               </td>
               <td className="p-3">
                 <span className="rounded bg-neutral-800 px-2 py-0.5 text-xs">

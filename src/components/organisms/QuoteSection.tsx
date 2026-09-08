@@ -35,9 +35,7 @@ const quotesData = [
   { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
 ];
 
-const IMG_1 = mediaConfig.quoteImages[0];
-const IMG_2 = mediaConfig.quoteImages[1];
-const IMG_3 = mediaConfig.quoteImages[2];
+const FALLBACK_IMGS = mediaConfig.quoteImages;
 
 function quoteOfTheDay() {
   const now = new Date();
@@ -48,7 +46,10 @@ function quoteOfTheDay() {
   return quotesData[dayOfYear % quotesData.length];
 }
 
-export const QuotesSection = () => {
+export const QuotesSection = ({ images = [] }: { images?: string[] }) => {
+  const IMG_1 = images[0] ?? FALLBACK_IMGS[0];
+  const IMG_2 = images[1] ?? FALLBACK_IMGS[1];
+  const IMG_3 = images[2] ?? FALLBACK_IMGS[2];
   // Computed during render (not in an effect) so SSR/first paint
   // already contains the quote instead of rendering null.
   const todaysQuote = quoteOfTheDay();

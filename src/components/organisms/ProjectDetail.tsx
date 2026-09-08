@@ -96,7 +96,7 @@ export const ProjectDetailSection = ({
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
           viewport={{ once: false }}
         >
           <BackButton />
@@ -113,7 +113,7 @@ export const ProjectDetailSection = ({
             </span>
           </div>
 
-          <h1 className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl leading-tight mb-8 md:mb-10">
+          <h1 className="font-gotham font-black text-brand-red text-3xl md:text-4xl lg:text-5xl leading-tight mb-8 md:mb-10">
             {project.name}
           </h1>
         </motion.div>
@@ -183,7 +183,7 @@ export const ProjectDetailSection = ({
             </motion.h3>
 
             <motion.p
-              className="font-dm text-brand-red text-base md:text-lg lg:text-xl leading-relaxed whitespace-pre-line"
+              className="font-dm text-brand-red text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line"
               variants={itemVariants}
             >
               {project.description}
@@ -244,7 +244,7 @@ export const ProjectDetailSection = ({
               className="w-max"
               initial={{ scale: 0, rotate: 90 }}
               whileInView={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 100, delay: 0.4 }} // Delay sedikit agar muncul terakhir
+              transition={{ type: "spring", stiffness: 100, delay: 0.4 }}
               viewport={{ once: false }}
             >
               <Image
@@ -252,7 +252,7 @@ export const ProjectDetailSection = ({
                 alt="Decorative Sun"
                 width={140}
                 height={140}
-                className="animate-[spin_20s_linear_infinite] lg:animate-spin-slow object-contain w-20 h-20 md:w-[100px] md:h-[100px] lg:w-[140px] lg:h-[140px]"
+                className="animate-[spin_20s_linear_infinite] lg:animate-spin-slow object-contain w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20"
               />
             </motion.div>
           </motion.div>

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import { getPublishedPosts, getContacts } from "@/lib/database";
 import { siteConfig } from "@/lib/config";
 import { Navbar } from "@/components/molecules/Navbar";
+import { BlogCard } from "@/components/molecules/BlogCard";
 import { FooterSection } from "@/components/organisms/FooterSection";
 
 export const revalidate = 60;
@@ -29,61 +28,33 @@ export default async function BlogPage() {
   return (
     <main className="bg-brand-black text-white">
       <Navbar />
-      <section className="mx-auto max-w-5xl px-4 py-16">
-        <h1 className="text-4xl font-bold">Blog</h1>
-        <p className="mt-2 text-neutral-400">
-          Artikel dan catatan seputar web development.
-        </p>
+      <section className="mx-auto max-w-[1400px] px-6 md:px-12 pt-32 pb-20 flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter">
+            Blogs
+          </h1>
+          <p className="font-bold text-brand-red">
+            I write random articles about tech.
+          </p>
+        </div>
 
         {posts.length === 0 ? (
-          <p className="mt-12 text-neutral-500">Belum ada artikel.</p>
+          <p className="mt-12 font-dm text-brand-red text-lg">
+            There is no articles yet.
+          </p>
         ) : (
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
             {posts.map((post) => (
-              <Link
+              <BlogCard
                 key={post.id}
-                href={`/blog/${post.slug}`}
-                className="overflow-hidden rounded-lg bg-neutral-900 transition hover:bg-neutral-800"
-              >
-                {post.cover_image && (
-                  <div className="relative h-48 w-full">
-                    <Image
-                      src={post.cover_image}
-                      alt={post.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-                <div className="p-5">
-                  <div className="flex flex-wrap gap-1">
-                    {post.tags?.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded bg-neutral-800 px-2 py-0.5 text-xs text-neutral-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h2 className="mt-2 text-xl font-semibold">{post.title}</h2>
-                  <p className="mt-1 line-clamp-2 text-sm text-neutral-400">
-                    {post.excerpt}
-                  </p>
-                  <p className="mt-3 text-xs text-neutral-500">
-                    {post.published_at
-                      ? new Date(post.published_at).toLocaleDateString("id-ID", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })
-                      : ""}
-                    {" • "}
-                    {post.reading_minutes} mnt baca
-                  </p>
-                </div>
-              </Link>
+                slug={post.slug}
+                title={post.title}
+                excerpt={post.excerpt}
+                coverImage={post.cover_image}
+                tags={post.tags ?? []}
+                publishedAt={post.published_at}
+                readingMinutes={post.reading_minutes}
+              />
             ))}
           </div>
         )}

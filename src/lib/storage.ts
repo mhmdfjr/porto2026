@@ -14,14 +14,12 @@ export function validateImageFile(file: File): void {
   }
   if (file.size > storageConfig.maxFileSizeBytes) {
     const maxMB = storageConfig.maxFileSizeBytes / (1024 * 1024);
-    throw new UploadValidationError(
-      `Ukuran gambar maksimal ${maxMB}MB.`,
-    );
+    throw new UploadValidationError(`Ukuran gambar maksimal ${maxMB}MB.`);
   }
   const ext = getExtension(file.name);
   if (!storageConfig.allowedExtensions.includes(ext as never)) {
     throw new UploadValidationError(
-      "Format gambar harus JPG, PNG, atau WebP.",
+      "Format gambar harus JPG, PNG, WebP, atau SVG.",
     );
   }
   if (
@@ -29,9 +27,23 @@ export function validateImageFile(file: File): void {
     !(storageConfig.allowedMimeTypes as readonly string[]).includes(file.type)
   ) {
     throw new UploadValidationError(
-      "Tipe file tidak didukung. Gunakan JPG, PNG, atau WebP.",
+      "Tipe file tidak didukung. Gunakan JPG, PNG, WebP, atau SVG.",
     );
   }
+}
+
+export function sanitizeSvg(dirty: string): string {
+  let clean = dirty.replace(/<script[\s\S]*?<\/script\s*>/gi, "");
+  clean = clean.replace(/<foreignObject[\s\S]*?<\/foreignObject\s*>/gi, "");
+  clean = clean.replace(/\son[a-zA-Z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/g, "");
+  clean = clean.replace(
+    /((?:href|xlink:href)\s*=\s*["'])\s*javascript:[^"']*/gi,
+    "$1#",
+  );
+  if (!/<svg[\s>]/i.test(clean)) {
+    throw new UploadValidationError("File SVG tidak valid.");
+  }
+  return clean;
 }
 
 function randomSuffix(): string {
@@ -47,10 +59,15 @@ export async function uploadImage(
   const ext = getExtension(file.name);
   const path = `${folder}/${randomSuffix()}.${ext}`;
 
+  const payload =
+    ext === "svg"
+      ? new Blob([sanitizeSvg(await file.text())], { type: "image/svg+xml" })
+      : file;
+
   const { error } = await supabase.storage
     .from(storageConfig.bucket)
-    .upload(path, file, {
-      contentType: file.type || undefined,
+    .upload(path, payload, {
+      contentType: ext === "svg" ? "image/svg+xml" : file.type || undefined,
       upsert: false,
     });
   if (error) throw new Error("Gagal mengunggah gambar. Coba lagi.");
@@ -79,11 +96,6 @@ export async function uploadImages(
   return urls;
 }
 
-/**
- * Extract a storage path from a public URL, but only if it belongs
- * to our bucket. Returns null for foreign URLs so callers never
- * delete files outside our control.
- */
 export function extractStoragePath(publicUrl: string): string | null {
   if (!publicUrl) return null;
   const marker = `${storageConfig.bucket}/`;
@@ -94,7 +106,6 @@ export function extractStoragePath(publicUrl: string): string | null {
   return path;
 }
 
-/** Best-effort removal; storage errors are logged, never thrown. */
 export async function removeStoragePaths(
   supabase: SupabaseClient,
   paths: (string | null | undefined)[],

@@ -1,5 +1,5 @@
 import { supabase } from "./supabase"
-import type { Contact, Skill, Feature, Education, Work, Project, Organization, Post } from "./supabase"
+import type { Contact, Skill, Feature, About, Education, Work, Project, Organization, Post } from "./supabase"
 
 /**
  * NOTE: these reads use the public anon client and therefore rely
@@ -73,6 +73,28 @@ export function getFeatures(): Promise<Feature[]> {
 
 export function getFeatureById(id: number): Promise<Feature | null> {
   return fetchById<Feature>("features", id);
+}
+
+/** Single about profile row (first record). Null when table is empty. */
+export async function getAbout(): Promise<About | null> {
+  try {
+    const { data, error } = await supabase
+      .from("about")
+      .select("*")
+      .order("id", { ascending: true })
+      .limit(1)
+      .single();
+
+    if (error) {
+      console.error("Error fetching about:", error);
+      return null;
+    }
+
+    return data as About;
+  } catch (error) {
+    console.error("Error fetching about:", error);
+    return null;
+  }
 }
 
 export function getEducations(): Promise<Education[]> {

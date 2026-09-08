@@ -32,12 +32,23 @@ export const storageConfig = {
     educations: "Educations",
     organizations: "Organizations",
     posts: "Posts",
+    skills: "Skills",
   },
-  allowedMimeTypes: ["image/jpeg", "image/png", "image/webp"],
-  allowedExtensions: ["jpg", "jpeg", "png", "webp"],
+  // SVG allowed but ALWAYS sanitized server-side (see lib/storage.ts):
+  // raw SVG can carry <script>/event handlers (stored XSS).
+  allowedMimeTypes: [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/svg+xml",
+  ],
+  allowedExtensions: ["jpg", "jpeg", "png", "webp", "svg"],
   maxFileSizeBytes: 2 * 1024 * 1024, // 2 MB
   maxFilesPerRecord: 5,
 } as const;
+
+/** accept attribute for admin file inputs — single source of truth. */
+export const IMAGE_INPUT_ACCEPT = storageConfig.allowedMimeTypes.join(",");
 
 export function publicStorageUrl(path: string): string {
   return `${supabasePublicBaseUrl()}/storage/v1/object/public/porto/${path}`;
@@ -63,4 +74,5 @@ export const mediaConfig = {
     publicStorageUrl("building1.jpg"),
     publicStorageUrl("cafe1.jpg"),
   ],
+  galleryFallback: publicStorageUrl("nature10.jpg"),
 } as const;

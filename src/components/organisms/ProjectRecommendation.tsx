@@ -77,11 +77,11 @@ export const ProjectRecommendationSection = ({
           </div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: false, amount: 0.3 }}
           >
             {recommendations.map((rec) => {
               const safeImage = getSafeImage(rec.images);
@@ -96,10 +96,9 @@ export const ProjectRecommendationSection = ({
                         fill
                         className="object-cover contrast-125 group-hover:scale-105 transition-all duration-500"
                       />
-                      <div className="absolute inset-0 bg-brand-red/0 group-hover:bg-brand-red/10 transition-colors" />
                     </div>
 
-                    <h3 className="font-gotham font-black text-brand-red text-2xl md:text-3xl lg:text-4xl uppercase tracking-tight decoration-brand-red underline-offset-4">
+                    <h3 className="font-gotham font-black text-brand-red text-xl md:text-2xl tracking-tight decoration-brand-red underline-offset-4">
                       {rec.name}
                     </h3>
                     <p className="font-dm text-brand-red/60 text-sm md:text-base mt-2 line-clamp-2">

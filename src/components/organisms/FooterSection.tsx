@@ -9,13 +9,6 @@ import type { Contact } from "@/lib/supabase";
 
 const FOOTER_IMAGE = mediaConfig.footerImage;
 
-/** Shorten a URL for display: strip protocol and trailing slash. */
-function displayUrl(url: string): string {
-  return url
-    .replace(/^(https?:\/\/|mailto:)/, "")
-    .replace(/\/$/, "");
-}
-
 export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
   return (
     <footer
@@ -24,9 +17,8 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
     >
       <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10">
         <div className="flex-1 flex flex-col gap-8 md:gap-10">
-          {/* Heading Animation - Slide in from Right */}
           <motion.h2
-            className="font-gotham w-full text-end font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter leading-none"
+            className="font-gotham w-full text-start font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter leading-none"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -73,7 +65,7 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
                     rel={isExternal ? "noopener noreferrer" : undefined}
                     className="font-dm text-brand-yellow text-base md:text-lg lg:text-xl hover:text-brand-yellow transition-colors break-all"
                   >
-                    {displayUrl(contact.url)}
+                    {contact.username}
                   </Link>
                 </motion.div>
               );
