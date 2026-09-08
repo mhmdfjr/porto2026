@@ -28,12 +28,14 @@ export default async function ProjectsPage() {
   return (
     <main className="bg-brand-black text-white">
       <Navbar />
-      <section className="mx-auto max-w-[1400px] px-6 md:px-12 pt-32 pb-20 flex flex-col gap-6">
+      <section className="w-full mx-auto px-6 md:px-12 pt-32 pb-20 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <h1 className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter">
-            Projects
+            My random craft
           </h1>
-          <p className="font-bold text-brand-red">My project collection.</p>
+          <p className="font-bold text-brand-red">
+            Let's go check out some of my fun project collections
+          </p>
         </div>
 
         {projects.length === 0 ? (
@@ -49,6 +51,7 @@ export default async function ProjectsPage() {
                 title={project.name}
                 description={project.description}
                 tags={project.techstack}
+                live_url={project.live_url || null}
                 imageUrl={project.images?.[0] ?? null}
               />
             ))}

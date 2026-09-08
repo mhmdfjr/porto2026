@@ -39,7 +39,7 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: false }}
           >
-            Blog
+            Write to talk
           </motion.h2>
         </div>
 
@@ -112,7 +112,7 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
                 href="/blog"
                 className="px-8 py-3 border border-brand-red text-brand-red font-gotham font-bold uppercase text-sm hover:bg-brand-red hover:text-black transition-colors"
               >
-                Lihat Semua Artikel
+                See all articles
               </Link>
             </motion.div>
           </>

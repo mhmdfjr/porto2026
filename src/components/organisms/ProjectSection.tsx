@@ -62,7 +62,7 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: false }}
           >
-            Project
+            Some random projects:
           </motion.h2>
 
           <motion.div

@@ -9,6 +9,7 @@ import { AboutSection } from "@/components/organisms/AboutSection";
 import { WorkSection } from "@/components/organisms/WorkSection";
 import { GallerySection } from "@/components/organisms/GallerySection";
 import { SkillSection } from "@/components/organisms/SkillSection";
+import { SkillMarqueeSection } from "@/components/organisms/SkillMarqueeSection";
 import { ProjectSection } from "@/components/organisms/ProjectSection";
 import { BlogSection } from "@/components/organisms/BlogSection";
 import { QuotesSection } from "@/components/organisms/QuoteSection";
@@ -53,12 +54,13 @@ export default async function Home() {
       <HeroSection images={heroImages} contacts={contacts} />
       <AboutSection />
       {/* <FeatureSection features={features} /> */}
+      <MottoSection text="Be Your Own Muse" />
       <WorkSection works={works} />
       {/* <GallerySection /> */}
-      <SkillSection skills={skills} image={skillImage} />
+      {/* <SkillSection skills={skills} image={skillImage} /> */}
       <ProjectSection projects={projects} />
+      <SkillMarqueeSection skills={skills} />
       {/* <QuotesSection images={quoteImages} /> */}
-      <MottoSection text="Be Your Own Muse" />
       <BlogSection posts={posts} />
       <FooterSection contacts={contacts} />
     </main>

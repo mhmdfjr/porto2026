@@ -13,9 +13,9 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
   return (
     <footer
       id="footer"
-      className="relative w-full bg-brand-red pt-4 pb-4 px-6 md:px-12 overflow-hidden"
+      className="relative w-full bg-brand-black pt-4 pb-4 px-6 md:px-12 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10">
+      <div className="w-full mx-auto flex flex-col gap-8 md:gap-10">
         <div className="flex-1 flex flex-col gap-8 md:gap-10">
           <motion.h2
             className="font-gotham w-full text-start font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter leading-none"
@@ -24,7 +24,7 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: false }}
           >
-            Thank you
+            Hit me up!
           </motion.h2>
         </div>
 
@@ -91,13 +91,13 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
       </div>
 
       <motion.div
-        className="max-w-7xl mx-auto mt-8 pt-4 border-t border-brand-yellow"
+        className="w-full mx-auto mt-8 pt-4 border-t border-brand-yellow"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.8 }}
         viewport={{ once: false }}
       >
-        <p className="font-dm text-brand-yellow text-sm text-center md:text-left">
+        <p className="font-dm text-brand-yellow text-sm text-center">
           © {new Date().getFullYear()} Mohamad Fajar. All rights reserved.
         </p>
       </motion.div>

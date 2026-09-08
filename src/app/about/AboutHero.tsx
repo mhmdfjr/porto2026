@@ -30,7 +30,7 @@ export const AboutHero = ({ about }: { about: About | null }) => {
       id="about"
       className="relative w-full bg-brand-black text-brand-red pt-12 lg:pb-10 px-6 md:px-12 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="w-full mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
           <motion.div
             className="flex flex-col gap-4 relative z-10"
@@ -83,14 +83,14 @@ export const AboutHero = ({ about }: { about: About | null }) => {
               transition={{ delay: 0.5, duration: 0.8 }}
               viewport={{ once: false }}
             >
-              <Button href="#education" text="Read More" />
+              <Button href="#education" text="What's more?" />
               <Button
                 href={CV_URL}
                 variant="secondary"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Download CV
+                Download my CV
               </Button>
             </motion.div>
           </motion.div>

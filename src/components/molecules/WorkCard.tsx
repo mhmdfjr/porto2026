@@ -18,12 +18,7 @@ export const WorkCard = ({
   imageUrl,
   index,
 }: WorkCardProps) => {
-  // --- LOGIKA MATEMATIKA GRID ---
-
-  // 1. Logika Tablet (2 Kolom) -> Pola ZigZag per 2 item
   const isReversedMd = Math.floor(index / 2) % 2 !== 0;
-
-  // 2. Logika Desktop (3 Kolom) -> Pola ZigZag per 3 item
   const isReversedLg = Math.floor(index / 3) % 2 !== 0;
 
   return (
@@ -57,17 +52,17 @@ export const WorkCard = ({
       {/* --- Text Content --- */}
       <div className={`flex flex-col gap-1 w-full md:w-1/2`}>
         {/* Company Name */}
-        <h3 className="font-gotham font-black text-brand-red text-base md:text-lg lg:text-xl uppercase tracking-tight">
+        <h3 className="font-gotham font-black text-brand-yellow text-base md:text-lg lg:text-xl uppercase tracking-tight">
           {company}
         </h3>
 
         {/* Role */}
-        <p className="font-gotham font-bold text-brand-red/90 text-sm md:text-base lg:text-lg">
+        <p className="font-gotham font-bold text-brand-yellow/90 text-sm md:text-base lg:text-lg">
           {role}
         </p>
 
         {/* Date & Location */}
-        <p className="font-dm text-brand-red/70 text-xs md:text-sm uppercase tracking-wider mt-1">
+        <p className="font-dm text-brand-yellow/70 text-xs md:text-sm uppercase tracking-wider mt-1">
           {dateRange} <br /> {location}
         </p>
       </div>

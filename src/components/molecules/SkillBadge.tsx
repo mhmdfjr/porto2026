@@ -8,21 +8,15 @@ type Props = {
   name: string;
   logoUrl?: string | null;
   index?: number;
+  plain?: boolean;
 };
 
-/** Skill badge: Supabase-hosted logo + name, or initial avatar. */
-export function SkillBadge({ name, logoUrl, index = 0 }: Props) {
+export function SkillBadge({ name, logoUrl, index = 0, plain = false }: Props) {
   const [failed, setFailed] = useState(false);
   const showAvatar = !logoUrl || failed;
 
-  return (
-    <motion.span
-      className="inline-flex items-center gap-2 border border-brand-yellow bg-transparent pr-4 min-w-max"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: (index % 8) * 0.07, ease: "easeOut" }}
-      viewport={{ once: false, amount: 0.3 }}
-    >
+  const inner = (
+    <>
       {showAvatar ? (
         <span
           aria-hidden
@@ -35,16 +29,36 @@ export function SkillBadge({ name, logoUrl, index = 0 }: Props) {
           <Image
             src={logoUrl}
             alt=""
-            width={24}
-            height={24}
+            width={32}
+            height={32}
             onError={() => setFailed(true)}
-            className="h-6 w-6 object-contain"
+            className="h-8 w-8 object-contain"
           />
         </span>
       )}
-      <span className="font-bold min-w-max text-sm text-brand-yellow md:text-base">
+      <span className="font-dm font-bold min-w-max text-sm text-brand-yellow md:text-base">
         {name}
       </span>
+    </>
+  );
+
+  if (plain) {
+    return (
+      <span className="inline-flex items-center gap-2 border-2 border-brand-yellow bg-transparent pr-4 min-w-max">
+        {inner}
+      </span>
+    );
+  }
+
+  return (
+    <motion.span
+      className="inline-flex items-center gap-2 border-2 border-brand-yellow bg-transparent pr-4 min-w-max"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: (index % 8) * 0.07, ease: "easeOut" }}
+      viewport={{ once: false, amount: 0.3 }}
+    >
+      {inner}
     </motion.span>
   );
 }

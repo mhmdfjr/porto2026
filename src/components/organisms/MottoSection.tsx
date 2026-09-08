@@ -17,10 +17,8 @@ export const MottoSection = ({
   return (
     <section
       id="motto"
-      className="relative w-full h-[40vh] md:h-[60vh] flex items-center justify-center overflow-hidden"
+      className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden"
     >
-      {/* --- BACKGROUND IMAGE ANIMATION --- */}
-      {/* Efek: Slow Zoom Out saat terlihat */}
       <motion.div
         className="absolute inset-0 z-0"
         initial={{ scale: 1.1, opacity: 0 }}
@@ -37,11 +35,9 @@ export const MottoSection = ({
         />
       </motion.div>
 
-      {/* --- CONTENT (RED BOX) --- */}
       <div className="relative z-10 p-4 w-full flex justify-center">
         <motion.div
           className="flex gap-4 justify-center items-center bg-brand-red px-6 py-4 md:px-12 md:py-8 shadow-2xl cursor-default"
-          // Entrance Animation (Pop Up)
           initial={{ opacity: 0, scale: 0.8, y: 50 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           transition={{
@@ -51,10 +47,8 @@ export const MottoSection = ({
             delay: 0.2,
           }}
           viewport={{ once: false }}
-          // Hover Animation (Menggantikan Tailwind hover)
           whileHover={{ scale: 1.05, rotate: 2 }}
         >
-          {/* Sun Icon Animation */}
           <motion.div
             className="transition-transform hover:rotate-45 duration-500"
             initial={{ scale: 0, rotate: -180 }}
@@ -71,9 +65,8 @@ export const MottoSection = ({
             />
           </motion.div>
 
-          {/* Text Animation */}
           <motion.h2
-            className="font-gotham font-black text-brand-black text-3xl md:text-5xl lg:text-7xl uppercase tracking-tighter text-center"
+            className="font-gotham font-black text-brand-black text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-center"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}

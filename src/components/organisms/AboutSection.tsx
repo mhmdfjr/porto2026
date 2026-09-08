@@ -14,9 +14,9 @@ export const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative w-full bg-brand-yellow text-brand-red pt-10 lg:pb-10 px-6 md:px-12 overflow-hidden"
+      className="relative w-full bg-brand-black text-brand-yellow pt-10 lg:pb-10 px-6 md:px-12 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div
             className="flex flex-col gap-8 relative z-10"
@@ -26,7 +26,7 @@ export const AboutSection = () => {
             viewport={{ once: false, amount: 0.3 }}
           >
             <h2 className="font-gotham font-black text-4xl md:text-5xl lg:text-6xl tracking-tight">
-              About Me
+              Who am I?
             </h2>
 
             <motion.p
@@ -36,7 +36,7 @@ export const AboutSection = () => {
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: false }}
             >
-              My name is <strong>Mohamad Fajar Nur Khasani</strong>, and I am a
+              My name is <strong>Mohamad Fajar Nur Khasani</strong>, a
               passionate <strong>Full-Stack Developer</strong>. I have gained
               valuable knowledge and great experience through my academic
               studies, professional work, and community involvement in
@@ -60,14 +60,14 @@ export const AboutSection = () => {
             >
               <Button
                 href="/about"
-                text="Read More"
-                variant="solid-red-yellow"
+                text="Know me more"
+                variant="solid-yellow-black"
                 icon="book-open"
               />
               <Button
                 href={CV_URL}
-                text="Donwload CV"
-                variant="outline-red-yellow"
+                text="Download my CV"
+                variant="outline-yellow-black"
                 size="md"
                 icon="arrow-big-down-dash"
                 target="_blank"
@@ -78,7 +78,7 @@ export const AboutSection = () => {
 
           <div className="relative h-[500px] lg:h-[600px] w-full flex flex-col justify-start md:gap-0 lg:block">
             <motion.div
-              className="absolute top-1/2 md:top-1/8 left-1/10 md:-left-1/10 select-none z-20"
+              className="absolute top-1/2 md:top-1/8 left-1/10 select-none z-20"
               initial={{ scale: 0, rotate: -90 }}
               whileInView={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
@@ -86,7 +86,7 @@ export const AboutSection = () => {
             >
               <div className="transition-transform hover:rotate-45 duration-500">
                 <Image
-                  src="/sun-red.svg"
+                  src="/sun-yellow.svg"
                   alt="Decorative Sun"
                   width={100}
                   height={100}

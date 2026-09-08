@@ -32,7 +32,7 @@ export const HeroSection = ({
   return (
     <section
       id="hero"
-      className="relative w-full min-h-screen flex flex-col overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col overflow-hidden px-0"
     >
       {/* --- Top Section --- */}
       <div className="relative h-[60vh] md:h-[65vh] w-full bg-gray-200 flex flex-col justify-end">
@@ -79,8 +79,8 @@ export const HeroSection = ({
         </div>
       </div>
 
-      <div className="flex-1 bg-brand-black w-full relative z-20 px-6 md:px-12 pt-12">
-        <div className="w-full max-w-7xl mx-auto h-full mb-6 flex flex-col items-start justify-end gap-10">
+      <div className="w-full flex flex-col bg-brand-black relative z-20 pt-12 px-6 md:px-12">
+        <div className="w-full mx-auto h-full mb-6 flex flex-col items-start justify-end gap-10">
           <motion.div
             className="w-full flex flex-col items-end justify-end gap-4"
             initial={{ x: 50, opacity: 0 }}
@@ -93,13 +93,13 @@ export const HeroSection = ({
             </p>
 
             <div className="flex justify-end md:text-lg lg:text-xl text-base">
-              <Button href="#about" text="Learn More" />
+              <Button href="#about" text="Tap to know me" />
             </div>
           </motion.div>
         </div>
 
         <motion.div
-          className="w-full max-w-7xl mx-auto flex items-start justify-end gap-5"
+          className="w-full mx-auto flex items-start justify-end gap-5"
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
