@@ -13,10 +13,9 @@ export const WorkSection = ({ works }: { works: Work[] }) => {
       id="work"
       className="relative bg-brand-black py-10 px-6 md:px-12 w-full overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto">
-        {/* Dekorasi Matahari - Pop Up Animation */}
+      <div className="w-full mx-auto space-y-6">
         <motion.div
-          className="absolute -top-10 -right-10 select-none z-10"
+          className="absolute -top-6 md:-top-10 -right-10 select-none z-10"
           initial={{ scale: 0, rotate: 90 }}
           whileInView={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 60, duration: 1 }}
@@ -33,10 +32,9 @@ export const WorkSection = ({ works }: { works: Work[] }) => {
           </div>
         </motion.div>
 
-        {/* Header Animation - Slide Right */}
-        <div className="flex items-center gap-4 mb-8 md:mb-16 relative z-10">
+        <div className="flex items-center gap-4 relative z-10">
           <motion.h2
-            className="font-gotham font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter"
+            className="font-gotham font-black text-brand-yellow text-3xl md:text-5xl lg:text-6xl tracking-tighter"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}

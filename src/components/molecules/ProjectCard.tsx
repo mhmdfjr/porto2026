@@ -41,7 +41,7 @@ export const ProjectCard = ({
         </div>
 
         <div className="flex flex-col gap-2 mt-4">
-          <h3 className="font-gotham font-black text-brand-red text-xl md:text-2xl lg:text-3xl tracking-tight leading-none">
+          <h3 className="font-gotham font-black text-brand-red text-xl md:text-2xl tracking-tight leading-none">
             {title}
           </h3>
 
@@ -71,11 +71,13 @@ export const ProjectCard = ({
           href={`/project/${id}`}
           size="sm"
           variant="outline-red-black"
+          icon="rocket"
         />
         <Button
           text="Live demo"
           href={live_url ? live_url : `#`}
           size="sm"
+          icon="external-link"
           variant="solid-red-black"
         />
       </div>

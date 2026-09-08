@@ -16,8 +16,8 @@ export const EducationSection = ({
       id="education"
       className="relative w-full bg-brand-black py-10 px-6 md:px-12 overflow-hidden"
     >
-      <div className="w-full mx-auto">
-        <div className="w-full flex gap-4 md:gap-6 justify-end items-start z-10 relative">
+      <div className="w-full mx-auto space-y-6 md:space-y-20">
+        <div className="w-full flex gap-4 md:gap-6 justify-end items-center z-10 relative">
           <motion.div
             className="transition-transform hover:rotate-45 duration-500 select-none"
             initial={{ scale: 0, rotate: -90 }}
@@ -40,7 +40,7 @@ export const EducationSection = ({
           </motion.div>
 
           <motion.h2
-            className="font-gotham text-end font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl mb-8 md:mb-20 tracking-tighter"
+            className="font-gotham text-end font-black text-brand-yellow text-3xl md:text-5xl lg:text-6xl tracking-tighter"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -70,7 +70,7 @@ export const EducationSection = ({
             viewport={{ once: false }}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-24 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-24 relative z-10">
             {educations.map((item, index) => (
               <div
                 key={item.id}

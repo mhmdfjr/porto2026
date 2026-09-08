@@ -17,15 +17,15 @@ export const AboutSection = () => {
       className="relative w-full bg-brand-black text-brand-yellow pt-10 lg:pb-10 px-6 md:px-12 overflow-hidden"
     >
       <div className="mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           <motion.div
-            className="flex flex-col gap-8 relative z-10"
+            className="flex flex-col gap-6 md:gap-8 relative z-10"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: false, amount: 0.3 }}
           >
-            <h2 className="font-gotham font-black text-4xl md:text-5xl lg:text-6xl tracking-tight">
+            <h2 className="font-gotham font-black text-3xl md:text-5xl lg:text-6xl tracking-tight">
               Who am I?
             </h2>
 
@@ -106,7 +106,7 @@ export const AboutSection = () => {
                 src={IMAGE_PROFILE_1}
                 alt="Profile Back"
                 fill
-                className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-500"
+                className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />
             </motion.div>
 
@@ -121,7 +121,7 @@ export const AboutSection = () => {
                 src={IMAGE_PROFILE_2}
                 alt="Profile Front"
                 fill
-                className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-500"
+                className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />
             </motion.div>
           </div>

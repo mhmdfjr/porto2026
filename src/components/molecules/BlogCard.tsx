@@ -21,11 +21,6 @@ function formatDate(iso: string | null): string {
   });
 }
 
-/**
- * Blog card mirroring the ProjectCard structure: vertical layout,
- * aspect-video cover, gotham title, excerpt, hashtag tags, and an
- * outlined CTA button — with date + reading time as its meta row.
- */
 export const BlogCard = ({
   slug,
   title,

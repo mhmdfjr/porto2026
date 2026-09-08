@@ -31,7 +31,7 @@ export const AboutHero = ({ about }: { about: About | null }) => {
       className="relative w-full bg-brand-black text-brand-red pt-12 lg:pb-10 px-6 md:px-12 overflow-hidden"
     >
       <div className="w-full mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 space-y-6 items-center">
           <motion.div
             className="flex flex-col gap-4 relative z-10"
             initial={{ opacity: 0, y: 50 }}
@@ -53,7 +53,9 @@ export const AboutHero = ({ about }: { about: About | null }) => {
                 <dt aria-label="Age">
                   <Sparkles className="h-5 w-5 text-brand-red/70" aria-hidden />
                 </dt>
-                <dd className="font-semibold">{String(profile.age)} y.o</dd>
+                <dd className="font-semibold  text-brand-red/70">
+                  {String(profile.age)} y.o
+                </dd>
               </div>
               <div className="flex items-center gap-2">
                 <dt aria-label="Address">
@@ -62,7 +64,9 @@ export const AboutHero = ({ about }: { about: About | null }) => {
                     aria-hidden
                   />
                 </dt>
-                <dd className="font-semibold">{profile.address}</dd>
+                <dd className="font-semibold text-brand-red/70">
+                  {profile.address}
+                </dd>
               </div>
             </dl>
 
@@ -83,15 +87,20 @@ export const AboutHero = ({ about }: { about: About | null }) => {
               transition={{ delay: 0.5, duration: 0.8 }}
               viewport={{ once: false }}
             >
-              <Button href="#education" text="What's more?" />
+              <Button
+                href="#education"
+                text="What's more?"
+                variant="solid-red-black"
+                icon="university"
+              />
               <Button
                 href={CV_URL}
-                variant="secondary"
+                variant="outline-red-black"
                 target="_blank"
+                icon="arrow-big-down-dash"
                 rel="noopener noreferrer"
-              >
-                Download my CV
-              </Button>
+                text="Download my CV"
+              />
             </motion.div>
           </motion.div>
 

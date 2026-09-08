@@ -37,7 +37,7 @@ export const MottoSection = ({
 
       <div className="relative z-10 p-4 w-full flex justify-center">
         <motion.div
-          className="flex gap-4 justify-center items-center bg-brand-red px-6 py-4 md:px-12 md:py-8 shadow-2xl cursor-default"
+          className="flex gap-2 md:gap-4 justify-center items-center bg-brand-red p-4 md:px-12 md:py-8 shadow-2xl cursor-default"
           initial={{ opacity: 0, scale: 0.8, y: 50 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           transition={{
@@ -66,7 +66,7 @@ export const MottoSection = ({
           </motion.div>
 
           <motion.h2
-            className="font-gotham font-black text-brand-black text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-center"
+            className="min-w-max font-gotham font-black text-brand-black text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-center"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}

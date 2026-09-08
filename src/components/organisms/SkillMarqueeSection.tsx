@@ -24,14 +24,14 @@ export const SkillMarqueeSection = ({ skills }: { skills: Skill[] }) => {
   return (
     <section
       id="skills-marquee"
-      className="relative w-full bg-brand-black py-10 overflow-hidden"
+      className="relative w-full bg-brand-black py-10 space-y-6 overflow-hidden"
     >
-      <div className="w-full px-6 md:px-12 mx-auto flex items-center gap-4 mb-8">
-        <h2 className="font-gotham font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter">
+      <div className="w-full px-6 md:px-12 mx-auto flex items-center gap-4">
+        <h2 className="font-gotham font-black text-brand-yellow text-3xl md:text-5xl lg:text-6xl tracking-tighter">
           Have some skills
         </h2>
         <motion.div
-          className="transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0"
+          className="transition-transform hover:rotate-45 duration-500 select-none"
           initial={{ scale: 0, rotate: 90 }}
           whileInView={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 100, duration: 0.8 }}
@@ -47,7 +47,7 @@ export const SkillMarqueeSection = ({ skills }: { skills: Skill[] }) => {
         </motion.div>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1 md:gap-">
         {rows.map((row, rowIndex) =>
           row.length > 0 ? (
             <div key={rowIndex} className="overflow-hidden">

@@ -38,7 +38,7 @@ export const WorkCard = ({
     >
       {/* --- Image Container --- */}
       <div className="relative w-full md:w-1/2 aspect-video md:aspect-square bg-brand-yellow overflow-hidden shadow-lg shrink-0">
-        <div className="w-full h-full relative grayscale contrast-125 transition-transform duration-500 group-hover:scale-105 group-hover:grayscale-0">
+        <div className="w-full h-full relative contrast-125 transition-transform duration-500 group-hover:scale-105">
           <Image
             src={imageUrl}
             alt={company}

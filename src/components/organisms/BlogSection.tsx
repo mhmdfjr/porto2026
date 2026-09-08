@@ -14,10 +14,10 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
       id="blog"
       className="relative bg-brand-black py-10 px-6 md:px-12 w-full overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto">
-        <div className="w-full flex justify-between items-start z-10">
+      <div className="w-full mx-auto space-y-6">
+        <div className="w-full flex items-center justify-between z-10">
           <motion.div
-            className="transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0"
+            className="transition-transform hover:rotate-45 duration-500 select-none"
             initial={{ scale: 0, rotate: 90 }}
             whileInView={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 100, duration: 0.8 }}
@@ -33,7 +33,7 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
           </motion.div>
 
           <motion.h2
-            className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-8 md:mb-10"
+            className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -76,7 +76,7 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
                       </div>
                     )}
                     <div className="flex flex-col gap-2">
-                      <h3 className="font-gotham font-black text-brand-red text-2xl md:text-3xl tracking-tight leading-none group-hover:underline">
+                      <h3 className="font-gotham font-black text-brand-red text-xl md:text-2xl tracking-tight leading-none">
                         {post.title}
                       </h3>
                       <p className="font-dm text-brand-red/80 text-sm md:text-base leading-relaxed line-clamp-3">
@@ -102,7 +102,7 @@ export const BlogSection = ({ posts }: { posts: Post[] }) => {
             </div>
 
             <motion.div
-              className="flex justify-center mt-8 md:mt-10"
+              className="flex justify-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}

@@ -5,6 +5,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ProjectCard } from "../molecules/ProjectCard";
+import { Button } from "../atoms/Button";
 import type { Project } from "@/lib/supabase";
 
 export const ProjectSection = ({ projects }: { projects: Project[] }) => {
@@ -22,12 +23,10 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
-  // Subscribing to the external Embla carousel instance (official
-  // Embla pattern): sync snap list + selection into React state.
   useEffect(() => {
     if (!emblaApi) return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- official Embla subscription pattern
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
@@ -53,10 +52,10 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
       id="project"
       className="relative bg-brand-black py-10 px-6 md:px-12 w-full overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto">
-        <div className="w-full flex justify-between items-start z-10">
+      <div className="w-full mx-auto space-y-6">
+        <div className="w-full flex items-center justify-between z-10">
           <motion.h2
-            className="font-gotham font-black text-brand-red text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-8 md:mb-10"
+            className="font-gotham font-black text-brand-red text-3xl md:text-5xl lg:text-6xl tracking-tighter"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -66,7 +65,7 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
           </motion.h2>
 
           <motion.div
-            className="transition-transform hover:rotate-45 duration-500 select-none p-8 md:p-0"
+            className="transition-transform hover:rotate-45 duration-500 select-none"
             initial={{ scale: 0, rotate: 90 }}
             whileInView={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 100, duration: 0.8 }}
@@ -126,18 +125,17 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
             </div>
 
             <motion.div
-              className="flex flex-row items-center justify-center md:justify-between gap-2 md:gap-4 lg:gap-6 mt-8 md:mt-10"
+              className="w-full flex flex-row items-center justify-between"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: false }}
             >
-              <button
+              <Button
+                text="Prev"
                 onClick={scrollPrev}
-                className="hidden md:flex px-4 py-2 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
-              >
-                Prev
-              </button>
+                variant="outline-red-black"
+              />
 
               <div className="flex gap-1 md:gap-3 flex-wrap justify-center">
                 {scrollSnaps.map((_, index) => (
@@ -154,19 +152,11 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
                 ))}
               </div>
 
-              <button
-                onClick={scrollPrev}
-                className="md:hidden px-8 py-3 border border-brand-red text-brand-red font-gotham font-bold text-lg hover:bg-brand-red hover:text-black transition-colors"
-              >
-                Prev
-              </button>
-
-              <button
+              <Button
+                text="Next"
                 onClick={scrollNext}
-                className="px-8 py-3 bg-brand-red text-black font-gotham font-bold text-lg hover:bg-red-600 transition-colors"
-              >
-                Next
-              </button>
+                variant="solid-red-black"
+              />
             </motion.div>
           </>
         )}

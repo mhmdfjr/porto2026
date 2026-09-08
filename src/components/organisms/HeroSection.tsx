@@ -93,7 +93,7 @@ export const HeroSection = ({
             </p>
 
             <div className="flex justify-end md:text-lg lg:text-xl text-base">
-              <Button href="#about" text="Tap to know me" />
+              <Button href="#about" text="Get to know more" />
             </div>
           </motion.div>
         </div>

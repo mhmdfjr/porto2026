@@ -13,22 +13,20 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
   return (
     <footer
       id="footer"
-      className="relative w-full bg-brand-black pt-4 pb-4 px-6 md:px-12 overflow-hidden"
+      className="relative w-full bg-brand-black py-4 pb-4 px-6 md:px-12 overflow-hidden"
     >
-      <div className="w-full mx-auto flex flex-col gap-8 md:gap-10">
-        <div className="flex-1 flex flex-col gap-8 md:gap-10">
-          <motion.h2
-            className="font-gotham w-full text-start font-black text-brand-yellow text-4xl md:text-5xl lg:text-6xl tracking-tighter leading-none"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: false }}
-          >
-            Hit me up!
-          </motion.h2>
-        </div>
+      <div className="w-full mx-auto flex flex-col space-y-6">
+        <motion.h2
+          className="font-gotham w-full text-start font-black text-brand-yellow text-3xl md:text-5xl lg:text-6xl tracking-tighter leading-none"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: false }}
+        >
+          Hit me up!
+        </motion.h2>
 
-        <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-between gap-12 md:gap-20">
+        <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-between gap-6">
           <motion.div
             className="relative w-full md:max-w-1/2 aspect-video bg-brand-yellow/10"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -40,7 +38,7 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
               src={FOOTER_IMAGE}
               alt="Thank you visual"
               fill
-              className="object-cover grayscale contrast-125 opacity-90"
+              className="object-cover contrast-125 opacity-90"
             />
           </motion.div>
 
