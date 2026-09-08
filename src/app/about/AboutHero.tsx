@@ -134,7 +134,7 @@ export const AboutHero = ({ about }: { about: About | null }) => {
                 src={IMAGE_PROFILE_1}
                 alt="Profile Back"
                 fill
-                className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-500"
+                className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />
             </motion.div>
 
@@ -149,7 +149,7 @@ export const AboutHero = ({ about }: { about: About | null }) => {
                 src={IMAGE_PROFILE_2}
                 alt="Profile Front"
                 fill
-                className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-500"
+                className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />
             </motion.div>
           </div>

@@ -108,7 +108,7 @@ export const EducationSection = ({
                     src={item.image}
                     alt={item.name}
                     fill
-                    className="object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-transform duration-700"
+                    className="object-cover contrast-125 hover:scale-105 transition-transform duration-700"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </motion.div>
