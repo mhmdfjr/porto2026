@@ -1,5 +1,5 @@
 import { supabase } from "./supabase"
-import type { Contact, Skill, Feature, About, Education, Work, Project, Organization, Post } from "./supabase"
+import type { Contact, Skill, Feature, About, Education, Work, Project, Organization, Post, Comment, CommentStatus, CommentTarget } from "./supabase"
 
 /**
  * NOTE: these reads use the public anon client and therefore rely
@@ -205,6 +205,62 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   } catch (error) {
     console.error(`Error fetching post ${clean}:`, error);
     return null;
+  }
+}
+
+// --- Comments (public + admin moderation) ---
+
+/** Approved comments for a blog post or project page, oldest first. */
+export async function getApprovedComments(
+  targetType: CommentTarget,
+  targetSlug: string,
+): Promise<Comment[]> {
+  const clean = targetSlug.trim().toLowerCase();
+  if (!clean || clean.length > 120) return [];
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .select("*")
+      .eq("target_type", targetType)
+      .eq("target_slug", clean)
+      .eq("status", "approved")
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      console.error("Error fetching comments:", error);
+      return [];
+    }
+
+    return (data ?? []) as Comment[];
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return [];
+  }
+}
+
+/** Pending + approved comments for admin moderation, newest first. */
+export async function getCommentsForAdmin(
+  status?: CommentStatus,
+): Promise<Comment[]> {
+  try {
+    let query = supabase
+      .from("comments")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (status) query = query.eq("status", status);
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching comments for admin:", error);
+      return [];
+    }
+
+    return (data ?? []) as Comment[];
+  } catch (error) {
+    console.error("Error fetching comments for admin:", error);
+    return [];
   }
 }
 

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProjectBySlug, getProjects, getContacts } from "@/lib/database";
+import { getProjectBySlug, getProjects, getContacts, getApprovedComments } from "@/lib/database";
 import { siteConfig } from "@/lib/config";
 import { Navbar } from "@/components/molecules/Navbar";
 import { FooterSection } from "@/components/organisms/FooterSection";
 import { ProjectDetailSection } from "@/components/organisms/ProjectDetail";
+import { CommentSection } from "@/components/organisms/CommentSection";
 
 export const revalidate = 60;
 
@@ -68,6 +69,7 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
 
   const allProjects = await getProjects();
   const contacts = await getContacts();
+  const comments = await getApprovedComments("project", project.slug);
   const recommendations = allProjects
     .filter((item) => item.slug !== project.slug)
     .slice(0, 3);
@@ -94,6 +96,7 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
     <main>
       <Navbar />
       <ProjectDetailSection project={project} recommendations={recommendations} />
+      <CommentSection targetType="project" targetSlug={project.slug} comments={comments} />
       <FooterSection contacts={contacts} />
       <script
         type="application/ld+json"

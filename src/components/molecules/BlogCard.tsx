@@ -39,7 +39,7 @@ export const BlogCard = ({
 
   return (
     <div className="flex flex-col gap-6 w-full group h-full justify-between">
-      <div>
+      <Link href={`/blog/${slug}`} className="block">
         <div className="relative w-full aspect-video bg-brand-yellow overflow-hidden">
           <Image
             src={safeImageUrl}
@@ -73,7 +73,7 @@ export const BlogCard = ({
             )}
           </div>
         </div>
-      </div>
+      </Link>
 
       <div className="flex items-center gap-4">
         <Button

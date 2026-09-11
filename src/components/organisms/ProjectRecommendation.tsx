@@ -35,7 +35,7 @@ export const ProjectRecommendationSection = ({
   if (!recommendations || recommendations.length === 0) return null;
 
   const getSafeImage = (images: string[] | null | undefined) => {
-    if (!images || !Array.isArray(images)) return "/sun-red.svg";
+    if (!images || !Array.isArray(images)) return "/sun-yellow.svg";
     const validImage = images.find(
       (img) =>
         typeof img === "string" &&
@@ -47,7 +47,7 @@ export const ProjectRecommendationSection = ({
   return (
     <motion.div variants={cardVariants} className="space-y-2">
       <motion.h3
-        className="font-gotham font-bold text-brand-red text-lg md:text-xl uppercase"
+        className="font-gotham font-bold text-brand-yellow text-lg md:text-xl uppercase"
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -81,7 +81,7 @@ export const ProjectRecommendationSection = ({
                   />
                 </div>
 
-                <h4 className="font-gotham font-black text-brand-red text-xl tracking-tight decoration-brand-red underline-offset-4">
+                <h4 className="font-gotham font-black text-brand-yellow text-xl tracking-tight decoration-brand-yellow underline-offset-4">
                   {rec.name}
                 </h4>
               </Link>

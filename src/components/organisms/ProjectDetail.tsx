@@ -77,7 +77,7 @@ export const ProjectDetailSection = ({
   if (!project) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 bg-brand-black">
-        <h1 className="font-gotham text-brand-red text-4xl">
+        <h1 className="font-gotham text-brand-yellow text-4xl">
           Project Not Found
         </h1>
         <BackButton />
@@ -91,10 +91,10 @@ export const ProjectDetailSection = ({
       typeof img === "string" &&
       (img.startsWith("http") || img.startsWith("/")),
   );
-  const images = validImages.length > 0 ? validImages : ["/sun-red.svg"];
+  const images = validImages.length > 0 ? validImages : ["/sun-yellow.svg"];
 
   return (
-    <section className="relative w-full bg-brand-black overflow-hidden selection:bg-brand-red selection:text-black">
+    <section className="relative w-full bg-brand-black overflow-hidden selection:bg-brand-yellow selection:text-black">
       <div className="relative z-10 mx-auto px-6 md:px-12 pt-24 pb-4">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -118,10 +118,10 @@ export const ProjectDetailSection = ({
             viewport={{ once: false }}
           >
             <div className="flex flex-col gap-1">
-              <h1 className="font-gotham font-black text-brand-red text-2xl md:text-3xl lg:text-4xl leading-tight">
+              <h1 className="font-gotham font-black text-brand-yellow text-2xl md:text-3xl lg:text-4xl leading-tight">
                 {project.name}
               </h1>
-              <p className="font-dm text-brand-red/80 text-sm md:text-base">
+              <p className="font-dm text-brand-yellow/80 text-sm md:text-base">
                 {new Date(project.created_at).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "long",
@@ -131,7 +131,7 @@ export const ProjectDetailSection = ({
             </div>
 
             <motion.div
-              className="relative w-full aspect-video md:aspect-21/9 bg-brand-red/40 overflow-hidden group"
+              className="relative w-full aspect-video md:aspect-21/9 bg-brand-yellow/40 overflow-hidden group"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
@@ -169,8 +169,8 @@ export const ProjectDetailSection = ({
                       onClick={() => paginate(idx)}
                       className={`h-1 md:h-1.5 transition-all duration-300 rounded-full ${
                         idx === currentImageIndex
-                          ? "w-8 md:w-12 bg-brand-red"
-                          : "w-2 md:w-3 bg-brand-red/30 hover:bg-brand-red/60"
+                          ? "w-8 md:w-12 bg-brand-yellow"
+                          : "w-2 md:w-3 bg-brand-yellow/30 hover:bg-brand-yellow/60"
                       }`}
                     />
                   ))}
@@ -179,14 +179,14 @@ export const ProjectDetailSection = ({
             </motion.div>
 
             <motion.h3
-              className="font-gotham font-bold text-brand-red text-2xl md:text-3xl"
+              className="font-gotham font-bold text-brand-yellow text-2xl md:text-3xl"
               variants={itemVariants}
             >
               Overview
             </motion.h3>
 
             <motion.p
-              className="font-dm text-brand-red text-sm md:text-base leading-relaxed whitespace-pre-line"
+              className="font-dm text-brand-yellow text-sm md:text-base leading-relaxed whitespace-pre-line"
               variants={itemVariants}
             >
               {project.description}
@@ -197,11 +197,12 @@ export const ProjectDetailSection = ({
                 href={project.live_url ? project.live_url : "#"}
                 text="Live Preview"
                 size="sm"
+                variant="solid-yellow-black"
                 target={project.live_url ? "_blank" : "_self"}
               />
               <Button
                 href={project.code_url ? project.code_url : "#"}
-                variant="secondary"
+                variant="outline-yellow-black"
                 size="sm"
                 text="View Code"
                 target={project.code_url ? "_blank" : "_self"}
@@ -210,36 +211,36 @@ export const ProjectDetailSection = ({
           </motion.div>
 
           <motion.div
-            className="lg:col-span-2 flex flex-col py-6 space-y-6 lg:border-l lg:pl-10 lg:border-brand-red"
+            className="lg:col-span-2 flex flex-col py-6 space-y-6 lg:border-l lg:pl-10 lg:border-brand-yellow"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false }}
           >
             <motion.div variants={itemVariants} className="space-y-2">
-              <h4 className="font-gotham font-bold text-brand-red text-lg md:text-xl uppercase">
+              <h4 className="font-gotham font-bold text-brand-yellow text-lg md:text-xl uppercase">
                 Technologies
               </h4>
               <div className="flex flex-wrap gap-2">
                 {project.techstack &&
                   project.techstack.map((tech, idx) => (
-                    <Tag key={idx} label={tech} />
+                    <Tag key={idx} label={tech} variant="yellow" />
                   ))}
               </div>
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-2">
-              <h4 className="font-gotham font-bold text-brand-red text-lg md:text-xl uppercase">
+              <h4 className="font-gotham font-bold text-brand-yellow text-lg md:text-xl uppercase">
                 Share
               </h4>
-              <div className="flex gap-4 text-brand-red/60">
+              <div className="flex gap-4 text-brand-yellow/60">
                 <a
                   href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
                     `https://mhmdfjr.vercel.app/project/${project.slug}`,
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold"
+                  className="cursor-pointer hover:text-brand-yellow transition-colors font-dm font-bold"
                 >
                   LinkedIn
                 </a>
@@ -249,7 +250,7 @@ export const ProjectDetailSection = ({
                   )}&text=${encodeURIComponent(project.name)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold"
+                  className="cursor-pointer hover:text-brand-yellow transition-colors font-dm font-bold"
                 >
                   Twitter
                 </a>
@@ -259,7 +260,7 @@ export const ProjectDetailSection = ({
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold"
+                  className="cursor-pointer hover:text-brand-yellow transition-colors font-dm font-bold"
                 >
                   WhatsApp
                 </a>
@@ -277,7 +278,7 @@ export const ProjectDetailSection = ({
               viewport={{ once: false }}
             >
               <Image
-                src="/sun-red.svg"
+                src="/sun-yellow.svg"
                 alt="Decorative Sun"
                 width={140}
                 height={140}

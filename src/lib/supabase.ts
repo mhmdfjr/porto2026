@@ -88,6 +88,19 @@ export interface Organization {
   created_at: string;
 }
 
+export type CommentTarget = "post" | "project";
+export type CommentStatus = "pending" | "approved" | "rejected";
+
+export interface Comment {
+  id: number;
+  target_type: CommentTarget;
+  target_slug: string;
+  name: string;
+  message: string;
+  status: CommentStatus;
+  created_at: string;
+}
+
 export type PostStatus = "draft" | "published";
 
 export interface Post {
