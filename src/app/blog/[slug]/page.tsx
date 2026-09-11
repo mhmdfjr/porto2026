@@ -27,9 +27,10 @@ export async function generateMetadata({
   if (!post) return {};
 
   const canonicalUrl = `${siteConfig.url}/blog/${post.slug}`;
+  const ogImage = post.cover_image ?? `${siteConfig.url}/opengraph-image`;
 
   return {
-    title: `${post.title} | ${siteConfig.name}`,
+    title: post.title,
     description: post.excerpt.slice(0, 160),
     alternates: { canonical: canonicalUrl },
     openGraph: {
@@ -38,13 +39,15 @@ export async function generateMetadata({
       url: canonicalUrl,
       type: "article",
       publishedTime: post.published_at ?? undefined,
+      modifiedTime: post.updated_at,
       authors: [siteConfig.name],
       tags: post.tags ?? [],
       images: [
         {
-          url: post.cover_image ?? siteConfig.ogImage,
+          url: ogImage,
           width: 1200,
           height: 630,
+          alt: post.title,
         },
       ],
     },
@@ -52,7 +55,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${post.title} | ${siteConfig.name}`,
       description: post.excerpt.slice(0, 160),
-      images: [post.cover_image ?? siteConfig.ogImage],
+      images: [ogImage],
     },
   };
 }
@@ -74,10 +77,21 @@ export default async function BlogDetail({ params }: BlogDetailProps) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
-    image: post.cover_image ?? undefined,
+    image: post.cover_image ?? `${siteConfig.url}/opengraph-image`,
     datePublished: post.published_at,
     dateModified: post.updated_at,
-    author: { "@type": "Person", name: "Mohamad Fajar Nur Khasani" },
+    mainEntityOfPage: `${siteConfig.url}/blog/${post.slug}`,
+    author: {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
+      name: "Mohamad Fajar Nur Khasani",
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
+      name: "Mohamad Fajar Nur Khasani",
+    },
     keywords: post.tags?.join(", "),
   };
 

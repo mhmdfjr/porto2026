@@ -104,7 +104,7 @@ export const AboutSection = () => {
             >
               <Image
                 src={IMAGE_PROFILE_1}
-                alt="Profile Back"
+                alt="Foto Mohamad Fajar Nur Khasani - Full-Stack Developer"
                 fill
                 className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />
@@ -119,7 +119,7 @@ export const AboutSection = () => {
             >
               <Image
                 src={IMAGE_PROFILE_2}
-                alt="Profile Front"
+                alt="Potret Mohamad Fajar Nur Khasani - Full-Stack Developer"
                 fill
                 className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />

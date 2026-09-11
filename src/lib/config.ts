@@ -16,12 +16,13 @@ function supabasePublicBaseUrl(): string {
 
 export const siteConfig = {
   url: "https://mhmdfjr.vercel.app",
-  name: "Mohamad Fajar",
-  title: "Mohamad Fajar | Full Stack Developer",
+  name: "Mohamad Fajar Nur Khasani",
+  shortName: "Mohamad Fajar",
+  title: "Mohamad Fajar Nur Khasani | Full-Stack Developer",
   description:
     "Mohamad Fajar Nur Khasani is a full-stack developer who builds modern websites for digital solutions with Next.js, Laravel, and other modern technologies.",
   locale: "id_ID",
-  ogImage: "/logo.png",
+  ogImage: "/opengraph-image",
 } as const;
 
 export const storageConfig = {

@@ -228,15 +228,36 @@ export const ProjectDetailSection = ({
                 Share
               </h4>
               <div className="flex gap-4 text-brand-red/60">
-                <span className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold">
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                    `https://mhmdfjr.vercel.app/project/${project.id}`,
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold"
+                >
                   LinkedIn
-                </span>
-                <span className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold">
+                </a>
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                    `https://mhmdfjr.vercel.app/project/${project.id}`,
+                  )}&text=${encodeURIComponent(project.name)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold"
+                >
                   Twitter
-                </span>
-                <span className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold">
-                  Copy Link
-                </span>
+                </a>
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(
+                    `${project.name} https://mhmdfjr.vercel.app/project/${project.id}`,
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer hover:text-brand-red transition-colors font-dm font-bold"
+                >
+                  WhatsApp
+                </a>
               </div>
             </motion.div>
 

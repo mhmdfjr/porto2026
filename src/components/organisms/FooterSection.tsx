@@ -36,7 +36,7 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
           >
             <Image
               src={FOOTER_IMAGE}
-              alt="Thank you visual"
+              alt="Foto Mohamad Fajar Nur Khasani - Full-Stack Developer"
               fill
               className="object-cover contrast-125 opacity-90"
             />
@@ -96,8 +96,26 @@ export const FooterSection = ({ contacts = [] }: { contacts?: Contact[] }) => {
         viewport={{ once: false }}
       >
         <p className="font-dm text-brand-yellow text-sm text-center">
-          © {new Date().getFullYear()} Mohamad Fajar. All rights reserved.
+          © {new Date().getFullYear()} Mohamad Fajar Nur Khasani. All rights
+          reserved.
         </p>
+        <nav
+          aria-label="Footer"
+          className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-dm text-sm text-brand-yellow/80"
+        >
+          <Link href="/" className="hover:text-brand-yellow">
+            Home
+          </Link>
+          <Link href="/about" className="hover:text-brand-yellow">
+            About
+          </Link>
+          <Link href="/project" className="hover:text-brand-yellow">
+            Projects
+          </Link>
+          <Link href="/blog" className="hover:text-brand-yellow">
+            Blog
+          </Link>
+        </nav>
       </motion.div>
     </footer>
   );

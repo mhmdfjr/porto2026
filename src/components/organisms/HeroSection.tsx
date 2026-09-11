@@ -52,7 +52,7 @@ export const HeroSection = ({
             >
               <Image
                 src={slides[index % slides.length]}
-                alt="Mountain Landscape"
+                alt="Mohamad Fajar Nur Khasani - Full-Stack Developer portfolio background"
                 fill
                 priority={index === 0}
                 sizes="100vw"
@@ -76,6 +76,9 @@ export const HeroSection = ({
           >
             Mohamad Fajar
           </motion.h1>
+          <p className="sr-only">
+            Mohamad Fajar Nur Khasani - Full-Stack Developer portfolio
+          </p>
         </div>
       </div>
 
@@ -90,6 +93,10 @@ export const HeroSection = ({
           >
             <p className="font-gotham font-bold text-brand-red md:text-2xl lg:text-3xl text-xl">
               Full-Stack Developer
+            </p>
+            <p className="sr-only">
+              Mohamad Fajar Nur Khasani builds modern, responsive web
+              experiences with Next.js, React, and Laravel.
             </p>
 
             <div className="flex justify-end md:text-lg lg:text-xl text-base">

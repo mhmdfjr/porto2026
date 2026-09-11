@@ -43,9 +43,9 @@ export const AboutHero = ({ about }: { about: About | null }) => {
               <p className="font-gotham font-bold text-brand-red text-lg md:text-xl tracking-wide uppercase">
                 {profile.role}
               </p>
-              <h2 className="font-gotham font-black text-3xl md:text-4xl lg:text-5xl tracking-tight">
+              <h1 className="font-gotham font-black text-3xl md:text-4xl lg:text-5xl tracking-tight">
                 {profile.name}
-              </h2>
+              </h1>
             </div>
 
             <dl className="flex flex-wrap gap-x-6 font-dm text-base md:text-lg">
@@ -132,7 +132,7 @@ export const AboutHero = ({ about }: { about: About | null }) => {
             >
               <Image
                 src={IMAGE_PROFILE_1}
-                alt="Profile Back"
+                alt="Foto Mohamad Fajar Nur Khasani - Full-Stack Developer"
                 fill
                 className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />
@@ -147,7 +147,7 @@ export const AboutHero = ({ about }: { about: About | null }) => {
             >
               <Image
                 src={IMAGE_PROFILE_2}
-                alt="Profile Front"
+                alt="Potret Mohamad Fajar Nur Khasani - Full-Stack Developer"
                 fill
                 className="object-cover contrast-125 hover:scale-105 transition-all duration-500"
               />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProjectById, getProjects, getContacts } from "@/lib/database";
+import { siteConfig } from "@/lib/config";
 import { Navbar } from "@/components/molecules/Navbar";
 import { FooterSection } from "@/components/organisms/FooterSection";
 import { ProjectDetailSection } from "@/components/organisms/ProjectDetail";
@@ -31,28 +32,27 @@ export async function generateMetadata({
   }
 
   const description = project.description.replace(/\s+/g, " ").slice(0, 160);
-  const canonicalUrl = `https://mhmdfjr.vercel.app/project/${project.id}`;
+  const canonicalUrl = `${siteConfig.url}/project/${project.id}`;
+  const ogImage = project.images?.[0] ?? `${siteConfig.url}/opengraph-image`;
 
   return {
-    title: `${project.name} | Mohamad Fajar`,
+    title: project.name,
     description,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${project.name} | Mohamad Fajar`,
+      title: `${project.name} | ${siteConfig.name}`,
       description,
       url: canonicalUrl,
       type: "article",
-      images: [
-        { url: project.images?.[0] ?? "/logo.png", width: 1200, height: 630 },
-      ],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: project.name }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.name} | Mohamad Fajar`,
+      title: `${project.name} | ${siteConfig.name}`,
       description,
-      images: [project.images?.[0] ?? "/logo.png"],
+      images: [ogImage],
     },
   };
 }
@@ -76,10 +76,15 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
     "@type": "CreativeWork",
     name: project.name,
     description: project.description,
-    url: `https://mhmdfjr.vercel.app/project/${project.id}`,
+    image: project.images?.[0],
+    datePublished: project.created_at,
+    url: `${siteConfig.url}/project/${project.id}`,
+    mainEntityOfPage: `${siteConfig.url}/project/${project.id}`,
     author: {
       "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
       name: "Mohamad Fajar Nur Khasani",
+      url: siteConfig.url,
     },
     keywords: project.techstack?.join(", ") ?? "web development",
   };

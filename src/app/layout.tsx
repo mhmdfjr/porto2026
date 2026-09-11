@@ -26,43 +26,78 @@ const gotham = localFont({
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${siteConfig.url}/#person`,
   name: "Mohamad Fajar Nur Khasani",
-  alternateName: "Mohamad Fajar",
+  alternateName: ["Mohamad Fajar", "mhmdfjr"],
   jobTitle: "Full-Stack Developer",
-  url: "https://mhmdfjr.vercel.app",
+  url: siteConfig.url,
+  image: `${siteConfig.url}/opengraph-image`,
+  nationality: "Indonesian",
+  address: { "@type": "PostalAddress", addressCountry: "ID" },
+  knowsAbout: [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Laravel",
+    "Full-Stack Web Development",
+  ],
   sameAs: [
     "https://linkedin.com/in/mohamadfajarnurkhasani",
     "https://github.com/mhmdfjr",
     "https://instagram.com/holy.jar_",
   ],
   description:
-    "Full-stack web developer focused on building modern, responsive, and performant web experiences.",
+    "Mohamad Fajar Nur Khasani is a full-stack developer focused on building modern, responsive, and performant web experiences with Next.js and Laravel.",
+  mainEntityOfPage: siteConfig.url,
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteConfig.url}/#website`,
+  url: siteConfig.url,
+  name: "Mohamad Fajar Nur Khasani | Full-Stack Developer",
+  inLanguage: "id-ID",
+  publisher: { "@id": `${siteConfig.url}/#person` },
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.title,
-    template: "%s | Mohamad Fajar",
+    template: "%s | Mohamad Fajar Nur Khasani",
   },
   description: siteConfig.description,
   keywords: [
-    "full stack developer",
-    "next.js developer",
-    "portfolio developer",
+    "Mohamad Fajar Nur Khasani",
     "Mohamad Fajar",
+    "mhmdfjr",
+    "full stack developer",
+    "full-stack developer Indonesia",
+    "next.js developer",
+    "laravel developer",
+    "portfolio developer",
     "developer Indonesia",
   ],
-  authors: [{ name: "Mohamad Fajar" }],
+  authors: [{ name: "Mohamad Fajar Nur Khasani", url: siteConfig.url }],
+  creator: "Mohamad Fajar Nur Khasani",
+  publisher: "Mohamad Fajar Nur Khasani",
   alternates: {
-    canonical: "https://mhmdfjr.vercel.app",
+    canonical: siteConfig.url,
   },
   openGraph: {
     title: siteConfig.title,
     description: siteConfig.description,
     url: siteConfig.url,
-    siteName: "Mohamad Fajar's Portfolio",
-    images: [{ url: "/logo.png", width: 1200, height: 630 }],
+    siteName: "Mohamad Fajar Nur Khasani | Portfolio",
+    images: [
+      {
+        url: `${siteConfig.url}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Mohamad Fajar Nur Khasani - Full-Stack Developer",
+      },
+    ],
     locale: "id_ID",
     type: "website",
   },
@@ -70,7 +105,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: ["/logo.png"],
+    images: [`${siteConfig.url}/opengraph-image`],
   },
   robots: {
     index: true,
@@ -104,6 +139,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         {children}
       </body>

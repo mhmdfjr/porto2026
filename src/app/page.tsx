@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { HeroSection } from "@/components/organisms/HeroSection";
 import {
   getHeroGalleryImages,
@@ -24,7 +25,29 @@ import {
   getContacts,
 } from "@/lib/database";
 
+import { siteConfig } from "@/lib/config";
+
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: siteConfig.title,
+  description: siteConfig.description,
+  alternates: { canonical: siteConfig.url },
+  openGraph: {
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Mohamad Fajar Nur Khasani - Full-Stack Developer",
+      },
+    ],
+  },
+};
 
 export default async function Home() {
   const [
