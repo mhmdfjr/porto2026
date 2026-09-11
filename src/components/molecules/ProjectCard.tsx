@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "../atoms/Button";
 
 interface ProjectCardProps {
-  id: number;
+  slug: string;
   title: string;
   description: string;
   tags: string[];
@@ -13,7 +13,7 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({
-  id,
+  slug,
   title,
   description,
   tags,
@@ -68,7 +68,7 @@ export const ProjectCard = ({
       <div className="flex gap-4">
         <Button
           text="Learn more"
-          href={`/project/${id}`}
+          href={`/project/${slug}`}
           size="sm"
           variant="outline-red-black"
           icon="rocket"

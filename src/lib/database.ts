@@ -117,9 +117,32 @@ export function getProjects(): Promise<Project[]> {
   return fetchList<Project>("projects", { column: "id", ascending: false });
 }
 
-// Fetch specific project by ID
+// Fetch specific project by ID (admin use)
 export function getProjectById(id: number): Promise<Project | null> {
   return fetchById<Project>("projects", id);
+}
+
+/** Published project by slug for public pages. */
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  const clean = slug.trim().toLowerCase();
+  if (!clean || clean.length > 120) return null;
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("slug", clean)
+      .single();
+
+    if (error) {
+      console.error(`Error fetching project ${clean}:`, error);
+      return null;
+    }
+
+    return data as Project;
+  } catch (error) {
+    console.error(`Error fetching project ${clean}:`, error);
+    return null;
+  }
 }
 
 export function getOrganizations(): Promise<Organization[]> {

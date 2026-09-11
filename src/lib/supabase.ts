@@ -68,6 +68,7 @@ export interface Work {
 
 export interface Project {
   id: number;
+  slug: string;
   name: string;
   description: string;
   techstack: string[];

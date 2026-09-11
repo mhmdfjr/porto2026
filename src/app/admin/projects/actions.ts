@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { createClient } from "@/lib/supabase/server"
 import { projectSchema, type ProjectFormState } from "@/lib/validations/project"
+import { slugifyTitle } from "@/lib/validations/post"
 import { storageConfig } from "@/lib/config"
 import {
   uploadImages,
@@ -44,6 +45,7 @@ export async function createProject(
 ): Promise<ProjectFormState> {
   const parsed = projectSchema.safeParse({
     name: formData.get("name"),
+    slug: formData.get("slug"),
     description: formData.get("description"),
     techstack: formData.get("techstack"),
     live_url: formData.get("live_url"),
@@ -54,6 +56,12 @@ export async function createProject(
     return validationFail(
       parsed.error.flatten().fieldErrors as Record<string, string[]>,
     )
+  }
+
+  let slug = (parsed.data.slug || "").trim().toLowerCase()
+  if (!slug) slug = slugifyTitle(parsed.data.name)
+  if (!slug) {
+    return validationFail({ slug: ["Slug tidak valid, isi manual"] })
   }
 
   const files = formData.getAll("images") as File[]
@@ -70,6 +78,7 @@ export async function createProject(
     const imageUrls = await uploadImages(supabase, validFiles, FOLDER)
 
     const { error } = await supabase.from("projects").insert({
+      slug,
       name: parsed.data.name,
       description: parsed.data.description,
       techstack: parsed.data.techstack,
@@ -83,10 +92,15 @@ export async function createProject(
         supabase,
         imageUrls.map(extractStoragePath),
       )
+      if (error.code === "23505") {
+        throw new FriendlyError("Slug sudah dipakai project lain")
+      }
       throw error
     }
 
     revalidatePath("/admin/projects")
+    revalidatePath("/project")
+    revalidatePath(`/project/${slug}`)
     return { success: true, message: "Project berhasil ditambahkan" }
   } catch (err) {
     if (err instanceof UploadValidationError) {
@@ -107,6 +121,7 @@ export async function updateProject(
 ): Promise<ProjectFormState> {
   const parsed = projectSchema.safeParse({
     name: formData.get("name"),
+    slug: formData.get("slug"),
     description: formData.get("description"),
     techstack: formData.get("techstack"),
     live_url: formData.get("live_url"),
@@ -119,6 +134,12 @@ export async function updateProject(
     )
   }
 
+  let slug = (parsed.data.slug || "").trim().toLowerCase()
+  if (!slug) slug = slugifyTitle(parsed.data.name)
+  if (!slug) {
+    return validationFail({ slug: ["Slug tidak valid, isi manual"] })
+  }
+
   const supabase = await createClient()
 
   try {
@@ -127,7 +148,7 @@ export async function updateProject(
 
     const { data: current, error: fetchError } = await supabase
       .from("projects")
-      .select("images")
+      .select("images, slug")
       .eq("id", recordId)
       .single()
     if (fetchError || !current) throw new FriendlyError("Project tidak ditemukan")
@@ -154,6 +175,7 @@ export async function updateProject(
     const { error } = await supabase
       .from("projects")
       .update({
+        slug,
         name: parsed.data.name,
         description: parsed.data.description,
         techstack: parsed.data.techstack,
@@ -168,6 +190,9 @@ export async function updateProject(
         supabase,
         newUrls.map(extractStoragePath),
       )
+      if (error.code === "23505") {
+        throw new FriendlyError("Slug sudah dipakai project lain")
+      }
       throw error
     }
 
@@ -181,6 +206,11 @@ export async function updateProject(
     }
 
     revalidatePath("/admin/projects")
+    revalidatePath("/project")
+    revalidatePath(`/project/${slug}`)
+    if (current.slug && current.slug !== slug) {
+      revalidatePath(`/project/${current.slug}`)
+    }
     return { success: true, message: "Project berhasil diperbarui" }
   } catch (err) {
     if (err instanceof UploadValidationError) {
@@ -222,6 +252,7 @@ export async function deleteProject(id: number) {
     if (error) throw error
 
     revalidatePath("/admin/projects")
+    revalidatePath("/project")
     return { success: true, message: "Project berhasil dihapus" }
   } catch (err) {
     return {

@@ -11,7 +11,7 @@ export const BackButton = ({
   label = "Back to Projects",
 }: BackButtonProps) => {
   return (
-    <Link href={href} className="group flex items-center gap-2 w-fit mb-8">
+    <Link href={href} className="group flex items-center gap-2 w-fit">
       <span className="text-brand-red text-xl transition-transform group-hover:-translate-x-2">
         ←
       </span>

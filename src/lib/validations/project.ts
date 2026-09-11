@@ -23,6 +23,15 @@ export const projectSchema = z.object({
     .trim()
     .min(3, "Nama project minimal 3 karakter")
     .max(120, "Nama project maksimal 120 karakter"),
+  slug: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .max(120, "Slug maksimal 120 karakter")
+    .optional()
+    .refine((val) => !val || /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(val), {
+      message: "Slug hanya boleh huruf kecil, angka, dan strip",
+    }),
   description: z
     .string()
     .trim()

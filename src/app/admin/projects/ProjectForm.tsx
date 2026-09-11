@@ -26,6 +26,7 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
   // Controlled state untuk field teks
   const [values, setValues] = useState(() => ({
     name: project?.name ?? "",
+    slug: project?.slug ?? "",
     description: project?.description ?? "",
     techstack: project?.techstack?.join(", ") ?? "",
     live_url: project?.live_url ?? "",
@@ -90,6 +91,19 @@ export function ProjectForm({ mode, project, action, onSuccess }: Props) {
           name="name"
           value={values.name}
           onChange={handleChange("name")}
+          className={fieldInputClass}
+        />
+      </FormField>
+
+      <FormField
+        label="Slug (kosongkan = otomatis dari nama)"
+        error={state.errors?.slug?.[0]}
+      >
+        <input
+          name="slug"
+          value={values.slug}
+          onChange={handleChange("slug")}
+          placeholder="nama-project-saya"
           className={fieldInputClass}
         />
       </FormField>

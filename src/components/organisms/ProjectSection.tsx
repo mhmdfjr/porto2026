@@ -99,7 +99,7 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
 
                   return (
                     <motion.div
-                      key={project.id}
+                      key={project.slug || project.id}
                       className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-6 md:pl-8"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -111,7 +111,7 @@ export const ProjectSection = ({ projects }: { projects: Project[] }) => {
                       viewport={{ once: false, amount: 0.2 }}
                     >
                       <ProjectCard
-                        id={project.id}
+                        slug={project.slug}
                         title={project.name}
                         description={project.description}
                         tags={project.techstack}

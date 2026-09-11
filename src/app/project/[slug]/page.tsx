@@ -1,38 +1,39 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProjectById, getProjects, getContacts } from "@/lib/database";
+import { getProjectBySlug, getProjects, getContacts } from "@/lib/database";
 import { siteConfig } from "@/lib/config";
 import { Navbar } from "@/components/molecules/Navbar";
 import { FooterSection } from "@/components/organisms/FooterSection";
 import { ProjectDetailSection } from "@/components/organisms/ProjectDetail";
-import { ProjectRecommendationSection } from "@/components/organisms/ProjectRecommendation";
 
 export const revalidate = 60;
 
 type ProjectPageProps = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateStaticParams() {
   const projects = await getProjects();
 
-  return projects.map((project) => ({
-    id: project.id.toString(),
-  }));
+  return projects
+    .filter((project) => Boolean(project.slug))
+    .map((project) => ({
+      slug: project.slug,
+    }));
 }
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const { id } = await params;
-  const project = await getProjectById(Number(id));
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return {};
   }
 
   const description = project.description.replace(/\s+/g, " ").slice(0, 160);
-  const canonicalUrl = `${siteConfig.url}/project/${project.id}`;
+  const canonicalUrl = `${siteConfig.url}/project/${project.slug}`;
   const ogImage = project.images?.[0] ?? `${siteConfig.url}/opengraph-image`;
 
   return {
@@ -58,8 +59,8 @@ export async function generateMetadata({
 }
 
 export default async function ProjectDetail({ params }: ProjectPageProps) {
-  const { id } = await params;
-  const project = await getProjectById(Number(id));
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
@@ -68,7 +69,7 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
   const allProjects = await getProjects();
   const contacts = await getContacts();
   const recommendations = allProjects
-    .filter((item) => item.id !== project.id)
+    .filter((item) => item.slug !== project.slug)
     .slice(0, 3);
 
   const projectSchema = {
@@ -78,8 +79,8 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
     description: project.description,
     image: project.images?.[0],
     datePublished: project.created_at,
-    url: `${siteConfig.url}/project/${project.id}`,
-    mainEntityOfPage: `${siteConfig.url}/project/${project.id}`,
+    url: `${siteConfig.url}/project/${project.slug}`,
+    mainEntityOfPage: `${siteConfig.url}/project/${project.slug}`,
     author: {
       "@type": "Person",
       "@id": `${siteConfig.url}/#person`,
@@ -92,8 +93,7 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
   return (
     <main>
       <Navbar />
-      <ProjectDetailSection project={project} />
-      <ProjectRecommendationSection recommendations={recommendations} />
+      <ProjectDetailSection project={project} recommendations={recommendations} />
       <FooterSection contacts={contacts} />
       <script
         type="application/ld+json"

@@ -19,9 +19,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const projectEntries = projects
-    .filter((project) => Number.isInteger(project.id) && project.id > 0)
+    .filter((project) => Boolean(project.slug))
     .map((project) => ({
-      url: `${baseUrl}/project/${project.id}`,
+      url: `${baseUrl}/project/${project.slug}`,
       lastModified: toDate(project.created_at),
       changeFrequency: "monthly" as const,
       priority: 0.8,
